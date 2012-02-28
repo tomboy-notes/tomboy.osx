@@ -1,3 +1,5 @@
 Macboy/bin/
 Macboy/bin/*
 .exe
+*.exe
+exe
