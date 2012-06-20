@@ -1,28 +1,11 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Tomboy-Library/Tomboy/NoteTag.cs">
-    <Files>
-      <File FileName="Macboy/Main.cs" Line="6" Column="1" />
-      <File FileName="Tomboy-Library/Tomboy/Note.cs" Line="1599" Column="3" />
-      <File FileName="Tomboy-Library/Tomboy/NoteManager.cs" Line="425" Column="3" />
-      <File FileName="Tomboy-Library/Tomboy/Utils.cs" Line="991" Column="6" />
-      <File FileName="Tomboy-Library/Tomboy/NoteBuffer.cs" Line="54" Column="3" />
-      <File FileName="Tomboy-Library/Tomboy/NoteTag.cs" Line="628" Column="1" />
-      <File FileName="Tomboy-Library/Tomboy/Notebooks/Notebook.cs" Line="112" Column="21" />
-      <File FileName="Tomboy-Library/Tomboy/RemoteControl.cs" Line="19" Column="58" />
-      <File FileName="Tomboy-Library/Tomboy/Notebooks/NotebookManager.cs" Line="297" Column="3" />
-      <File FileName="Tomboy-Library/Tomboy/Tomboy.cs" Line="7" Column="3" />
-      <File FileName="Tomboy-Library/Tomboy/AddinManager.cs" Line="20" Column="16" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Macboy" expanded="True" />
-          <Node name="Tomboy-Library" expanded="True">
-            <Node name="Tomboy" expanded="True">
-              <Node name="Notebooks" expanded="True" />
-              <Node name="NoteTag.cs" selected="True" />
-            </Node>
+          <Node name="Macboy" expanded="True">
+            <Node name="MainWindow.xib" selected="True" />
           </Node>
         </State>
       </Pad>
