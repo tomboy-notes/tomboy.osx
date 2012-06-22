@@ -3,10 +3,8 @@
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Macboy" expanded="True">
-            <Node name="MainWindow.xib" selected="True" />
-          </Node>
+        <State expanded="True" selected="True">
+          <Node name="Macboy" expanded="True" />
         </State>
       </Pad>
     </Pads>

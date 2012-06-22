@@ -96,7 +96,7 @@
 																	<string key="NSFrameSize">{296, 383}</string>
 																	<reference key="NSSuperview" ref="987694810"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="553682880"/>
+																	<reference key="NSNextKeyView" ref="509582853"/>
 																	<string key="NSReuseIdentifierKey">_NS:1828</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSTableHeaderView" key="NSHeaderView" id="782210237">
@@ -284,7 +284,7 @@
 													<string key="NSFrame">{{0, 1}, {298, 402}}</string>
 													<reference key="NSSuperview" ref="903110398"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="987694810"/>
+													<reference key="NSNextKeyView" ref="553682880"/>
 													<string key="NSReuseIdentifierKey">_NS:1824</string>
 													<int key="NSsFlags">133681</int>
 													<reference key="NSVScroller" ref="509582853"/>
@@ -345,7 +345,7 @@
 																	<string key="NSFrameSize">{538, 14}</string>
 																	<reference key="NSSuperview" ref="439112195"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="61581508"/>
+																	<reference key="NSNextKeyView" ref="884849563"/>
 																	<string key="NSReuseIdentifierKey">_NS:1480</string>
 																	<object class="NSTextContainer" key="NSTextContainer" id="250725049">
 																		<object class="NSLayoutManager" key="NSLayoutManager">
@@ -492,7 +492,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 													<string key="NSFrameSize">{540, 403}</string>
 													<reference key="NSSuperview" ref="502187637"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="439112195"/>
+													<reference key="NSNextKeyView" ref="61581508"/>
 													<string key="NSReuseIdentifierKey">_NS:940</string>
 													<int key="NSsFlags">133137</int>
 													<reference key="NSVScroller" ref="884849563"/>
@@ -537,7 +537,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 															<string key="NSFrameSize">{110, 412}</string>
 															<reference key="NSSuperview" ref="380309624"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="53116503"/>
+															<reference key="NSNextKeyView" ref="954051858"/>
 															<string key="NSReuseIdentifierKey">_NS:1828</string>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTableHeaderView" key="NSHeaderView" id="882601270">
@@ -631,8 +631,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 													<string key="NSReuseIdentifierKey">_NS:1845</string>
 													<reference key="NSTarget" ref="963858881"/>
 													<string key="NSAction">_doScroller:</string>
-													<double key="NSCurValue">37</double>
-													<double key="NSPercent">0.1947367936372757</double>
+													<double key="NSPercent">0.99109792284866471</double>
 												</object>
 												<object class="NSScroller" id="542251884">
 													<reference key="NSNextResponder" ref="963858881"/>
@@ -667,7 +666,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 											<string key="NSFrame">{{0, -33}, {112, 431}}</string>
 											<reference key="NSSuperview" ref="717086327"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="380309624"/>
+											<reference key="NSNextKeyView" ref="53116503"/>
 											<string key="NSReuseIdentifierKey">_NS:1824</string>
 											<int key="NSsFlags">133681</int>
 											<reference key="NSVScroller" ref="954051858"/>
@@ -692,7 +691,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 										<object class="NSButton" id="46505084">
 											<reference key="NSNextResponder" ref="989632754"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{0, -1}, {122, 19}}</string>
+											<string key="NSFrame">{{20, 9}, {95, 19}}</string>
 											<reference key="NSSuperview" ref="989632754"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="498902002"/>
@@ -713,7 +712,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSButtonFlags2">164</int>
 												<object class="NSCustomResource" key="NSNormalImage">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">NSApplicationIcon</string>
+													<string key="NSResourceName">note-new</string>
 												</object>
 												<string key="NSAlternateContents"/>
 												<string key="NSKeyEquivalent"/>
@@ -813,6 +812,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string key="NSFrame">{{962, 0}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="312036702"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3891</string>
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
@@ -1224,7 +1224,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">233</int>
+			<int key="maxID">235</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1256,8 +1256,8 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">NSApplicationIcon</string>
-			<string key="NS.object.0">{128, 128}</string>
+			<string key="NS.key.0">note-new</string>
+			<string key="NS.object.0">{12.801422684151452, 12.801422684151452}</string>
 		</object>
 	</data>
 </archive>

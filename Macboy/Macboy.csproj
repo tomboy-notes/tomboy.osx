@@ -71,4 +71,7 @@
   <ItemGroup>
     <EmbeddedResource Include="note.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="note-new.png" />
+  </ItemGroup>
 </Project>
