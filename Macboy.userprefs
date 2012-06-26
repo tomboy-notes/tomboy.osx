@@ -1,10 +1,18 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Macboy/MainWindowController.cs">
+    <Files>
+      <File FileName="Macboy/MainWindow.cs" Line="1" Column="1" />
+      <File FileName="Macboy/MainWindowController.cs" Line="25" Column="3" />
+      <File FileName="Macboy/MainWindow.designer.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
-          <Node name="Macboy" expanded="True" />
+        <State expanded="True">
+          <Node name="Macboy" expanded="True">
+            <Node name="MainWindow.cs" expanded="True" />
+            <Node name="MainWindow.xib" selected="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>

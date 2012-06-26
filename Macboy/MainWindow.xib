@@ -96,7 +96,7 @@
 																	<string key="NSFrameSize">{296, 383}</string>
 																	<reference key="NSSuperview" ref="987694810"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="509582853"/>
+																	<reference key="NSNextKeyView" ref="553682880"/>
 																	<string key="NSReuseIdentifierKey">_NS:1828</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSTableHeaderView" key="NSHeaderView" id="782210237">
@@ -284,7 +284,7 @@
 													<string key="NSFrame">{{0, 1}, {298, 402}}</string>
 													<reference key="NSSuperview" ref="903110398"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="553682880"/>
+													<reference key="NSNextKeyView" ref="987694810"/>
 													<string key="NSReuseIdentifierKey">_NS:1824</string>
 													<int key="NSsFlags">133681</int>
 													<reference key="NSVScroller" ref="509582853"/>
@@ -345,7 +345,7 @@
 																	<string key="NSFrameSize">{538, 14}</string>
 																	<reference key="NSSuperview" ref="439112195"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="884849563"/>
+																	<reference key="NSNextKeyView" ref="61581508"/>
 																	<string key="NSReuseIdentifierKey">_NS:1480</string>
 																	<object class="NSTextContainer" key="NSTextContainer" id="250725049">
 																		<object class="NSLayoutManager" key="NSLayoutManager">
@@ -492,7 +492,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 													<string key="NSFrameSize">{540, 403}</string>
 													<reference key="NSSuperview" ref="502187637"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="61581508"/>
+													<reference key="NSNextKeyView" ref="439112195"/>
 													<string key="NSReuseIdentifierKey">_NS:940</string>
 													<int key="NSsFlags">133137</int>
 													<reference key="NSVScroller" ref="884849563"/>
@@ -537,7 +537,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 															<string key="NSFrameSize">{110, 412}</string>
 															<reference key="NSSuperview" ref="380309624"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="954051858"/>
+															<reference key="NSNextKeyView" ref="53116503"/>
 															<string key="NSReuseIdentifierKey">_NS:1828</string>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTableHeaderView" key="NSHeaderView" id="882601270">
@@ -666,7 +666,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 											<string key="NSFrame">{{0, -33}, {112, 431}}</string>
 											<reference key="NSSuperview" ref="717086327"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="53116503"/>
+											<reference key="NSNextKeyView" ref="380309624"/>
 											<string key="NSReuseIdentifierKey">_NS:1824</string>
 											<int key="NSsFlags">133681</int>
 											<reference key="NSVScroller" ref="954051858"/>
@@ -812,7 +812,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string key="NSFrame">{{962, 0}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="312036702"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3891</string>
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
@@ -1224,7 +1223,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">235</int>
+			<int key="maxID">237</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1240,6 +1239,17 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">MainWindowController</string>
 					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">newNoteButton</string>
+						<string key="NS.object.0">NSButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">newNoteButton</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">newNoteButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/MainWindowController.h</string>
