@@ -27,6 +27,7 @@ namespace Macboy
 		public MainWindowController () : base ("MainWindow")
 		{
 			Initialize ();
+
 		}
 		
 		// Shared initialization code
@@ -34,7 +35,17 @@ namespace Macboy
 		{
 		}
 		
+		
 		#endregion
+		
+		#region Events and Actions
+		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender)
+		{
+			
+		}
+		
+		
+		#endregion Events an Actions
 		
 		//strongly typed window accessor
 		public new MainWindow Window {
