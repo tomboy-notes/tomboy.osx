@@ -8,6 +8,15 @@ using MonoMac.Foundation;
 
 namespace Macboy
 {
+	[Register ("MainWindow")]
+	partial class MainWindow
+	{
+		
+		void ReleaseDesignerOutlets ()
+		{
+		}
+	}
+
 	[Register ("MainWindowController")]
 	partial class MainWindowController
 	{
@@ -20,15 +29,6 @@ namespace Macboy
 				newNoteButton.Dispose ();
 				newNoteButton = null;
 			}
-		}
-	}
-
-	[Register ("MainWindow")]
-	partial class MainWindow
-	{
-		
-		void ReleaseDesignerOutlets ()
-		{
 		}
 	}
 }
