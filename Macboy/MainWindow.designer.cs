@@ -17,6 +17,12 @@ namespace Macboy
 		[Outlet]
 		MonoMac.AppKit.NSTextField MyTextField { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSTableView tblNotes { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSTableColumn tblColmnNoteTitle { get; set; }
+
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
 		
@@ -30,6 +36,16 @@ namespace Macboy
 			if (MyTextField != null) {
 				MyTextField.Dispose ();
 				MyTextField = null;
+			}
+
+			if (tblNotes != null) {
+				tblNotes.Dispose ();
+				tblNotes = null;
+			}
+
+			if (tblColmnNoteTitle != null) {
+				tblColmnNoteTitle.Dispose ();
+				tblColmnNoteTitle = null;
 			}
 		}
 	}

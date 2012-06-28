@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy", "Macboy\Macboy.csproj", "{89E1D362-7111-4E3B-9C0F-EA10F70DF417}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-Library", "Tomboy-Library\Tomboy-Library.csproj", "{C99DF5D3-5CE7-4AFE-91A0-9050682D07B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Debug|x86.Build.0 = Debug|x86
 		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Release|x86.ActiveCfg = Release|x86
 		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Release|x86.Build.0 = Release|x86
+		{C99DF5D3-5CE7-4AFE-91A0-9050682D07B4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C99DF5D3-5CE7-4AFE-91A0-9050682D07B4}.Debug|x86.Build.0 = Debug|Any CPU
+		{C99DF5D3-5CE7-4AFE-91A0-9050682D07B4}.Release|x86.ActiveCfg = Release|Any CPU
+		{C99DF5D3-5CE7-4AFE-91A0-9050682D07B4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Macboy\Macboy.csproj

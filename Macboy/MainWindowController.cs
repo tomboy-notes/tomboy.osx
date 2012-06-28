@@ -53,6 +53,14 @@ namespace Macboy
 				return (MainWindow)base.Window;
 			}
 		}
+		
+		// This method will be called automatically when the main window "wakes up".
+		[Export ("awakeFromNib:")]
+		public override void AwakeFromNib ()
+		{
+			Console.WriteLine ("awakeFromNib:");
+			tblNotes.DataSource = new TableNotesDataSource ();
+		}		
 	}
 }
 
