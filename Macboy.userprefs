@@ -1,21 +1,21 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Macboy/MainWindowController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Macboy/TableNotesDataSource.cs">
     <Files>
-      <File FileName="Macboy/MainWindow.cs" Line="30" Column="1" />
-      <File FileName="Macboy/MainWindow.designer.cs" Line="1" Column="1" />
-      <File FileName="Macboy/TableNotesDataSource.cs" Line="117" Column="73" />
-      <File FileName="../tomboy-library/Tomboy-library/Tomboy/Engine.cs" Line="85" Column="21" />
-      <File FileName="Macboy/MainWindowController.cs" Line="67" Column="36" />
+      <File FileName="Macboy/MainWindow.cs" Line="7" Column="1" />
+      <File FileName="Macboy/MainWindow.designer.cs" Line="30" Column="71" />
+      <File FileName="Macboy/TableNotesDataSource.cs" Line="65" Column="23" />
+      <File FileName="Macboy/Main.cs" Line="22" Column="3" />
+      <File FileName="Macboy/MainWindowController.cs" Line="138" Column="52" />
+      <File FileName="Macboy/Default.css" Line="19" Column="14" />
+      <File FileName="Macboy/note.html" Line="11" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Macboy" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="AppDelegate.cs" expanded="True" />
             <Node name="MainWindow.cs" expanded="True" />
-            <Node name="MainWindow.xib" selected="True" />
+            <Node name="TableNotesDataSource.cs" selected="True" />
           </Node>
           <Node name="Tomboy-library" expanded="True">
             <Node name="Tomboy" expanded="True" />

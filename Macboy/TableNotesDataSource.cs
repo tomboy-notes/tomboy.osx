@@ -30,10 +30,7 @@ namespace Macboy
 {
 	public class TableNotesDataSource : NSTableViewSource
 	{
-		/// <summary>
-		/// The tomboy engine.
-		/// </summary>
-		private Engine tomboyEngine;
+
 		
 		private ArrayList notesList;
 		private Dictionary <string, Note> notes;
@@ -41,11 +38,8 @@ namespace Macboy
 		
 		public TableNotesDataSource (NSTableView table)
 		{
-			DiskStorage.Instance.SetPath ("/Users/jjennings/Library/Application Support/Tomboy");
-			tomboyEngine = new Engine (DiskStorage.Instance);
-			notes = tomboyEngine.GetNotes ();
-			notesList = new ArrayList (notes.Keys);
 			this.table = table;
+			LoadNotes ();
 		}
 		
 		#region Delegates
@@ -56,7 +50,23 @@ namespace Macboy
 		#region Events
 		public static event SelectedNoteChangedEventHandler SelectedNoteChanged;
 		#endregion Events
-				
+
+		#region Private Methods
+		/// <summary>
+		/// Loads the notes from the engine
+		/// </summary>
+		private void LoadNotes ()
+		{
+			LoadNotes (MainClass.GetEngine ().GetNotes ());
+		}
+
+		private void LoadNotes (Dictionary<string, Tomboy.Note> notes)
+		{
+			this.notes = notes;
+			notesList = new ArrayList (notes.Keys);
+		}
+
+		#endregion Private Methods
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
 		public int NumberOfRowsInTableView (NSTableView table)
@@ -109,19 +119,19 @@ namespace Macboy
 			
 			switch (row) {
 			case 0:
-                // We will write "Hello" in the first row...
+				// We will write "Hello" in the first row...
 				return new NSString ("Hello");
 			case 1:
-                // ...and "World" in the second.
+				// ...and "World" in the second.
 				return new NSString ("World");
 			// Note that NSTableView requires an NSString, which we create with new NSString("bla").
 			default:
-                // We need a default value.
+				// We need a default value.
 				return null;
 			}
-		} 	      
+		}
 		
-		  
+
 		public override void SelectionDidChange (NSNotification notification)
 		{
 			int rowID = table.SelectedRow;

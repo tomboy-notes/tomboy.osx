@@ -24,7 +24,7 @@ namespace Macboy
 		MonoMac.AppKit.NSTableColumn tblColmnNoteTitle { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextView tvNoteBody { get; set; }
+		MonoMac.WebKit.WebView noteWebView { get; set; }
 
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
@@ -51,9 +51,9 @@ namespace Macboy
 				tblColmnNoteTitle = null;
 			}
 
-			if (tvNoteBody != null) {
-				tvNoteBody.Dispose ();
-				tvNoteBody = null;
+			if (noteWebView != null) {
+				noteWebView.Dispose ();
+				noteWebView = null;
 			}
 		}
 	}

@@ -1,0 +1,24 @@
+
+body {
+	height:100%;
+    font-family: 'Lucida Grande', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 15px;
+    font-weight: bold;
+    background: silver;
+    text-align: center;
+}
+
+#main_content  {
+	background: yellow;
+	min-height:500px;
+}
+
+p {
+    font-size: 12px;
+}
