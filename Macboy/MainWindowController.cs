@@ -4,6 +4,8 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
+using Tomboy;
+
 namespace Macboy
 {
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
@@ -38,14 +40,14 @@ namespace Macboy
 		
 		#endregion
 		
-		#region Events and Actions
+		#region Actions
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender)
 		{
 			
 		}
 		
 		
-		#endregion Events an Actions
+		#endregion Actions
 		
 		//strongly typed window accessor
 		public new MainWindow Window {
@@ -59,8 +61,12 @@ namespace Macboy
 		public override void AwakeFromNib ()
 		{
 			Console.WriteLine ("awakeFromNib:");
-			tblNotes.DataSource = new TableNotesDataSource ();
-		}		
+			tblNotes.Source = new TableNotesDataSource (tblNotes);
+			TableNotesDataSource.SelectedNoteChanged += delegate(Note note) {
+				Console.WriteLine ("YES I KNOW IT CHANGED NOW {0}", tblNotes.SelectedRow);
+				tvNoteBody.InsertText ((NSString)note.Text);
+			};
+		}	
 	}
 }
 

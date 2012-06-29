@@ -20,23 +20,48 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using Tomboy;
+
+using System.Collections.Generic;
+using System.Collections;
+using System;
 
 namespace Macboy
 {
-	public class TableNotesDataSource : NSTableViewDataSource
+	public class TableNotesDataSource : NSTableViewSource
 	{
-		public TableNotesDataSource ()
+		/// <summary>
+		/// The tomboy engine.
+		/// </summary>
+		private Engine tomboyEngine;
+		
+		private ArrayList notesList;
+		private Dictionary <string, Note> notes;
+		NSTableView table;
+		
+		public TableNotesDataSource (NSTableView table)
 		{
-			
+			DiskStorage.Instance.SetPath ("/Users/jjennings/Library/Application Support/Tomboy");
+			tomboyEngine = new Engine (DiskStorage.Instance);
+			notes = tomboyEngine.GetNotes ();
+			notesList = new ArrayList (notes.Keys);
+			this.table = table;
 		}
 		
+		#region Delegates
+		public delegate void SelectedNoteChangedEventHandler (Note note);
 		
+		#endregion Delegates
+		
+		#region Events
+		public static event SelectedNoteChangedEventHandler SelectedNoteChanged;
+		#endregion Events
+				
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
 		public int NumberOfRowsInTableView (NSTableView table)
 		{
-			// We just return a static 2. We will have two rows.
-			return 2;
+			return notesList.Count;
 		}
 		
 		/// <summary>
@@ -60,23 +85,22 @@ namespace Macboy
 		{
 			//noteTitle
 			NSString valueKey = null;
+			String currNote = (String)notesList [row];
+			Note note = notes [currNote];
+			
 			if (tableColumn.Identifier != null)
 				valueKey = (NSString)tableColumn.Identifier.ToString ();
-			System.Console.WriteLine ("valueKey:{0}", valueKey);
-							
-			switch (valueKey)
-			{
-				case "noteTitle":
-					return (NSString)"My Note";
-				case "colNoteModifiedDate":
-					return (NSString)"2012-06-28";
+			
+			
+			switch (valueKey) {
+			case "noteTitle":
+				return (NSString)note.Title;
+			case "colNoteModifiedDate":
+				return (NSString)note.ChangeDate.ToString ();
 				
 			}
-			throw new System.Exception(string.Format("Incorrect value requested '{0}'", valueKey));
+			throw new System.Exception (string.Format ("Incorrect value requested '{0}'", valueKey));
 		}
-		
-		
-		
 		
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
@@ -95,7 +119,18 @@ namespace Macboy
                 // We need a default value.
 				return null;
 			}
-		}       	        
+		} 	      
+		
+		  
+		public override void SelectionDidChange (NSNotification notification)
+		{
+			int rowID = table.SelectedRow;
+			Console.WriteLine (notesList[rowID]);
+			String noteName = notesList[rowID].ToString ();
+			Console.WriteLine ("Note Body {0}", notes[noteName].Text);
+			if (SelectedNoteChanged != null)
+				SelectedNoteChanged (notes[noteName]);
+		}
 	}
 }
 

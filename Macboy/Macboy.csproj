@@ -75,4 +75,10 @@
   <ItemGroup>
     <Content Include="note-new.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\tomboy-library\Tomboy-library\Tomboy-library.csproj">
+      <Project>{040AA912-9738-438A-A7FD-5BB02C40C30A}</Project>
+      <Name>Tomboy-library</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

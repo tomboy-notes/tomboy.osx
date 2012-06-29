@@ -23,6 +23,9 @@ namespace Macboy
 		[Outlet]
 		MonoMac.AppKit.NSTableColumn tblColmnNoteTitle { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSTextView tvNoteBody { get; set; }
+
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
 		
@@ -46,6 +49,11 @@ namespace Macboy
 			if (tblColmnNoteTitle != null) {
 				tblColmnNoteTitle.Dispose ();
 				tblColmnNoteTitle = null;
+			}
+
+			if (tvNoteBody != null) {
+				tvNoteBody.Dispose ();
+				tvNoteBody = null;
 			}
 		}
 	}
