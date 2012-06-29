@@ -34,12 +34,16 @@ namespace Macboy
 		
 		private ArrayList notesList;
 		private Dictionary <string, Note> notes;
-		NSTableView table;
+		private NSTableView table;
+		private NSSearchField searchField;
 		
-		public TableNotesDataSource (NSTableView table)
+		public TableNotesDataSource (NSTableView table, NSSearchField searchField)
 		{
 			this.table = table;
+			this.searchField = searchField;
 			LoadNotes ();
+			//Handle Search Field
+			this.searchField.Changed += SearchFieldChanged;
 		}
 		
 		#region Delegates
@@ -53,6 +57,21 @@ namespace Macboy
 
 		#region Private Methods
 		/// <summary>
+		/// Searchs for Notes based on what is in the Search Field
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
+		/// <param name='e'>
+		/// E.
+		/// </param>
+		private void SearchFieldChanged (object sender, EventArgs e)
+		{
+			Console.WriteLine ("Searching for {0}", this.searchField.StringValue);
+			LoadNotes (MainClass.GetEngine ().GetNotes (this.searchField.StringValue, true));
+		}
+
+		/// <summary>
 		/// Loads the notes from the engine
 		/// </summary>
 		private void LoadNotes ()
@@ -64,6 +83,8 @@ namespace Macboy
 		{
 			this.notes = notes;
 			notesList = new ArrayList (notes.Keys);
+			Console.WriteLine ("Count in Notes {0}, Count in notesList {1}", this.notes.Count, notesList.Count);
+			table.ReloadData ();
 		}
 
 		#endregion Private Methods
@@ -135,6 +156,8 @@ namespace Macboy
 		public override void SelectionDidChange (NSNotification notification)
 		{
 			int rowID = table.SelectedRow;
+			if (rowID == -1)
+				return;
 			Console.WriteLine (notesList[rowID]);
 			String noteName = notesList[rowID].ToString ();
 			Console.WriteLine ("Note Body {0}", notes[noteName].Text);

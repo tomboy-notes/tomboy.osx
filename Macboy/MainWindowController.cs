@@ -77,7 +77,7 @@ namespace Macboy
 		public override void AwakeFromNib ()
 		{
 			Console.WriteLine ("awakeFromNib:");
-			tblNotes.Source = new TableNotesDataSource (tblNotes);
+			tblNotes.Source = new TableNotesDataSource (tblNotes, searchField);
 			TableNotesDataSource.SelectedNoteChanged += delegate(Note note) {
 				Console.WriteLine ("YES I KNOW IT CHANGED NOW {0}", tblNotes.SelectedRow);
 				loadNote (note);

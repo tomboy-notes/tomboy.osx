@@ -26,6 +26,9 @@ namespace Macboy
 		[Outlet]
 		MonoMac.WebKit.WebView noteWebView { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSSearchField searchField { get; set; }
+
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
 		
@@ -54,6 +57,11 @@ namespace Macboy
 			if (noteWebView != null) {
 				noteWebView.Dispose ();
 				noteWebView = null;
+			}
+
+			if (searchField != null) {
+				searchField.Dispose ();
+				searchField = null;
 			}
 		}
 	}
