@@ -44,6 +44,7 @@ namespace Macboy
 			LoadNotes ();
 			//Handle Search Field
 			this.searchField.Changed += SearchFieldChanged;
+			Engine.NoteAdded += HandleNewNoteAdded;
 		}
 		
 		#region Delegates
@@ -85,6 +86,12 @@ namespace Macboy
 			notesList = new ArrayList (notes.Keys);
 			Console.WriteLine ("Count in Notes {0}, Count in notesList {1}", this.notes.Count, notesList.Count);
 			table.ReloadData ();
+		}
+
+		private void HandleNewNoteAdded (Note note)
+		{
+			this.notesList.Add (note.Title);
+			//TODO: Find the index in the table Select the Cell.
 		}
 
 		#endregion Private Methods

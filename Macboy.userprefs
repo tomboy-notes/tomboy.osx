@@ -3,12 +3,13 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Macboy/TableNotesDataSource.cs">
     <Files>
       <File FileName="Macboy/MainWindow.cs" Line="7" Column="1" />
-      <File FileName="Macboy/MainWindow.designer.cs" Line="30" Column="71" />
-      <File FileName="Macboy/TableNotesDataSource.cs" Line="65" Column="23" />
-      <File FileName="Macboy/Main.cs" Line="22" Column="3" />
-      <File FileName="Macboy/MainWindowController.cs" Line="138" Column="52" />
-      <File FileName="Macboy/Default.css" Line="19" Column="14" />
-      <File FileName="Macboy/note.html" Line="11" Column="6" />
+      <File FileName="Macboy/MainWindow.designer.cs" Line="1" Column="1" />
+      <File FileName="Macboy/TableNotesDataSource.cs" Line="78" Column="28" />
+      <File FileName="Macboy/Main.cs" Line="37" Column="30" />
+      <File FileName="Macboy/MainWindowController.cs" Line="110" Column="8" />
+      <File FileName="Macboy/note.html" Line="11" Column="7" />
+      <File FileName="../tomboy-library/Tomboy-library/Tomboy/Engine.cs" Line="128" Column="3" />
+      <File FileName="../tomboy-library/Tomboy-library/Tomboy/SearchEngine.cs" Line="41" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

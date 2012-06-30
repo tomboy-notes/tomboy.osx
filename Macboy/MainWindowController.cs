@@ -53,13 +53,7 @@ namespace Macboy
 		#region Actions
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender)
 		{
-			Note note = MainClass.GetEngine ().NewNote ();
-			note.Title = "New Note";
-			paraBlock = document.GetElementById("main_content");
-			paraBlock.TextContent = "Example Note";
-			/* Example of programmically making element editable 
-			* ((DomHtmlElement)document.GetElementById("main_content")).
-			*/
+			NewNote ();
 		}
 		
 		
@@ -92,21 +86,32 @@ namespace Macboy
 				document = noteWebView.MainFrameDocument;
 				Console.WriteLine ("webView Finished loading");
 			};
-		}	
+		}
 		
+		#region Private Methods
+
 		/// <summary>
 		/// Sets the title in the Note Editor View
 		/// </summary>
 		/// <param name='title'>
 		/// Title.
 		/// </param>
-		public void setTitle (String title)
+		private void setTitle (String title)
 		{
 			mainWindow.Title = title;
-		}		
-		
-		#region Private Methods
+		}
 
+		private void NewNote ()
+		{
+			Note note = MainClass.GetEngine ().NewNote ();
+			note.Title = "New Note";
+			paraBlock = document.GetElementById("main_content");
+			paraBlock.TextContent = "Example Note";
+			setTitle (note.Title);
+			/* Example of programmically making element editable 
+			* ((DomHtmlElement)document.GetElementById("main_content")).
+			*/
+		}
 
 		#endregion Private Methods
 		/// <summary>

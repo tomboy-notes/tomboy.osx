@@ -14,6 +14,15 @@ namespace Macboy
 		/// The tomboy engine.
 		/// </summary>
 		private static Engine tomboyEngine;
+
+		#region Delegates
+		public delegate void NewNoteEventHandler (Note note);
+		
+		#endregion Delegates
+		
+		#region Events
+		public static event NewNoteEventHandler NewNote;
+		#endregion Events
 			
 		public static Engine GetEngine ()
 		{
@@ -26,7 +35,6 @@ namespace Macboy
 			tomboyEngine = new Engine (DiskStorage.Instance);		
 			NSApplication.Init ();
 			NSApplication.Main (args);
-			
 		}
 	}
 }	
