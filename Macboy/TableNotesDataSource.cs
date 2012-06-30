@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using MonoMac.WebKit;
 using Tomboy;
 
 using System.Collections.Generic;
@@ -36,15 +37,19 @@ namespace Macboy
 		private Dictionary <string, Note> notes;
 		private NSTableView table;
 		private NSSearchField searchField;
+		private WebView webView;
 		
-		public TableNotesDataSource (NSTableView table, NSSearchField searchField)
+		public TableNotesDataSource (NSTableView table, NSSearchField searchField, WebView webView)
 		{
 			this.table = table;
 			this.searchField = searchField;
+			this.webView = webView;
 			LoadNotes ();
 			//Handle Search Field
 			this.searchField.Changed += SearchFieldChanged;
 			Engine.NoteAdded += HandleNewNoteAdded;
+			KeyboardListener.NoteContentChanged += HandleContentUpdate;
+			DomDocumentListener.NoteContentChanged += HandleNoteContentClosing;
 		}
 		
 		#region Delegates
@@ -57,6 +62,35 @@ namespace Macboy
 		#endregion Events
 
 		#region Private Methods
+		private Note GetActiveNoteObj ()
+		{
+			int rowID = table.SelectedRow;
+			if (rowID == -1)
+				return null;
+
+			String noteName = notesList[rowID].ToString ();
+			Note note = notes[noteName];
+			return note;
+		}
+
+		private void HandleNoteContentClosing ()
+		{
+			UpdateNote ();
+		}
+
+		private void HandleContentUpdate ()
+		{
+			UpdateNote ();
+		}
+
+		private void UpdateNote ()
+		{
+			DomDocument document = webView.MainFrameDocument;
+			DomElement paraBlock = document.GetElementById("main_content");
+			GetActiveNoteObj ().Text = paraBlock.InnerText;
+			MainClass.GetEngine ().SaveNote (GetActiveNoteObj ());
+		}
+
 		/// <summary>
 		/// Searchs for Notes based on what is in the Search Field
 		/// </summary>
@@ -98,6 +132,9 @@ namespace Macboy
 		}
 
 		#endregion Private Methods
+
+		#region Public Methods
+
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
 		public int NumberOfRowsInTableView (NSTableView table)
@@ -161,19 +198,19 @@ namespace Macboy
 				return null;
 			}
 		}
-		
 
+		/// <summary>
+		/// Handle selection changes in the Notes TableView
+		/// </summary>
+		/// <param name='notification'>
+		/// Notification.
+		/// </param>
 		public override void SelectionDidChange (NSNotification notification)
 		{
-			int rowID = table.SelectedRow;
-			if (rowID == -1)
-				return;
-			Console.WriteLine (notesList[rowID]);
-			String noteName = notesList[rowID].ToString ();
-			Console.WriteLine ("Note Body {0}", notes[noteName].Text);
-			if (SelectedNoteChanged != null)
-				SelectedNoteChanged (notes[noteName]);
+			if (SelectedNoteChanged != null && GetActiveNoteObj () != null)
+				SelectedNoteChanged (GetActiveNoteObj ());
 		}
+		#endregion Public Methods
 	}
 }
 

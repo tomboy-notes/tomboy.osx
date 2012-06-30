@@ -59,6 +59,8 @@
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
     <Compile Include="TableNotesDataSource.cs" />
+    <Compile Include="KeyboardListener.cs" />
+    <Compile Include="DomDocumentListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

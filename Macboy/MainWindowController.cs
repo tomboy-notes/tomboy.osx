@@ -18,8 +18,11 @@ namespace Macboy
 		/// </summary>
 		private DomDocument document;
 		private DomElement paraBlock;
+		public Macboy.KeyboardListener keyboardListener = new KeyboardListener ();
+		public Macboy.DomDocumentListener domDocumentListener = new DomDocumentListener ();
+
 		#endregion fields
-		
+
 		#region Constructors
 		
 		// Called when created from unmanaged code
@@ -70,21 +73,25 @@ namespace Macboy
 		[Export ("awakeFromNib:")]
 		public override void AwakeFromNib ()
 		{
-			Console.WriteLine ("awakeFromNib:");
-			tblNotes.Source = new TableNotesDataSource (tblNotes, searchField);
+			tblNotes.Source = new TableNotesDataSource (tblNotes, searchField, noteWebView);
 			TableNotesDataSource.SelectedNoteChanged += delegate(Note note) {
-				Console.WriteLine ("YES I KNOW IT CHANGED NOW {0}", tblNotes.SelectedRow);
 				loadNote (note);
 			};
+
+			KeyboardListener.NoteContentChanged += NoteContentChanged;
 							
 			loadNoteWebKit ();
 			setTitle ("Tomboy");
 			noteWebView.OnFinishedLoading += delegate {
+				installKeyboardHandler ();
 				Console.WriteLine ("OnFinishedLoading");
 			};
 			noteWebView.FinishedLoad += delegate {
 				document = noteWebView.MainFrameDocument;
 				Console.WriteLine ("webView Finished loading");
+			};
+			this.Window.WillClose += delegate {
+				Console.WriteLine ("Will Close");
 			};
 		}
 		
@@ -122,7 +129,37 @@ namespace Macboy
 			*/
 		}
 
-		#endregion Private Methods
+		/// <summary>
+		/// Handle Note content that changed
+		/// </summary>
+		private void NoteContentChanged ()
+		{
+
+		}
+
+		/// <summary>
+		/// Retrieves the active note content
+		/// </summary>
+		/// <returns>
+		/// The note content.
+		/// </returns>
+		private String ActiveNoteContent ()
+		{
+			DomElement block = document.GetElementById("main_content");
+			return block.InnerText;
+		}
+
+		// Install the click handler so we can capture changes to the note
+		private void installKeyboardHandler()
+		{
+			var dom = noteWebView.MainFrameDocument;
+			var element = dom.GetElementById ("body");
+
+			element.AddEventListener ("focusout", domDocumentListener, true);
+			element.AddEventListener ("blur", domDocumentListener, true);
+			element.AddEventListener ("keypress", keyboardListener, true);
+		}
+
 		/// <summary>
 		/// Loads the note into the WebKit view
 		/// </summary>
@@ -162,9 +199,8 @@ namespace Macboy
 			// Load the HTML document
 			var htmlPath = Path.Combine (NSBundle.MainBundle.ResourcePath, "note.html");
 			Console.WriteLine ("htmlPath {0}", htmlPath);
-			noteWebView.MainFrame.LoadRequest(new NSUrlRequest (new NSUrl (htmlPath)));			
-			Console.WriteLine ("Note Editor loaded");
+			noteWebView.MainFrame.LoadRequest(new NSUrlRequest (new NSUrl (htmlPath)));
 		}
+		#endregion Private Methods
 	}
 }
-
