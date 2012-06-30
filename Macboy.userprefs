@@ -4,12 +4,10 @@
     <Files>
       <File FileName="Macboy/MainWindow.cs" Line="7" Column="1" />
       <File FileName="Macboy/MainWindow.designer.cs" Line="1" Column="1" />
-      <File FileName="Macboy/TableNotesDataSource.cs" Line="78" Column="28" />
-      <File FileName="Macboy/Main.cs" Line="37" Column="30" />
-      <File FileName="Macboy/MainWindowController.cs" Line="110" Column="8" />
-      <File FileName="Macboy/note.html" Line="11" Column="7" />
-      <File FileName="../tomboy-library/Tomboy-library/Tomboy/Engine.cs" Line="128" Column="3" />
-      <File FileName="../tomboy-library/Tomboy-library/Tomboy/SearchEngine.cs" Line="41" Column="4" />
+      <File FileName="Macboy/TableNotesDataSource.cs" Line="77" Column="18" />
+      <File FileName="Macboy/MainWindowController.cs" Line="20" Column="28" />
+      <File FileName="Macboy/note.html" Line="10" Column="16" />
+      <File FileName="Macboy/KeyboardListener.cs" Line="45" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
