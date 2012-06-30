@@ -102,7 +102,7 @@
 															<string key="NSFrameSize">{443, 408}</string>
 															<reference key="NSSuperview" ref="987694810"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="509582853"/>
+															<reference key="NSNextKeyView" ref="553682880"/>
 															<string key="NSReuseIdentifierKey">_NS:1828</string>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTableHeaderView" key="NSHeaderView" id="782210237">
@@ -297,7 +297,7 @@
 											<string key="NSFrameSize">{445, 427}</string>
 											<reference key="NSSuperview" ref="196370067"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="553682880"/>
+											<reference key="NSNextKeyView" ref="987694810"/>
 											<string key="NSReuseIdentifierKey">_NS:1824</string>
 											<int key="NSsFlags">133681</int>
 											<reference key="NSVScroller" ref="509582853"/>
@@ -650,6 +650,14 @@
 					</object>
 					<int key="connectionID">283</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mainWindow</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="748157544"/>
+					</object>
+					<int key="connectionID">284</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -959,7 +967,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">283</int>
+			<int key="maxID">284</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -84,7 +84,7 @@ namespace Macboy
 			};
 							
 			loadNoteWebKit ();
-			
+			setTitle ("Tomboy");
 			noteWebView.OnFinishedLoading += delegate {
 				Console.WriteLine ("OnFinishedLoading");
 			};
@@ -102,14 +102,7 @@ namespace Macboy
 		/// </param>
 		public void setTitle (String title)
 		{
-			if (title == null)
-				title = "Example Title";
-
-			DomText newText = document.CreateTextNode(title);
-
-			var contentTitle = document.GetElementById("contentTitle");
-			contentTitle.ReplaceChild(newText, contentTitle.FirstChild);
-			
+			mainWindow.Title = title;
 		}		
 		
 		#region Private Methods
@@ -124,6 +117,7 @@ namespace Macboy
 		/// </param>
 		private void loadNote (Note note)
 		{
+			mainWindow.Title = note.Title;
 			paraBlock = document.GetElementById("main_content");
 			paraBlock.TextContent = note.Text;
 		}

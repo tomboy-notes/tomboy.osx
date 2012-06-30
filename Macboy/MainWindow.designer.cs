@@ -29,6 +29,9 @@ namespace Macboy
 		[Outlet]
 		MonoMac.AppKit.NSSearchField searchField { get; set; }
 
+		[Outlet]
+		Macboy.MainWindow mainWindow { get; set; }
+
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
 		
@@ -62,6 +65,11 @@ namespace Macboy
 			if (searchField != null) {
 				searchField.Dispose ();
 				searchField = null;
+			}
+
+			if (mainWindow != null) {
+				mainWindow.Dispose ();
+				mainWindow = null;
 			}
 		}
 	}
