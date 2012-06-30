@@ -1,11 +1,2 @@
-Macboy/bin/
+Macboy/obj/*
 Macboy/bin/*
-.exe
-*.exe
-exe
-
-Macboy.userprefs
-
-Macboy/obj/Debug/monomac_version
-
-.DS_Store
