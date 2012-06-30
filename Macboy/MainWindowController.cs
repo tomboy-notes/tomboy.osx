@@ -108,6 +108,15 @@ namespace Macboy
 			paraBlock = document.GetElementById("main_content");
 			paraBlock.TextContent = "Example Note";
 			setTitle (note.Title);
+			/* select the row that the new Note was added to.
+			 * In TableNotesDataSource we assume and add the new Note to index 0 in the notes arraylist
+			 */
+			tblNotes.SelectRow (0, false);
+			/* Set the new row to the viewable row */
+			System.Drawing.PointF point = new System.Drawing.PointF (0, 0);
+			notesScrollView.ScrollPoint (point);
+			notesScrollView.ContentView.ScrollPoint (point);
+			
 			/* Example of programmically making element editable 
 			* ((DomHtmlElement)document.GetElementById("main_content")).
 			*/

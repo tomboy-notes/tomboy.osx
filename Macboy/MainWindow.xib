@@ -102,7 +102,7 @@
 															<string key="NSFrameSize">{443, 408}</string>
 															<reference key="NSSuperview" ref="987694810"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="553682880"/>
+															<reference key="NSNextKeyView" ref="509582853"/>
 															<string key="NSReuseIdentifierKey">_NS:1828</string>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTableHeaderView" key="NSHeaderView" id="782210237">
@@ -297,7 +297,7 @@
 											<string key="NSFrameSize">{445, 427}</string>
 											<reference key="NSSuperview" ref="196370067"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="987694810"/>
+											<reference key="NSNextKeyView" ref="553682880"/>
 											<string key="NSReuseIdentifierKey">_NS:1824</string>
 											<int key="NSsFlags">133681</int>
 											<reference key="NSVScroller" ref="509582853"/>
@@ -658,6 +658,14 @@
 					</object>
 					<int key="connectionID">284</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">notesScrollView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="819968361"/>
+					</object>
+					<int key="connectionID">285</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -967,7 +975,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">284</int>
+			<int key="maxID">285</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1000,6 +1008,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>MyTextField</string>
 							<string>NewNoteOutlet</string>
+							<string>mainWindow</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 							<string>tblColmnNoteTitle</string>
@@ -1009,6 +1018,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTextField</string>
 							<string>NSButton</string>
+							<string>MainWindow</string>
 							<string>WebView</string>
 							<string>NSSearchField</string>
 							<string>NSTableColumn</string>
@@ -1021,6 +1031,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>MyTextField</string>
 							<string>NewNoteOutlet</string>
+							<string>mainWindow</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 							<string>tblColmnNoteTitle</string>
@@ -1035,6 +1046,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">NewNoteOutlet</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mainWindow</string>
+								<string key="candidateClassName">MainWindow</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">noteWebView</string>

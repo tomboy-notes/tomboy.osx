@@ -32,6 +32,9 @@ namespace Macboy
 		[Outlet]
 		Macboy.MainWindow mainWindow { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSScrollView notesScrollView { get; set; }
+
 		[Action ("NewNoteButton_Clicked:")]
 		partial void NewNoteButton_Clicked (MonoMac.AppKit.NSButton sender);
 		
@@ -70,6 +73,11 @@ namespace Macboy
 			if (mainWindow != null) {
 				mainWindow.Dispose ();
 				mainWindow = null;
+			}
+
+			if (notesScrollView != null) {
+				notesScrollView.Dispose ();
+				notesScrollView = null;
 			}
 		}
 	}

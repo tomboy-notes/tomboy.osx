@@ -90,8 +90,11 @@ namespace Macboy
 
 		private void HandleNewNoteAdded (Note note)
 		{
-			this.notesList.Add (note.Title);
-			//TODO: Find the index in the table Select the Cell.
+			/* insert into the first element of the array */
+			//TODO: Make sure the arraylist is initiated and not a zero value
+			this.notesList.Insert (0, note.Title);
+			this.notes.Add (note.Title, note);
+			table.ReloadData ();
 		}
 
 		#endregion Private Methods
