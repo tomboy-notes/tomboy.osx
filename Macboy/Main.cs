@@ -4,26 +4,12 @@ using MonoMac.Foundation;
 using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
 
-using Tomboy;
-
-namespace Macboy
+namespace MacSuperBoy
 {
 	class MainClass
 	{
-		/// <summary>
-		/// The tomboy engine.
-		/// </summary>
-		private static Engine tomboyEngine;
-			
-		public static Engine GetEngine ()
+		static void Main (string[] args)
 		{
-			return tomboyEngine;
-		}
-		
-		static void Main (string [] args)
-		{
-			DiskStorage.Instance.SetPath ("/Users/jjennings/Library/Application Support/Tomboy");
-			tomboyEngine = new Engine (DiskStorage.Instance);		
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}
