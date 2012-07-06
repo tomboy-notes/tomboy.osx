@@ -58,7 +58,7 @@ namespace MacSuperBoy
 			currentNote = note;
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
-			noteWebView.MainFrame.LoadHtmlString (note.Text,
+			noteWebView.MainFrame.LoadHtmlString (note.Text.Replace (Environment.NewLine, "<br />"),
 			                                      new NSUrl (AppDelegate.BaseUrlPath));
 			if (withHistory) {
 				if (currentHistoryPosition < history.Count - 1)
