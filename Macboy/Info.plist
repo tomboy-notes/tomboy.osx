@@ -2,12 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>DocumentType</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+		</dict>
+	</array>
+	<key>CFBundleIconFile</key>
+	<string>MacBoy</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.Macboy</string>
+	<string>org.gnome.MacBoy</string>
 	<key>CFBundleName</key>
-	<string>Macboy</string>
+	<string>MacBoy</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6</string>
 	<key>NSMainNibFile</key>
