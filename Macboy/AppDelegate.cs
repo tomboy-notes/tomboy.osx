@@ -15,7 +15,7 @@ namespace MacSuperBoy
 		public AppDelegate ()
 		{
 			// TODO, set it in a generic way
-			Tomboy.DiskStorage.Instance.SetPath ("/Users/jeremie/projects/MacBoy/test-notes");
+			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
 			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
 			Notes = NoteEngine.GetNotes ();
 
