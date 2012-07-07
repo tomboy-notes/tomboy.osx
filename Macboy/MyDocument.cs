@@ -33,12 +33,12 @@ namespace MacSuperBoy
 			base.WindowControllerDidLoadNib (windowController);
 			UpdateBackForwardSensitivity ();
 			noteWebView.FinishedLoad += HandleFinishedLoad;
+			Editable (true);
 		}
 
 		void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
 		{
 			var dom = e.ForFrame.DomDocument;
-			Editable (true);
 
 			if (!string.IsNullOrEmpty (currentNote.Title)) {
 				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
