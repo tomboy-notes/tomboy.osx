@@ -38,6 +38,7 @@ namespace MacSuperBoy
 		void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
 		{
 			var dom = e.ForFrame.DomDocument;
+			Editable (true);
 
 			if (!string.IsNullOrEmpty (currentNote.Title)) {
 				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
@@ -60,7 +61,8 @@ namespace MacSuperBoy
 			InvalidateRestorableState ();
 			noteWebView.MainFrame.LoadHtmlString (note.Text.Replace (Environment.NewLine, "<br />"),
 			                                      new NSUrl (AppDelegate.BaseUrlPath));
-			noteWebView.Editable = true; // So that Notes can be Edited
+			Editable (true);
+
 			if (withHistory) {
 				if (currentHistoryPosition < history.Count - 1)
 					history.RemoveRange (currentHistoryPosition + 1,
@@ -69,6 +71,11 @@ namespace MacSuperBoy
 				currentHistoryPosition = history.Count - 1;
 			}
 			UpdateBackForwardSensitivity ();
+		}
+
+		void Editable (bool editable)
+		{
+			noteWebView.Editable = editable; // So that Notes can be Edited
 		}
 
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
