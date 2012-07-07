@@ -73,6 +73,12 @@ namespace MacSuperBoy
 			UpdateBackForwardSensitivity ();
 		}
 
+		/// <summary>
+		/// Should the Note be editable
+		/// </summary>
+		/// <param name='editable'>
+		/// Editable.
+		/// </param>
 		void Editable (bool editable)
 		{
 			noteWebView.Editable = editable; // So that Notes can be Edited
@@ -123,7 +129,8 @@ namespace MacSuperBoy
 		[Export ("searchResultSelected")]
 		void SearchResultSelected (NSObject sender)
 		{
-
+			NSMenuItem item = (NSMenuItem)sender;
+			LoadNote (AppDelegate.NoteEngine.GetNote (item.Title).Uri, false);
 		}
 
 		partial void ShowNotes (NSObject sender)
