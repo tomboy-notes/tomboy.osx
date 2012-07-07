@@ -60,6 +60,7 @@ namespace MacSuperBoy
 			InvalidateRestorableState ();
 			noteWebView.MainFrame.LoadHtmlString (note.Text.Replace (Environment.NewLine, "<br />"),
 			                                      new NSUrl (AppDelegate.BaseUrlPath));
+			noteWebView.Editable = true; // So that Notes can be Edited
 			if (withHistory) {
 				if (currentHistoryPosition < history.Count - 1)
 					history.RemoveRange (currentHistoryPosition + 1,
