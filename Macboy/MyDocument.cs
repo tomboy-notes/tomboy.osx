@@ -5,6 +5,7 @@ using System.Drawing;
 
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using MonoMac.WebKit;
 
 namespace Tomboy
 {
@@ -16,6 +17,9 @@ namespace Tomboy
 		// A unique identifier for a note
 		string currentNoteID;
 		Note currentNote;
+
+		// Used as a marker. Are we loading a Note or something else that the Policy Handler should act on
+		bool LoadingFromString;
 
 		public MyDocument (IntPtr handle) : base (handle)
 		{
@@ -31,7 +35,31 @@ namespace Tomboy
 			base.WindowControllerDidLoadNib (windowController);
 			UpdateBackForwardSensitivity ();
 			noteWebView.FinishedLoad += HandleFinishedLoad;
+			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
 			Editable (true);
+		}
+
+		/// <summary>
+		/// Handles the web view decide policy for navigation.
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
+		/// <param name='e'>
+		/// E.
+		/// </param>
+		void HandleWebViewDecidePolicyForNavigation (object sender, WebNavigatioPolicyEventArgs e)
+		{
+			// Reference for examples of this method in use
+			// https://github.com/mono/monomac/commit/efc6e28fc03005638ce2cd217dc6c9281ad9c1c5
+
+			if (LoadingFromString){
+				WebView.DecideUse (e.DecisionToken);
+				return;
+			}
+
+			WebView.DecideIgnore (e.DecisionToken);
+			LoadNote (currentNoteID, true);
 		}
 
 		void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
@@ -50,6 +78,7 @@ namespace Tomboy
 
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
+			LoadingFromString = true;
 			Logger.Info ("Trying to load note {0}", newNoteId);
 			var note = AppDelegate.Notes[newNoteId];
 			if (note == null)
@@ -69,6 +98,7 @@ namespace Tomboy
 				currentHistoryPosition = history.Count - 1;
 			}
 			UpdateBackForwardSensitivity ();
+			LoadingFromString = false;
 		}
 
 		/// <summary>
