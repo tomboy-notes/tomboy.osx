@@ -6,7 +6,7 @@ using MonoMac.Foundation;
 using MonoMac.AppKit;
 using MonoMac.WebKit;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	public partial class NoteCollectionViewItemController : NSCollectionViewItem
 	{

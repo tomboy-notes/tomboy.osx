@@ -5,7 +5,7 @@ using MonoMac.Foundation;
 
 using Tomboy;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	interface ICocoaNoteAdapter
 	{

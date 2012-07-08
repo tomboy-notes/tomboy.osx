@@ -4,3 +4,5 @@ Macboy/bin/*
 DS_Store
 
 Macboy.userprefs
+
+Macboy/deploy/*

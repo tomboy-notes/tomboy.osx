@@ -5,7 +5,7 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	[Register ("InsensitiveTextView")]
 	public class InsensitiveTextView : NSTextView

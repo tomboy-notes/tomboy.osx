@@ -6,13 +6,13 @@
 //
 using MonoMac.Foundation;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	[Register ("ShowNotesPopup")]
 	partial class ShowNotesPopup
 	{
 		[Outlet]
-		MacSuperBoy.NoteCollectionView collectionView { get; set; }
+		Tomboy.NoteCollectionView collectionView { get; set; }
 
 		[Outlet]
 		MonoMac.AppKit.NSSlider collectionNumberSlider { get; set; }

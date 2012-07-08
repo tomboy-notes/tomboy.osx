@@ -25,12 +25,18 @@
 	</array>
 	<key>CFBundleIconFile</key>
 	<string>MacBoy</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>MacBoy.icns</string>
+	</array>
 	<key>CFBundleIdentifier</key>
-	<string>org.gnome.MacBoy</string>
+	<string>org.gnome.Tomboy</string>
 	<key>CFBundleName</key>
-	<string>MacBoy</string>
+	<string>Tomboy</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>

@@ -8,7 +8,7 @@ using MonoMac.AppKit;
 
 using Tomboy;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{

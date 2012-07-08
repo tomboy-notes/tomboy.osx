@@ -4,7 +4,7 @@ using System.Drawing;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	public class NoteEventArgs : EventArgs
 	{

@@ -4,7 +4,7 @@ using System.Drawing;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	[Register ("StyleBar")]
 	public class StyleBar : NSView

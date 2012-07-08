@@ -7,7 +7,7 @@ using MonoMac.AppKit;
 
 using Tomboy;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	public partial class ShowNotesPopupController : MonoMac.AppKit.NSViewController
 	{

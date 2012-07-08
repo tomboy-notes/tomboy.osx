@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy", "Macboy\Macboy.csproj", "{89E1D362-7111-4E3B-9C0F-EA10F70DF417}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy", "Macboy\Tomboy.csproj", "{CBEFA338-7B6F-432C-A7B4-32F80F36D672}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-library", "..\tomboy-library\Tomboy-library\Tomboy-library.csproj", "{040AA912-9738-438A-A7FD-5BB02C40C30A}"
 EndProject
@@ -15,12 +15,12 @@ Global
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.Build.0 = Debug|x86
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.ActiveCfg = Release|x86
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.Build.0 = Release|x86
-		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Debug|x86.ActiveCfg = Debug|x86
-		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Debug|x86.Build.0 = Debug|x86
-		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Release|x86.ActiveCfg = Release|x86
-		{89E1D362-7111-4E3B-9C0F-EA10F70DF417}.Release|x86.Build.0 = Release|x86
+		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Debug|x86.ActiveCfg = Debug|x86
+		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Debug|x86.Build.0 = Debug|x86
+		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Release|x86.ActiveCfg = Release|x86
+		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Macboy\Macboy.csproj
+		StartupItem = Macboy\Tomboy.csproj
 	EndGlobalSection
 EndGlobal
