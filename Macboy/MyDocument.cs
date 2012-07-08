@@ -6,8 +6,6 @@ using System.Drawing;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-using Tomboy;
-
 namespace Tomboy
 {
 	public partial class MyDocument : MonoMac.AppKit.NSDocument
@@ -52,7 +50,7 @@ namespace Tomboy
 
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
-			Console.WriteLine ("Trying to load note {0}", newNoteId);
+			Logger.Info ("Trying to load note {0}", newNoteId);
 			var note = AppDelegate.Notes[newNoteId];
 			if (note == null)
 				return;
@@ -112,9 +110,9 @@ namespace Tomboy
 			var action = new MonoMac.ObjCRuntime.Selector ("searchResultSelected");
 			foreach (var name in noteResults.Values.Select (n => n.Title))
 				noteSearchMenu.AddItem (name, action, string.Empty);
-			Console.WriteLine (sender.Frame);
-			Console.WriteLine (sender.Superview.Frame);
-			Console.WriteLine (sender.Superview.Superview.Frame);
+			Logger.Debug (sender.Frame.ToString ());
+			Logger.Debug (sender.Superview.Frame.ToString ());
+			Logger.Debug (sender.Superview.Superview.Frame.ToString ());
 			NSEvent evt = NSEvent.OtherEvent (NSEventType.ApplicationDefined,
 			                                  new PointF (sender.Frame.Left, sender.Frame.Top),
 			                                  (NSEventModifierMask)0,
