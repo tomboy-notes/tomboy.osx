@@ -7,4 +7,6 @@ Macboy.userprefs
 
 Macboy/deploy/*
 
+Macboy/test-results/
+
 Tomboy.userprefs
