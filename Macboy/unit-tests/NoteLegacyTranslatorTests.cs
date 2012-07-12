@@ -23,6 +23,7 @@ using NUnit.Framework;
 using System.Text;
 
 using Tomboy;
+using MonoMac.WebKit;
 
 namespace TomboyMacUnitTests
 {
@@ -33,7 +34,8 @@ namespace TomboyMacUnitTests
 		[Test()]
 		public void TestCase ()
 		{
-			StringBuilder sb = new StringBuilder ();
+			/*
+			 * StringBuilder sb = new StringBuilder ();
 			sb.Append ("The Title of the Note ");
 			sb.Append ("Body of the Note ");
 			sb.Append ("<br>");
@@ -41,8 +43,11 @@ namespace TomboyMacUnitTests
 			sb.Append ("<a href=\"https://ebusinessdev.\">https://ebusinessdev.</a>");
 			sb.Append ("<a href=\"https://www.novell.com\">https://www.novell.com</a>");
 			sb.Append ("Something we should remember <br>");
+			DomDocument domDocument = new DomDocument ();
 			NoteLegacyTranslator translator = new NoteLegacyTranslator ();
 			Assert.True (translator.TranslateHtml (sb.ToString ()).Contains ("<link:url>https://ebusinessdev.</link:url>"));
+
+			 */
 
 		}
 	}

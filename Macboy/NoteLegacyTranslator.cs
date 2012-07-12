@@ -20,8 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Text;
 using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Linq;
+using System.Drawing;
+
+using MonoMac.Foundation;
+using MonoMac.AppKit;
+using MonoMac.WebKit;
+using System.Text.RegularExpressions;
 
 namespace Tomboy
 {
@@ -67,20 +73,28 @@ namespace Tomboy
 			return list;
 		}
 
-		public String TranslateHtml (string html)
+		public String TranslateHtml (DomDocument domDocument)
 		{
+			DomNodeList element = domDocument.GetElementsByTagName ("body");
+			var elementTitle = domDocument.GetElementsByTagName ("h1");
+			DomHtmlElement body = (DomHtmlElement)element.First ();
+			DomHtmlElement h1 = (DomHtmlElement)elementTitle.First ();
+
 			/* begin: strip <br> tags from HTML */
 
 			string pattern = @"(<br *\>)";
 			Regex r = new Regex(pattern);
-			string result = r.Replace (html, System.Environment.NewLine);
+			string result = r.Replace (body.InnerHTML, System.Environment.NewLine);
 
 			/* end: strip <br> tags from HTML */
 
 			/* Begin handling other internal PANGO types */
-			foreach (LinkItem i in Find (html)) {
+			foreach (LinkItem i in Find (body.InnerHTML)) {
 				result = result.Replace (i.WholeHREF, "<link:url>" + i.Href + "</link:url>");
 			}
+
+			/* Replace h1 with text as was originally in Note xml */
+			result = result.Replace (h1.OuterHTML, h1.InnerText);
 
 			/* end of handling PANGO formating */
 

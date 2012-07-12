@@ -76,6 +76,18 @@ namespace Tomboy
 			}
 		}
 
+		/// <summary>
+		/// Strings the replacements to format the Note content correctly in the web view
+		/// </summary>
+		/// <param name='note'>
+		/// Note.
+		/// </param>
+		private void StringReplacements (Note note)
+		{
+			note.Text = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
+			note.Text = note.Text.Replace (Environment.NewLine, "<br>");
+		}
+
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
 			LoadingFromString = true;
@@ -86,9 +98,9 @@ namespace Tomboy
 			currentNote = note;
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
+			StringReplacements (note);
 			Console.WriteLine ("Loading Note Body '{0}'", note.Text);
-			noteWebView.MainFrame.LoadHtmlString (note.Text.Replace (Environment.NewLine, "<br />"),
-			                                      new NSUrl (AppDelegate.BaseUrlPath));
+			noteWebView.MainFrame.LoadHtmlString (note.Text, new NSUrl (AppDelegate.BaseUrlPath));
 			Editable (true);
 
 			if (withHistory) {
@@ -116,11 +128,8 @@ namespace Tomboy
 		private void SaveData ()
 		{
 			NoteLegacyTranslator translator = new NoteLegacyTranslator ();
-			var element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
-			DomHtmlElement body = (DomHtmlElement)element.First ();
-
 			Console.WriteLine ("Saving Note ID {0}", currentNoteID);
-			string results = translator.TranslateHtml (body.InnerHTML);
+			string results = translator.TranslateHtml (noteWebView.MainFrame.DomDocument);
 			Console.WriteLine ("Note Translation results: {0}", results);
 		}
 
