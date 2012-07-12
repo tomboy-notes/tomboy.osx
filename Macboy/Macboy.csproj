@@ -10,6 +10,23 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Tomboy</RootNamespace>
     <AssemblyName>Tomboy</AssemblyName>
+    <Description>Copyright (C) 2012 Jared Jennings &lt;jjennings@gnome.org&gt;
+Copyright (C) 2004-2007 Alex Graveley &lt;alex@beatniksoftware.com&gt;
+
+Please send questions and suggestions to
+&lt;tomboy-list@beatniksoftware.com&gt;.
+
+Please report bugs using http://bugzilla.gnome.org/
+(http://bugzilla.gnome.org/enter_bug.cgi?product=Tomboy).
+
+Tomboy is licensed under the LGPL, see COPYING for more details.
+
+----
+Macboy is a full implementation of Tomboy.
+This project will be merged into the main Tomboy project at git.gnome.org at some point.
+
+Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or Windows.
+----</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
