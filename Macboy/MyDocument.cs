@@ -112,6 +112,16 @@ namespace Tomboy
 			noteWebView.Editable = editable; // So that Notes can be Edited
 		}
 
+		private void SaveData ()
+		{
+			NoteLegacyTranslator translator = new NoteLegacyTranslator ();
+			var element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
+			DomHtmlElement body = (DomHtmlElement)element.First ();
+
+			Console.WriteLine ("Note ID {0}", currentNoteID);
+			Console.WriteLine ("Note Content {0}", body.InnerHTML);
+		}
+
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
 		{
 			var selected = sender.SelectedSegment;
@@ -221,8 +231,22 @@ namespace Tomboy
 			return null;
 		}
 
+		public override void SaveDocument (NSObject sender)
+		{
+			Logger.Info ("Saving Note: {0}", currentNote.Title);
+			SaveData ();
+			//AppDelegate.NoteEngine.SaveNote (currentNote);
+		}
+
+		public override void SaveDocumentTo (NSObject sender)
+		{
+			Console.WriteLine ("SaveDocumentTo");
+			base.SaveDocumentTo (sender);
+		}
+
 		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
 		{
+			Console.WriteLine ("ReadFromData");
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
 			return false;
 		}
