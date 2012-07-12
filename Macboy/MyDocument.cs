@@ -86,6 +86,7 @@ namespace Tomboy
 			currentNote = note;
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
+			Console.WriteLine ("Loading Note Body '{0}'", note.Text);
 			noteWebView.MainFrame.LoadHtmlString (note.Text.Replace (Environment.NewLine, "<br />"),
 			                                      new NSUrl (AppDelegate.BaseUrlPath));
 			Editable (true);
@@ -118,8 +119,9 @@ namespace Tomboy
 			var element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
 			DomHtmlElement body = (DomHtmlElement)element.First ();
 
-			Console.WriteLine ("Note ID {0}", currentNoteID);
-			Console.WriteLine ("Note Content {0}", body.InnerHTML);
+			Console.WriteLine ("Saving Note ID {0}", currentNoteID);
+			string results = translator.TranslateHtml (body.InnerHTML);
+			Console.WriteLine ("Note Translation results: {0}", results);
 		}
 
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)

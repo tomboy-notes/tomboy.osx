@@ -102,6 +102,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="NoteLegacyTranslator.cs" />
     <Compile Include="unit-tests\NoteLegacyTranslatorTests.cs" />
+    <Compile Include="LinkItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MyDocument.xib" />

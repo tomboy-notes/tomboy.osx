@@ -1,5 +1,5 @@
 //
-//  NoteLegacyTranslatorTests.cs
+//  LinkItem.cs
 //
 //  Author:
 //       Jared Jennings <jjennings@gnome.org>
@@ -19,31 +19,31 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using NUnit.Framework;
-using System.Text;
 
-using Tomboy;
-
-namespace TomboyMacUnitTests
+namespace Tomboy
 {
-	[TestFixture()]
-	public class NoteLegacyTranslatorTests
+	/// <summary>
+	/// Link item.
+	/// </summary>
+	/// <description>Represents a link types in Tomboy Notes</description>
+	public struct LinkItem
 	{
+		/// <summary>
+		/// The href.example: http://MyURL
+		/// </summary>
+		public string Href;
+		/// <summary>
+		/// The text.example: "My URL"
+		/// </summary>
+		public string Text;
+		/// <summary>
+		/// The whole HRE.example: <a HREF="http://MyURL">My URL</a>
+		/// </summary>
+		public string WholeHREF;
 
-		[Test()]
-		public void TestCase ()
+		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder ();
-			sb.Append ("The Title of the Note ");
-			sb.Append ("Body of the Note ");
-			sb.Append ("<br>");
-			sb.Append ("<br>");
-			sb.Append ("<a href=\"https://ebusinessdev.\">https://ebusinessdev.</a>");
-			sb.Append ("<a href=\"https://www.novell.com\">https://www.novell.com</a>");
-			sb.Append ("Something we should remember <br>");
-			NoteLegacyTranslator translator = new NoteLegacyTranslator ();
-			Assert.True (translator.TranslateHtml (sb.ToString ()).Contains ("<link:url>https://ebusinessdev.</link:url>"));
-
+			return Href + "\n\t" + Text;
 		}
 	}
 }
