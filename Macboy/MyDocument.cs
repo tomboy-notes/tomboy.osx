@@ -84,8 +84,8 @@ namespace Tomboy
 		/// </param>
 		private void StringReplacements (Note note)
 		{
-			note.Text = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
-			note.Text = note.Text.Replace (Environment.NewLine, "<br>");
+			string noteText = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
+			note.Text = noteText.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
 		}
 
 		void LoadNote (string newNoteId, bool withHistory = true)
@@ -99,8 +99,8 @@ namespace Tomboy
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
 			StringReplacements (note);
-			Console.WriteLine ("Loading Note Body '{0}'", note.Text);
-			noteWebView.MainFrame.LoadHtmlString (note.Text, new NSUrl (AppDelegate.BaseUrlPath));
+			Console.WriteLine ("Loading Note Body '{0}'", currentNote.Text);
+			noteWebView.MainFrame.LoadHtmlString (currentNote.Text, new NSUrl (AppDelegate.BaseUrlPath));
 			Editable (true);
 
 			if (withHistory) {
@@ -131,6 +131,8 @@ namespace Tomboy
 			Console.WriteLine ("Saving Note ID {0}", currentNoteID);
 			string results = translator.TranslateHtml (noteWebView.MainFrame.DomDocument);
 			Console.WriteLine ("Note Translation results: {0}", results);
+			currentNote.Text = results;
+			AppDelegate.NoteEngine.SaveNote (currentNote);
 		}
 
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)

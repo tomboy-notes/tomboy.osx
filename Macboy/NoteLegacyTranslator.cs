@@ -22,7 +22,6 @@ using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
 
 using MonoMac.Foundation;
 using MonoMac.AppKit;
@@ -76,7 +75,7 @@ namespace Tomboy
 		public String TranslateHtml (DomDocument domDocument)
 		{
 			DomNodeList element = domDocument.GetElementsByTagName ("body");
-			var elementTitle = domDocument.GetElementsByTagName ("h1");
+			DomNodeList elementTitle = domDocument.GetElementsByTagName ("h1");
 			DomHtmlElement body = (DomHtmlElement)element.First ();
 			DomHtmlElement h1 = (DomHtmlElement)elementTitle.First ();
 
@@ -99,18 +98,6 @@ namespace Tomboy
 			/* end of handling PANGO formating */
 
 			return result;
-
-			/* StringBuilder sb = new StringBuilder (html);
-
-			for (int ctr = 0; ctr < sb.Length; ctr++) {
-				char ch = sb[ctr];
-
-				if (char.ToUpperInvariant (ch) == char.ToUpperInvariant (Convert.ToChar ("<"))) {
-					Console.WriteLine ("Found a match for <");
-				}
-			}
-			return sb.ToString ();
-			 */
 		}
 	}
 }
