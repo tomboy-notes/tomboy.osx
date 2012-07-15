@@ -21,6 +21,8 @@ namespace Tomboy
 		// Used as a marker. Are we loading a Note or something else that the Policy Handler should act on
 		bool LoadingFromString;
 
+		NSPopover popover;
+
 		public MyDocument (IntPtr handle) : base (handle)
 		{
 		}
@@ -85,9 +87,15 @@ namespace Tomboy
 		private void StringReplacements (Note note)
 		{
 			/* The Note title is also contained in the Note Body */
-			string noteTitle = note.Text.Substring (0, (note.Text.IndexOf ("\n")));
-			/* Set the Note Title so that it appears as a Title in The Content of the Note */
-			string noteText = note.Text.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
+			int indx = note.Text.IndexOf ("\n");
+			string noteText = "";
+			if (indx != -1) {
+				string noteTitle = note.Text.Substring (0, (indx));
+				/* Set the Note Title so that it appears as a Title in The Content of the Note */
+				noteText = note.Text.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
+			} else {
+				noteText = note.Text;
+			}
 			note.Text = noteText.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
 		}
 
@@ -115,6 +123,8 @@ namespace Tomboy
 			}
 			UpdateBackForwardSensitivity ();
 			LoadingFromString = false;
+			if (popover != null)
+				popover.Close ();
 		}
 
 		/// <summary>
@@ -189,13 +199,13 @@ namespace Tomboy
 
 		partial void ShowNotes (NSObject sender)
 		{
-			using (NSPopover popover = new NSPopover ()) {
-				var controller = new ShowNotesPopupController ();
-				controller.NoteNodeClicked += (s, e) => LoadNote (e.NoteId);
-				popover.Behavior = NSPopoverBehavior.Transient;
-				popover.ContentViewController = controller;
-				popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
-			}
+			popover = new NSPopover ();
+			ShowNotesPopupController controller = new ShowNotesPopupController ();
+			controller.NoteNodeClicked += (s, e) => LoadNote (e.NoteId);
+			popover.Behavior = NSPopoverBehavior.Transient;
+			popover.ContentViewController = controller;
+			popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
+
 		}
 
 		partial void DeleteNote (NSObject sender)
