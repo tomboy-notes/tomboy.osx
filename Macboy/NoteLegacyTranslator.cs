@@ -40,6 +40,12 @@ namespace Tomboy
 		{
 		}
 
+		/// <summary>
+		/// Finds HREF's in the given string. Returns a LinkTem with Name and URL values
+		/// </summary>
+		/// <param name='text'>
+		/// Text.
+		/// </param>
 		public List<LinkItem> Find (string text)
 		{
 			List<LinkItem> list = new List<LinkItem> ();
