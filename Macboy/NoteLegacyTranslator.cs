@@ -83,12 +83,11 @@ namespace Tomboy
 			DomNodeList element = domDocument.GetElementsByTagName ("body");
 			DomNodeList elementTitle = domDocument.GetElementsByTagName ("h1");
 			DomHtmlElement body = (DomHtmlElement)element.First ();
-			DomHtmlElement h1 = (DomHtmlElement)elementTitle.First ();
 
 			/* begin: strip <br> tags from HTML */
 
 			string pattern = @"(<br *\>)";
-			Regex r = new Regex(pattern);
+			Regex r = new Regex (pattern);
 			string result = r.Replace (body.InnerHTML, System.Environment.NewLine);
 
 			/* end: strip <br> tags from HTML */
@@ -98,8 +97,11 @@ namespace Tomboy
 				result = result.Replace (i.WholeHREF, "<link:url>" + i.Href + "</link:url>");
 			}
 
-			/* Replace h1 with text as was originally in Note xml */
-			result = result.Replace (h1.OuterHTML, h1.InnerText);
+			if (elementTitle != null && elementTitle.Count > 0) {
+				DomHtmlElement h1 = (DomHtmlElement)elementTitle.First ();
+				/* Replace h1 with text as was originally in Note xml */
+				result = result.Replace (h1.OuterHTML, h1.InnerText);
+			}
 
 			/* end of handling PANGO formating */
 
