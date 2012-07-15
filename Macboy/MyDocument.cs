@@ -194,14 +194,14 @@ namespace Tomboy
 		void SearchResultSelected (NSObject sender)
 		{
 			NSMenuItem item = (NSMenuItem)sender;
-			LoadNote (AppDelegate.NoteEngine.GetNote (item.Title).Uri, false);
+			LoadNote (AppDelegate.NoteEngine.GetNote (item.Title).Uri, true);
 		}
 
 		partial void ShowNotes (NSObject sender)
 		{
 			popover = new NSPopover ();
 			ShowNotesPopupController controller = new ShowNotesPopupController ();
-			controller.NoteNodeClicked += (s, e) => LoadNote (e.NoteId);
+			controller.NoteNodeClicked += (s, e) => LoadNote (e.NoteId, true);
 			popover.Behavior = NSPopoverBehavior.Transient;
 			popover.ContentViewController = controller;
 			popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
