@@ -32,7 +32,7 @@ namespace Tomboy
 		void Initialize ()
 		{
 			View.CollectionView.ItemPrototype = new NoteCollectionViewItemController ();
-			View.CollectionView.Content = NotesToNSObject (AppDelegate.Notes);
+			View.CollectionView.Content = NotesToNSObject (AppDelegate.Notes.OrderByDescending( x => x.Value.ChangeDate ).Take (20).ToDictionary(d => d.Key, d => d.Value));
 			View.CollectionView.NoteSelected += (s, e) => NoteNodeClicked (s, e);
 			//View.CollectionView.UpdateColumnCountBasedOnNumber (3);
 		}
