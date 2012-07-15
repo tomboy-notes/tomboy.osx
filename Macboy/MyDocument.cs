@@ -84,7 +84,10 @@ namespace Tomboy
 		/// </param>
 		private void StringReplacements (Note note)
 		{
-			string noteText = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
+			/* The Note title is also contained in the Note Body */
+			string noteTitle = note.Text.Substring (0, (note.Text.IndexOf ("\n")));
+			/* Set the Note Title so that it appears as a Title in The Content of the Note */
+			string noteText = note.Text.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
 			note.Text = noteText.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
 		}
 
