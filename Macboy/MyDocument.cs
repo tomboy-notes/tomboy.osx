@@ -148,6 +148,49 @@ namespace Tomboy
 			AppDelegate.NoteEngine.SaveNote (currentNote);
 		}
 
+		void SaveNewNote ()
+		{
+			Note newNote = AppDelegate.NoteEngine.NewNote ();
+			string content = GetBodyAsHtml ();
+			string noteTitle = GetTitleFromBody ();
+			/* The Note title is also contained in the Note Body */
+			newNote.Title = noteTitle;
+			/* Set the Note Title so that it appears as a Title in The Content of the Note */
+			newNote.Text = content.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
+			AppDelegate.NoteEngine.SaveNote (newNote);
+			LoadNote (newNote.Uri, true);
+		}
+
+		/// <summary>
+		/// Gets the body as html from the current document
+		/// </summary>
+		/// <description>This allows you to get other HTML elements from the Note content</description>
+		/// <returns>
+		/// string : everything inside the <body></body> tags
+		/// </returns>
+		private string GetBodyAsHtml ()
+		{
+			DomNodeList element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
+			//FIXME: Need to make sure that we check for no body
+			DomHtmlElement body = (DomHtmlElement)element.FirstOrDefault ();
+			return body.InnerHTML;
+		}
+
+		/// <summary>
+		/// Gets the title from body of the note.
+		/// It is considered that the title is always the first line of the Note.
+		/// </summary>
+		/// <returns>
+		/// The title from body.
+		/// </returns>
+		private string GetTitleFromBody ()
+		{
+			string content = GetBodyAsHtml ();
+			//FIXME: Need to see if the Note already contains an <h1>
+			int indx = content.IndexOf ("<br>");
+			return content.Substring (0, (indx)).Replace ("<div>", "");
+		}
+
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
 		{
 			var selected = sender.SelectedSegment;
@@ -259,9 +302,10 @@ namespace Tomboy
 
 		public override void SaveDocument (NSObject sender)
 		{
-			Logger.Info ("Saving Note: {0}", currentNote.Title);
-			SaveData ();
-			//AppDelegate.NoteEngine.SaveNote (currentNote);
+			if (String.IsNullOrEmpty (currentNoteID))
+				SaveNewNote ();
+			else
+				SaveData ();
 		}
 
 		public override void SaveDocumentTo (NSObject sender)
