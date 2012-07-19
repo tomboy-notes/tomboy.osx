@@ -22,6 +22,10 @@ namespace Tomboy
 			// Create our cache directory
 			if (!Directory.Exists (BaseUrlPath))
 				Directory.CreateDirectory (BaseUrlPath);
+
+			Engine.NoteAdded += HandleNoteAdded;
+
+
 		}
 
 		public override void FinishedLaunching (NSObject notification)
@@ -45,6 +49,11 @@ namespace Tomboy
 			get;
 			set;
 		}
+		void HandleNoteAdded (Note note)
+		{
+			throw new NotImplementedException ();
+		}
+
 	}
 }
 
