@@ -22,6 +22,7 @@ namespace Tomboy
 		bool LoadingFromString;
 
 		NSPopover popover;
+		NoteLegacyTranslator translator= new NoteLegacyTranslator ();
 
 		public MyDocument (IntPtr handle) : base (handle)
 		{
@@ -84,19 +85,11 @@ namespace Tomboy
 		/// <param name='note'>
 		/// Note.
 		/// </param>
-		private void StringReplacements (Note note)
+		private void SetNoteTitle (Note note)
 		{
 			/* The Note title is also contained in the Note Body */
-			int indx = note.Text.IndexOf ("\n");
-			string noteText = "";
-			if (indx != -1) {
-				string noteTitle = note.Text.Substring (0, (indx));
-				/* Set the Note Title so that it appears as a Title in The Content of the Note */
-				noteText = note.Text.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
-			} else {
-				noteText = note.Text;
-			}
-			note.Text = noteText.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
+			string noteText = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
+			note.Text = noteText;
 		}
 
 		void LoadNote (string newNoteId, bool withHistory = true)
@@ -109,8 +102,10 @@ namespace Tomboy
 			currentNote = note;
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
-			StringReplacements (note);
-			Console.WriteLine ("Loading Note Body '{0}'", currentNote.Text);
+			note.Text = translator.From (note);
+			SetNoteTitle (note);
+			note.Text = note.Text.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
+			Logger.Debug ("Loading Note Body '{0}'", currentNote.Text);
 			noteWebView.MainFrame.LoadHtmlString (currentNote.Text, new NSUrl (AppDelegate.BaseUrlPath));
 			Editable (true);
 
@@ -140,10 +135,8 @@ namespace Tomboy
 
 		private void SaveData ()
 		{
-			NoteLegacyTranslator translator = new NoteLegacyTranslator ();
-			Console.WriteLine ("Saving Note ID {0}", currentNoteID);
-			string results = translator.TranslateHtml (noteWebView.MainFrame.DomDocument);
-			Console.WriteLine ("Note Translation results: {0}", results);
+			Logger.Info ("Saving Note ID {0}", currentNoteID);
+			string results = translator.TranslateTo (noteWebView.MainFrame.DomDocument);
 			currentNote.Text = results;
 			AppDelegate.NoteEngine.SaveNote (currentNote);
 		}
