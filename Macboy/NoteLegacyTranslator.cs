@@ -53,6 +53,7 @@ namespace Tomboy
 			/* The order of the following methods matter */
 			GetAssembly ();
 			LoadPaths ();
+			// if the stylesheets don't exist, copy them to the hd.
 			CopyXSLT (_xsl_transform_to);
 			CopyXSLT (_xsl_transform_from);
 
@@ -120,7 +121,7 @@ namespace Tomboy
 		/// <param name='domDocument'>
 		/// DOM document.
 		/// </param>
-		public String TranslateTo (DomDocument domDocument)
+		public String To (DomDocument domDocument)
 		{
 			StringBuilder sb = new StringBuilder ();
 			StringWriter stringWriter = new StringWriter (sb);
@@ -131,19 +132,15 @@ namespace Tomboy
 			DomHtmlElement body = (DomHtmlElement)element.First ();
 			string pattern = @"(<br *\>)";
 			Regex r = new Regex (pattern);
+			// br needs to end in proper xml, so we are replacing <br> with <br />
 			string result = r.Replace (body.OuterHTML, "<br />");
-			// replace br's that are inside of divs which usually are empty
-			result = result.Replace ("<div><br></div>", "");
-			// git rid of the leading div as it's useless
-			result = result.Replace ("<div>", "");
-			// replace the last closing div with a newline
-			result = result.Replace ("</div>", System.Environment.NewLine);
+
 			// run the remaining of the document through the xslt
 			StringReader stringReader = new StringReader (result);
 			XPathDocument doc = new XPathDocument(stringReader);
 			stringReader.Close();
 			xslTransformTo.Transform(doc, null,xmlTextWriter);
-			return sb.ToString ();
+			return sb.ToString ();;
 		}
 
 		#region private methods
@@ -157,6 +154,9 @@ namespace Tomboy
 			}	
 		}
 
+		/// <summary>
+		/// Loads the paths where Tomboy stores Stylesheets
+		/// </summary>
 		private void LoadPaths ()
 		{
 			_style_sheet_location = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Caches", "Tomboy");

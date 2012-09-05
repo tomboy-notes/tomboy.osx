@@ -138,7 +138,7 @@ namespace Tomboy
 		private void SaveData ()
 		{
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
-			string results = translator.TranslateTo (noteWebView.MainFrame.DomDocument);
+			string results = translator.To (noteWebView.MainFrame.DomDocument);
 			currentNote.Text = results;
 			AppDelegate.NoteEngine.SaveNote (currentNote);
 		}
