@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MacboyUnitTests</RootNamespace>
+    <AssemblyName>Macboy-UnitTests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="TranslateToTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Macboy\Macboy.csproj">
+      <Project>{CBEFA338-7B6F-432C-A7B4-32F80F36D672}</Project>
+      <Name>Macboy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\tomboy-library\Tomboy-library\Tomboy-library.csproj">
+      <Project>{040AA912-9738-438A-A7FD-5BB02C40C30A}</Project>
+      <Name>Tomboy-library</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
