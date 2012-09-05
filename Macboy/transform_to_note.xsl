@@ -13,10 +13,9 @@
 
   <xsl:preserve-space elements="*" />
 
-  <xsl:template match="br">
-    <!-- hopefully a universal newline -->
+  <!--xsl:template match="br">
     <xsl:text>&#xA;</xsl:text>
-  </xsl:template>
+  </xsl:template-->
 
   <xsl:template match="b">
     <bold>

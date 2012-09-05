@@ -70,44 +70,6 @@ namespace Tomboy
 		}
 
 		/// <summary>
-		/// Finds HREF's in the given string. Returns a LinkTem with Name and URL values
-		/// </summary>
-		/// <param name='text'>
-		/// Text.
-		/// </param>
-		public List<LinkItem> Find (string text)
-		{
-			List<LinkItem> list = new List<LinkItem> ();
-
-			// 1.
-			// Find all matches in file.
-			MatchCollection m1 = Regex.Matches (text, @"(<a.*?>.*?</a>)", RegexOptions.Singleline);
-
-			// 2.
-			// Loop over each match.
-			foreach (Match m in m1) {
-				string value = m.Groups [1].Value;
-				LinkItem i = new LinkItem ();
-				i.WholeHREF = m.Value;
-
-				// 3.
-				// Get href attribute.
-				Match m2 = Regex.Match (value, @"href=\""(.*?)\""", RegexOptions.Singleline);
-				if (m2.Success) {
-					i.Href = m2.Groups [1].Value;
-				}
-
-				// 4.
-				// Remove inner tags from text.
-				string t = Regex.Replace (value, @"\s*<.*?>\s*", "", RegexOptions.Singleline);
-				i.Text = t;
-
-				list.Add (i);
-			}
-			return list;
-		}
-
-		/// <summary>
 		/// Translate the note content from legacy XML format to WebKit
 		/// </summary>
 		/// <param name='text'>
@@ -149,6 +111,15 @@ namespace Tomboy
 			return sb.ToString ().Trim ();
 		}
 
+		/// <summary>
+		/// Translates to.traditional Tomboy Note formats
+		/// </summary>
+		/// <returns>
+		/// A string representation of the Note in the Linux traditional Linux format
+		/// </returns>
+		/// <param name='domDocument'>
+		/// DOM document.
+		/// </param>
 		public String TranslateTo (DomDocument domDocument)
 		{
 			StringBuilder sb = new StringBuilder ();
@@ -158,20 +129,20 @@ namespace Tomboy
 			DomNodeList element = domDocument.GetElementsByTagName ("body");
 			//DomNodeList elementTitle = domDocument.GetElementsByTagName ("h1");
 			DomHtmlElement body = (DomHtmlElement)element.First ();
-
-			/* begin: strip <br> tags from HTML */
-
 			string pattern = @"(<br *\>)";
 			Regex r = new Regex (pattern);
-			string result = r.Replace (body.OuterHTML, System.Environment.NewLine);
-
+			string result = r.Replace (body.OuterHTML, "<br />");
+			// replace br's that are inside of divs which usually are empty
+			result = result.Replace ("<div><br></div>", "");
+			// git rid of the leading div as it's useless
+			result = result.Replace ("<div>", "");
+			// replace the last closing div with a newline
+			result = result.Replace ("</div>", System.Environment.NewLine);
+			// run the remaining of the document through the xslt
 			StringReader stringReader = new StringReader (result);
 			XPathDocument doc = new XPathDocument(stringReader);
 			stringReader.Close();
-
 			xslTransformTo.Transform(doc, null,xmlTextWriter);
-			/* end: strip <br> tags from HTML */
-			//result =  xmlTextWriter.ToString ();
 			return sb.ToString ();
 		}
 

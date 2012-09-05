@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy", "Macboy\Macboy.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-library", "..\tomboy-library\Tomboy-library\Tomboy-library.csproj", "{040AA912-9738-438A-A7FD-5BB02C40C30A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy-UnitTests", "Macboy-UnitTests\Macboy-UnitTests.csproj", "{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.Build.0 = Debug|x86
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.ActiveCfg = Release|x86
 		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.Build.0 = Release|x86
+		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.Debug|x86.ActiveCfg = Debug|x86
+		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.Debug|x86.Build.0 = Debug|x86
+		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.Release|x86.ActiveCfg = Release|x86
+		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.Release|x86.Build.0 = Release|x86
 		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Debug|x86.ActiveCfg = Debug|x86
 		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Debug|x86.Build.0 = Debug|x86
 		{CBEFA338-7B6F-432C-A7B4-32F80F36D672}.Release|x86.ActiveCfg = Release|x86

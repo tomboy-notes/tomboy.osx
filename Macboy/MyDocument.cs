@@ -80,12 +80,12 @@ namespace Tomboy
 		}
 
 		/// <summary>
-		/// Strings the replacements to format the Note content correctly in the web view
+		/// Sets the Note title, which is not only stored in the Window Title, but also in the note body
 		/// </summary>
 		/// <param name='note'>
 		/// Note.
 		/// </param>
-		private void SetNoteTitle (Note note)
+		private void SetContentTitle (Note note)
 		{
 			/* The Note title is also contained in the Note Body */
 			string noteText = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
@@ -95,7 +95,6 @@ namespace Tomboy
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
 			LoadingFromString = true;
-			Logger.Info ("Trying to load note {0}", newNoteId);
 			var note = AppDelegate.Notes[newNoteId];
 			if (note == null)
 				return;
@@ -103,10 +102,13 @@ namespace Tomboy
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
 			note.Text = translator.From (note);
-			SetNoteTitle (note);
+			SetContentTitle (note);
+			// replace the system newlines with HTML new lines
 			note.Text = note.Text.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
-			Logger.Debug ("Loading Note Body '{0}'", currentNote.Text);
+			Logger.Debug ("Loading Note ID {0} \n Note Body '{1}'", newNoteId, currentNote.Text);
 			noteWebView.MainFrame.LoadHtmlString (currentNote.Text, new NSUrl (AppDelegate.BaseUrlPath));
+
+			// Make the note editable
 			Editable (true);
 
 			if (withHistory) {
