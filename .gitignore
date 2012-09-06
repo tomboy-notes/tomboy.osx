@@ -11,6 +11,9 @@ Macboy/test-results/
 
 Tomboy.userprefs
 
-Macboy/test-results/Tomboy.csproj.test-cache
+Macboy/test-results/*
 
-Macboy/test-results/Tomboy.csproj.test-cache
+
+*.dll
+
+Macboy-UnitTests/bin/*
