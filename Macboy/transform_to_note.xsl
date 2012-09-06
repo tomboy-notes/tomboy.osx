@@ -18,7 +18,7 @@
   </xsl:template>
 
   <xsl:template match="div">
-	<xsl:apply-templates select="node()"/><xsl:text>&#xA;</xsl:text>
+	<xsl:text>&#xA;</xsl:text><xsl:apply-templates select="node()"/>
   </xsl:template>
   
   <xsl:template match="b">

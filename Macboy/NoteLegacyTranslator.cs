@@ -139,7 +139,13 @@ namespace Tomboy
 			StringReader stringReader = new StringReader (result);
 			XPathDocument doc = new XPathDocument(stringReader);
 			stringReader.Close();
-			xslTransformTo.Transform(doc, null,xmlTextWriter);
+			try {
+				xslTransformTo.Transform(doc, null,xmlTextWriter);
+			} catch (System.Xml.XmlException e) {
+				Logger.Error (e.Message, body.OuterHTML);
+				throw new System.Xml.XmlException ("XSLT transform failed to handle the note");
+			}
+
 			return sb.ToString ();;
 		}
 

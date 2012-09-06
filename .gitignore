@@ -17,3 +17,11 @@ Macboy/test-results/*
 *.dll
 
 Macboy-UnitTests/bin/*
+
+*.test-cache
+
+*.exe
+
+*.exe
+
+*.mdb

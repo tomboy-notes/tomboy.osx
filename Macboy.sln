@@ -193,5 +193,6 @@ Global
 		$32.MessageStyle = $33
 		$33.LineAlign = 0
 		$32.inheritsSet = Mono
+		version = 0.2
 	EndGlobalSection
 EndGlobal
