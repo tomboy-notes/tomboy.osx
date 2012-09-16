@@ -167,10 +167,24 @@ namespace Tomboy
 			string results = translator.To (noteWebView.MainFrame.DomDocument);
 			currentNote.Text = results;
 			AppDelegate.NoteEngine.SaveNote (currentNote);
+
 		}
+
+		/*public override bool HasUnautosavedChanges {
+			get {
+				return false;
+			}
+		}
+
+		public override bool IsDocumentEdited {
+			get {
+				return false;
+			}
+		}*/
 
 		void SaveNewNote ()
 		{
+			// TODO we should / can check if the document is new (has not been saved)
 			Note newNote = AppDelegate.NoteEngine.NewNote ();
 			string content = GetBodyAsHtml ();
 			string noteTitle = GetTitleFromBody ();
