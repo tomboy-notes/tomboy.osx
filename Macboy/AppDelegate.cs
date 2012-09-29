@@ -53,11 +53,6 @@ namespace Tomboy
 
 		}
 
-		public override void FinishedLaunching (NSObject notification)
-		{
-
-		}
-
 		public static string BaseUrlPath {
 			get {
 				return Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
@@ -76,7 +71,7 @@ namespace Tomboy
 		}
 		void HandleNoteAdded (Note note)
 		{
-			throw new NotImplementedException ();
+			Logger.Debug ("Handling Note Added {0}", note.Title);
 		}
 
 	}

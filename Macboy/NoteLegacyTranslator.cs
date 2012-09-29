@@ -200,15 +200,15 @@ namespace Tomboy
 		{
 			if (!Directory.Exists (_style_sheet_location))
 				Directory.CreateDirectory (_style_sheet_location);
-
+			string destFile = Path.Combine (_style_sheet_location, xsl_file_name);
 			/* Only copy the file if it doesn't exist
 			 * This allows someone to override the default
 			 * It also allows someone to rebuild if corrupt
 			 */
-			if (!File.Exists (Path.Combine (_style_sheet_location, xsl_file_name))) {
-				Console.WriteLine ("deploying default Transform {0}", xsl_file_name);
+			if (!File.Exists (destFile)) {
+				Console.WriteLine ("deploying default Transform {0}", destFile);
 				using (Stream input = _assembly.GetManifestResourceStream(xsl_file_name))
-				using (Stream output = File.Create(Path.Combine (_style_sheet_location, xsl_file_name)))
+				using (Stream output = File.Create(destFile))
 					CopyStream (input, output);
 			}
 		}

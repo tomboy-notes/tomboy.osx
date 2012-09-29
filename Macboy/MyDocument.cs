@@ -52,11 +52,27 @@ namespace Tomboy
 
 		public MyDocument (IntPtr handle) : base (handle)
 		{
+			// Loading new blank note.
+			LoadNewNote ();
+			// might not need SetDisplayName later when I find how to properly load webkit on new windows. jlj
+			SetDisplayName (currentNote.Title);
 		}
 
 		[Export ("initWithCoder:")]
 		public MyDocument (NSCoder coder) : base (coder)
 		{
+		}
+
+		/// <summary>
+		/// Sets the display name.
+		/// Which this was a hack at the time of creation because I coudln't find out why webkit wasn't loaded yet.
+		/// </summary>
+		/// <param name='displayNameOrNull'>
+		/// Display name or null.
+		/// </param>
+		public override void SetDisplayName (string displayNameOrNull)
+		{
+			base.SetDisplayName (displayNameOrNull);
 		}
 
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
@@ -118,10 +134,27 @@ namespace Tomboy
 			note.Text = noteText;
 		}
 
+		void LoadNewNote ()
+		{
+			LoadingFromString = true;
+			Note note = AppDelegate.NoteEngine.NewNote ();
+			currentNote = note;
+			currentNoteID = note.Uri;
+			InvalidateRestorableState ();
+			LoadingFromString = false;
+		}
+
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
 			LoadingFromString = true;
-			var note = AppDelegate.Notes[newNoteId];
+			Note note;
+			try {
+				// on a crash, the document restore may try to load a key that doesn't exist any more.
+				note = AppDelegate.Notes[newNoteId];
+			} catch (Exception e) {
+				Logger.Error (e.Message, e);
+				return;
+			}
 			if (note == null)
 				return;
 			currentNote = note;
@@ -166,6 +199,8 @@ namespace Tomboy
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
 			string results = translator.To (noteWebView.MainFrame.DomDocument);
 			currentNote.Text = results;
+			currentNote.Title = GetTitleFromBody ();
+			this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
 			AppDelegate.NoteEngine.SaveNote (currentNote);
 
 		}
@@ -182,20 +217,6 @@ namespace Tomboy
 			}
 		}*/
 
-		void SaveNewNote ()
-		{
-			// TODO we should / can check if the document is new (has not been saved)
-			Note newNote = AppDelegate.NoteEngine.NewNote ();
-			string content = GetBodyAsHtml ();
-			string noteTitle = GetTitleFromBody ();
-			/* The Note title is also contained in the Note Body */
-			newNote.Title = noteTitle;
-			/* Set the Note Title so that it appears as a Title in The Content of the Note */
-			newNote.Text = content.Replace (noteTitle, "<h1>" + noteTitle + "</h1>");
-			AppDelegate.NoteEngine.SaveNote (newNote);
-			LoadNote (newNote.Uri, true);
-		}
-
 		/// <summary>
 		/// Gets the body as html from the current document
 		/// </summary>
@@ -203,12 +224,12 @@ namespace Tomboy
 		/// <returns>
 		/// string : everything inside the <body></body> tags
 		/// </returns>
-		private string GetBodyAsHtml ()
+		private DomHtmlElement GetBody ()
 		{
 			DomNodeList element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
 			//FIXME: Need to make sure that we check for no body
 			DomHtmlElement body = (DomHtmlElement)element.FirstOrDefault ();
-			return body.InnerHTML;
+			return body;
 		}
 
 		/// <summary>
@@ -220,10 +241,10 @@ namespace Tomboy
 		/// </returns>
 		private string GetTitleFromBody ()
 		{
-			string content = GetBodyAsHtml ();
-			//FIXME: Need to see if the Note already contains an <h1>
-			int indx = content.IndexOf ("<br>");
-			return content.Substring (0, (indx)).Replace ("<div>", "");
+			// we do not care about any HTML markup. We just want the raw text.
+			string innerText = GetBody ().InnerText;
+			// crop the text at the first line break.
+			return innerText.Substring (0, (innerText.IndexOf ("\n",0)));
 		}
 
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
@@ -337,10 +358,7 @@ namespace Tomboy
 
 		public override void SaveDocument (NSObject sender)
 		{
-			if (String.IsNullOrEmpty (currentNoteID))
-				SaveNewNote ();
-			else
-				SaveData ();
+			SaveData ();
 		}
 
 		public override void SaveDocumentTo (NSObject sender)
@@ -362,6 +380,11 @@ namespace Tomboy
 			}
 		}
 
+		public override bool ShouldRunSavePanelWithAccessoryView {
+			get {
+				return false;
+			}
+		}
 	}
 }
 
