@@ -63,18 +63,6 @@ namespace Tomboy
 		{
 		}
 
-		/// <summary>
-		/// Sets the display name.
-		/// Which this was a hack at the time of creation because I coudln't find out why webkit wasn't loaded yet.
-		/// </summary>
-		/// <param name='displayNameOrNull'>
-		/// Display name or null.
-		/// </param>
-		public override void SetDisplayName (string displayNameOrNull)
-		{
-			base.SetDisplayName (displayNameOrNull);
-		}
-
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
 		{
 			base.WindowControllerDidLoadNib (windowController);
@@ -136,10 +124,12 @@ namespace Tomboy
 
 		void LoadNewNote ()
 		{
+			// this thing still has issues. The noteWebView is not initialized and I don't know how to get it.
 			LoadingFromString = true;
 			Note note = AppDelegate.NoteEngine.NewNote ();
 			currentNote = note;
 			currentNoteID = note.Uri;
+
 			InvalidateRestorableState ();
 			LoadingFromString = false;
 		}
@@ -196,13 +186,26 @@ namespace Tomboy
 
 		private void SaveData ()
 		{
+			if (noteWebView == null)
+				return;
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
 			string results = translator.To (noteWebView.MainFrame.DomDocument);
+			if (results == null || results.Length == 0)
+				return;
 			currentNote.Text = results;
-			currentNote.Title = GetTitleFromBody ();
-			this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
+			string title = GetTitleFromBody ();
+			if (title == null)
+				return;
+			currentNote.Title = title;
+			if (this.WindowForSheet != null) // on closing of the Window this will not have a value
+				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
 			AppDelegate.NoteEngine.SaveNote (currentNote);
 
+			/*
+			 * Very important piece of code.(UpdateChangeCount)
+			 * This allows us to trick NSDOcument into believing that we have saved the document
+			 */
+			UpdateChangeCount (NSDocumentChangeType.Cleared);
 		}
 
 		/*public override bool HasUnautosavedChanges {
@@ -243,8 +246,11 @@ namespace Tomboy
 		{
 			// we do not care about any HTML markup. We just want the raw text.
 			string innerText = GetBody ().InnerText;
+			int loc = innerText.IndexOf ("\n",0);
+			if (loc <= 0)
+				return null;
 			// crop the text at the first line break.
-			return innerText.Substring (0, (innerText.IndexOf ("\n",0)));
+			return innerText.Substring (0, loc);
 		}
 
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
@@ -356,11 +362,22 @@ namespace Tomboy
 			return null;
 		}
 
-		public override void SaveDocument (NSObject sender)
+		public override void SaveDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector didSaveSelector, IntPtr contextInfo)
 		{
 			SaveData ();
 		}
 
+		// This is called every time the document is saved.
+		// this is a default thing of NSDocument.
+		public override NSUrl FileUrl {
+			get {
+				SaveData ();
+				return base.FileUrl;
+			}
+			set {
+				base.FileUrl = value;
+			}
+		}
 		public override void SaveDocumentTo (NSObject sender)
 		{
 			Console.WriteLine ("SaveDocumentTo");
@@ -369,7 +386,6 @@ namespace Tomboy
 
 		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
 		{
-			Console.WriteLine ("ReadFromData");
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
 			return false;
 		}
@@ -377,12 +393,6 @@ namespace Tomboy
 		public override string WindowNibName { 
 			get {
 				return "MyDocument";
-			}
-		}
-
-		public override bool ShouldRunSavePanelWithAccessoryView {
-			get {
-				return false;
 			}
 		}
 	}
