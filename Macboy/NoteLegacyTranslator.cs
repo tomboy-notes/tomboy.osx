@@ -49,27 +49,31 @@ namespace Tomboy
 		private XslCompiledTransform xslTransformTo;
 		private XslCompiledTransform xslTransformFrom;
 		private Assembly _assembly;
-		private const string _xsl_transform_to = "Tomboy.Tomboy.transform_to_note.xsl";
-		private const string _xsl_transform_from = "Tomboy.Tomboy.transform_from_note.xsl";
-		private string _style_sheet_location = "";
+		private string _xsl_to_path_file = "";
+		private string _xsl_from_path_file= "";
+		private const string _xsl_from = "Tomboy.transform_from_note.xsl";
+		private const string _xsl_to = "Tomboy.transform_to_note.xsl";
+		private string _style_sheet_location = Path.Combine (
+			Environment.GetFolderPath (Environment.SpecialFolder.Personal), 
+			"Library", 
+			"Caches", 
+			"Tomboy"
+			);
 
 		public NoteLegacyTranslator ()
 		{
 			/* The order of the following methods matter */
 			GetAssembly ();
-			LoadPaths ();
-			// if the stylesheets don't exist, copy them to the hd.
-			CopyXSLT (_xsl_transform_to);
-			CopyXSLT (_xsl_transform_from);
+			DetectCustomXSL ();
 
 			if (xslTransformTo == null) {
 				xslTransformTo = new XslCompiledTransform (true);
-				xslTransformTo.Load (Path.Combine (_style_sheet_location, _xsl_transform_to));
+				xslTransformTo.Load (_xsl_to_path_file);
 			}
 
 			if (xslTransformFrom == null) {
 				xslTransformFrom = new XslCompiledTransform (true);
-				xslTransformFrom.Load (Path.Combine (_style_sheet_location, _xsl_transform_from));
+				xslTransformFrom.Load (_xsl_from_path_file);
 			}
 
 			/* end of orderness */
@@ -161,55 +165,45 @@ namespace Tomboy
 			try {
 				_assembly = Assembly.GetExecutingAssembly ();
 			} catch {
-				Console.WriteLine ("Error accessing resources!");
+				Logger.Error ("Error accessing Assembly resources!");
 			}	
 		}
 
-		/// <summary>
-		/// Loads the paths where Tomboy stores Stylesheets
-		/// </summary>
-		private void LoadPaths ()
+		private void DetectCustomXSL ()
 		{
-			_style_sheet_location = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Caches", "Tomboy");
-		}
+			_xsl_from_path_file = Path.Combine (_style_sheet_location, _xsl_from);
+			_xsl_to_path_file = Path.Combine (_style_sheet_location, _xsl_to);
 
-		/// <summary>
-		/// Copies a stream from one location to another..
-		/// </summary>
-		/// <param name='input'>
-		/// Input.
-		/// </param>
-		/// <param name='output'>
-		/// Output.
-		/// </param>
-		private void CopyStream (Stream input, Stream output)
-		{
-			// Insert null checking here for production
-			byte[] buffer = new byte[8192];
+			if (!(Directory.Exists (_style_sheet_location)))
+				Directory.CreateDirectory (_style_sheet_location);
 
-			int bytesRead;
-			while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0) {
-				output.Write (buffer, 0, bytesRead);
+			if (!File.Exists (_xsl_from_path_file)) {
+				CopyXSLT (_xsl_from, _xsl_from_path_file);
+			}
+
+			if (!File.Exists (_xsl_to_path_file)) {
+				CopyXSLT (_xsl_to, _xsl_to_path_file);
 			}
 		}
 
 		/// <summary>
 		/// Copies the XSL to the correct location
 		/// </summary>
-		private void CopyXSLT (string xsl_file_name)
+		private void CopyXSLT (string source, string dest)
 		{
-			if (!Directory.Exists (_style_sheet_location))
-				Directory.CreateDirectory (_style_sheet_location);
-			string destFile = Path.Combine (_style_sheet_location, xsl_file_name);
-			/* Only copy the file if it doesn't exist
-			 * This allows someone to override the default
-			 * It also allows someone to rebuild if corrupt
-			 */
-			if (!File.Exists (destFile)) {
-				Console.WriteLine ("deploying default Transform {0}", destFile);
-				using (Stream input = _assembly.GetManifestResourceStream(xsl_file_name))
-				using (Stream output = File.Create(destFile))
-					CopyStream (input, output);
+			Logger.Info ("deploying default Transform {0} to {1}", source, dest);
+			Logger.Debug ("Assembly Resource Names {0}", _assembly.GetManifestResourceNames ());
+			using (Stream s = _assembly.GetManifestResourceStream(source)) {
+
+				FileStream resourceFile = new FileStream(dest, FileMode.Create);
+				
+				byte[] b = new byte[s.Length + 1];
+				s.Read(b, 0, Convert.ToInt32(s.Length));
+				resourceFile.Write(b, 0, Convert.ToInt32(b.Length - 1));
+				resourceFile.Flush();
+				resourceFile.Close();
+				
+				resourceFile = null;
 			}
 		}
 	#endregion private methods
