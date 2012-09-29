@@ -113,11 +113,14 @@ namespace Tomboy
 			sbNoteText.AppendLine ("</note>");
 
 			StringReader stringReader = new StringReader (sbNoteText.ToString ());
-			XPathDocument doc = new XPathDocument(stringReader);
+			XPathDocument doc;
+			try {
+				doc = new XPathDocument(stringReader);
+				xslTransformFrom.Transform(doc, null,xmlTextWriter);
+			} catch (Exception e) {
+				Logger.Error (e.Message, e, sbNoteText.ToString ());
+			}
 			stringReader.Close();
-
-			xslTransformFrom.Transform(doc, null,xmlTextWriter);
-
 			return sb.ToString ().Trim ();
 		}
 
