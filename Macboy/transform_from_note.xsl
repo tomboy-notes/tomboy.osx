@@ -12,9 +12,7 @@
 	</xsl:template-->
 	
 	<xsl:template match="link:internal">
-		<a href="{text()}">
-			<xsl:value-of select="text()" />
-		</a>
+		<a href="{text()}"><xsl:value-of select="text()" /></a>
 	</xsl:template>
 	<xsl:template match="tomboy:bold">
 		<b>
@@ -60,11 +58,6 @@
 		<span>
 			<xsl:value-of select="node()" />
 		</span>
-	</xsl:template>
-	<xsl:template match="link:internal">
-		<a>
-			<xsl:value-of select="node()" />
-		</a>
 	</xsl:template>
 	<xsl:template match="link:url">
 		<!--<a href="{node()}">-->
