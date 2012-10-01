@@ -109,26 +109,12 @@ namespace Tomboy
 			}
 		}
 
-		/// <summary>
-		/// Sets the Note title, which is not only stored in the Window Title, but also in the note body
-		/// </summary>
-		/// <param name='note'>
-		/// Note.
-		/// </param>
-		private void SetContentTitle (Note note)
-		{
-			/* The Note title is also contained in the Note Body */
-			string noteText = note.Text.Replace (note.Title, "<h1>" + note.Title + "</h1>");
-			note.Text = noteText;
-		}
-
 		void LoadNewNote ()
 		{
 			// this thing still has issues. The noteWebView is not initialized and I don't know how to get it.
 			LoadingFromString = true;
-			Note note = AppDelegate.NoteEngine.NewNote ();
-			currentNote = note;
-			currentNoteID = note.Uri;
+			currentNote = AppDelegate.NoteEngine.NewNote ();
+			currentNoteID = currentNote.Uri;
 
 			InvalidateRestorableState ();
 			LoadingFromString = false;
@@ -136,26 +122,33 @@ namespace Tomboy
 
 		void LoadNote (string newNoteId, bool withHistory = true)
 		{
+			if (HasUnautosavedChanges)
+				SaveData ();
+
 			LoadingFromString = true;
-			Note note;
 			try {
 				// on a crash, the document restore may try to load a key that doesn't exist any more.
-				note = AppDelegate.Notes[newNoteId];
+				currentNote = AppDelegate.Notes[newNoteId];
 			} catch (Exception e) {
 				Logger.Error (e.Message, e);
 				return;
 			}
-			if (note == null)
+			if (currentNote == null)
 				return;
-			currentNote = note;
+
 			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
-			note.Text = translator.From (note);
-			SetContentTitle (note);
+
+			Logger.Debug ("Note text before Translator {0}", currentNote.Text);
+			string content = translator.From (currentNote);
+			Logger.Debug ("Note text after Translator {0}", content);
+
+			content = content.Replace (currentNote.Title, "<h1>" + currentNote.Title + "</h1>");
+			Logger.Debug ("Note text after title {0}", content);
+
 			// replace the system newlines with HTML new lines
-			note.Text = note.Text.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
-			Logger.Debug ("Loading Note ID {0} \n Note Body '{1}'", newNoteId, currentNote.Text);
-			noteWebView.MainFrame.LoadHtmlString (currentNote.Text, new NSUrl (AppDelegate.BaseUrlPath));
+			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
+			noteWebView.MainFrame.LoadHtmlString (content, new NSUrl (AppDelegate.BaseUrlPath));
 
 			// Make the note editable
 			Editable (true);
@@ -171,6 +164,7 @@ namespace Tomboy
 			LoadingFromString = false;
 			if (popover != null)
 				popover.Close ();
+			Logger.Debug ("Finished loading Note ID {0} \n Note Body '{1}'", newNoteId, content);
 		}
 
 		/// <summary>
@@ -190,12 +184,18 @@ namespace Tomboy
 				return;
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
 			string results = translator.To (noteWebView.MainFrame.DomDocument);
-			if (results == null || results.Length == 0)
+			if (results == null || results.Length == 0) {
+				Logger.Debug ("note content empty or null. Nothing to save for {0}", currentNoteID);
 				return;
-			currentNote.Text = results;
+			}
+
 			string title = GetTitleFromBody ();
-			if (title == null)
+			if (title == null) {
+				Logger.Debug ("note title null. Nothing to save for {0}", currentNoteID);
 				return;
+			}
+			
+			currentNote.Text = results;
 			currentNote.Title = title;
 			if (this.WindowForSheet != null) // on closing of the Window this will not have a value
 				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
@@ -371,7 +371,8 @@ namespace Tomboy
 		// this is a default thing of NSDocument.
 		public override NSUrl FileUrl {
 			get {
-				SaveData ();
+				if (HasUnautosavedChanges)
+					SaveData ();
 				return base.FileUrl;
 			}
 			set {
