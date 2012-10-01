@@ -52,10 +52,6 @@ namespace Tomboy
 
 		public MyDocument (IntPtr handle) : base (handle)
 		{
-			// Loading new blank note.
-			LoadNewNote ();
-			// might not need SetDisplayName later when I find how to properly load webkit on new windows. jlj
-			SetDisplayName (currentNote.Title);
 		}
 
 		[Export ("initWithCoder:")]
@@ -70,6 +66,8 @@ namespace Tomboy
 			noteWebView.FinishedLoad += HandleFinishedLoad;
 			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
 			Editable (true);
+			if (currentNoteID == null || currentNoteID.Length == 0)
+				LoadNewNote ();
 		}
 
 		/// <summary>
@@ -115,6 +113,8 @@ namespace Tomboy
 			LoadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
+			
+			noteWebView.MainFrame.LoadHtmlString ("<h1>" + currentNote.Title + "</h1>", new NSUrl (AppDelegate.BaseUrlPath));
 
 			InvalidateRestorableState ();
 			LoadingFromString = false;

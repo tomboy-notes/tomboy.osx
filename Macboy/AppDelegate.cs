@@ -74,6 +74,20 @@ namespace Tomboy
 			Logger.Debug ("Handling Note Added {0}", note.Title);
 		}
 
+		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows)
+		{
+			return true;
+		}
+
+		public override bool ApplicationShouldOpenUntitledFile (NSApplication sender)
+		{
+			return true;
+		}
+
+		public override bool ApplicationOpenUntitledFile (NSApplication sender)
+		{
+			return true;
+		}
 	}
 }
 
