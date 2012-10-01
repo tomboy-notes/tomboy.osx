@@ -93,7 +93,7 @@ namespace Tomboy
 			LoadNote (currentNoteID, true);
 		}
 
-		void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
+		private void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
 		{
 			var dom = e.ForFrame.DomDocument;
 
@@ -107,7 +107,7 @@ namespace Tomboy
 			}
 		}
 
-		void LoadNewNote ()
+		private void LoadNewNote ()
 		{
 			// this thing still has issues. The noteWebView is not initialized and I don't know how to get it.
 			LoadingFromString = true;
@@ -120,7 +120,7 @@ namespace Tomboy
 			LoadingFromString = false;
 		}
 
-		void LoadNote (string newNoteId, bool withHistory = true)
+		private void LoadNote (string newNoteId, bool withHistory = true)
 		{
 			if (HasUnautosavedChanges)
 				SaveData ();
@@ -173,7 +173,7 @@ namespace Tomboy
 		/// <param name='editable'>
 		/// Editable.
 		/// </param>
-		void Editable (bool editable)
+		private void Editable (bool editable)
 		{
 			noteWebView.Editable = editable; // So that Notes can be Edited
 		}
