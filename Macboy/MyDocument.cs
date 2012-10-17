@@ -183,29 +183,33 @@ namespace Tomboy
 			if (noteWebView == null)
 				return;
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
-			string results = translator.To (noteWebView.MainFrame.DomDocument);
-			if (results == null || results.Length == 0) {
-				Logger.Debug ("note content empty or null. Nothing to save for {0}", currentNoteID);
-				return;
-			}
+			try {
+				string results = translator.To (noteWebView.MainFrame.DomDocument);
+				if (results == null || results.Length == 0) {
+					Logger.Debug ("note content empty or null. Nothing to save for {0}", currentNoteID);
+					return;
+				}
 
-			string title = GetTitleFromBody ();
-			if (title == null) {
-				Logger.Debug ("note title null. Nothing to save for {0}", currentNoteID);
-				return;
-			}
-			
-			currentNote.Text = results;
-			currentNote.Title = title;
-			if (this.WindowForSheet != null) // on closing of the Window this will not have a value
-				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
-			AppDelegate.NoteEngine.SaveNote (currentNote);
+				string title = GetTitleFromBody ();
+				if (title == null) {
+					Logger.Debug ("note title null. Nothing to save for {0}", currentNoteID);
+					return;
+				}
+				
+				currentNote.Text = results;
+				currentNote.Title = title;
+				if (this.WindowForSheet != null) // on closing of the Window this will not have a value
+					this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
+				AppDelegate.NoteEngine.SaveNote (currentNote);
 
-			/*
-			 * Very important piece of code.(UpdateChangeCount)
-			 * This allows us to trick NSDOcument into believing that we have saved the document
-			 */
-			UpdateChangeCount (NSDocumentChangeType.Cleared);
+				/*
+				 * Very important piece of code.(UpdateChangeCount)
+				 * This allows us to trick NSDOcument into believing that we have saved the document
+				 */
+				UpdateChangeCount (NSDocumentChangeType.Cleared);
+			} catch (Exception e) {
+				Logger.Error ("Failed to Save Note", e);
+			}
 		}
 
 		/*public override bool HasUnautosavedChanges {
