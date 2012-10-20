@@ -1,10 +1,30 @@
+// WARNING
+//
+// This file has been generated automatically by MonoDevelop to store outlets and
+// actions made in the Xcode designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
+//
+using MonoMac.Foundation;
 
 namespace Tomboy
 {
-	// Should subclass MonoMac.AppKit.NSResponder
-	[MonoMac.Foundation.Register("AppDelegate")]
-	public partial class AppDelegate
+	[Register ("AppDelegate")]
+	partial class AppDelegate
 	{
+		[Action ("_searchAllNotes:")]
+		partial void _searchAllNotes (MonoMac.Foundation.NSObject sender);
+
+		[Action ("_dockNewNotes:")]
+		partial void _dockNewNotes (MonoMac.Foundation.NSObject sender);
+
+		[Action ("_dockSynchronize:")]
+		partial void _dockSynchronize (MonoMac.Foundation.NSObject sender);
+
+		[Action ("_dockSearchNotes:")]
+		partial void _dockSearchNotes (MonoMac.Foundation.NSObject sender);
+		
+		void ReleaseDesignerOutlets ()
+		{
+		}
 	}
 }
-

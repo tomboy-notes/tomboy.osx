@@ -121,12 +121,19 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="NoteLegacyTranslator.cs" />
     <Compile Include="unit-tests\NoteLegacyTranslatorTests.cs" />
     <Compile Include="LinkItem.cs" />
+    <Compile Include="DashboardNotesTableViewDataSource.cs" />
+    <Compile Include="DashboardWindow.cs" />
+    <Compile Include="DashboardWindowController.cs" />
+    <Compile Include="DashboardWindow.designer.cs">
+      <DependentUpon>DashboardWindow.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MyDocument.xib" />
     <InterfaceDefinition Include="MainMenu.xib" />
     <InterfaceDefinition Include="ShowNotesPopup.xib" />
     <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
+    <InterfaceDefinition Include="DashboardWindow.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist">

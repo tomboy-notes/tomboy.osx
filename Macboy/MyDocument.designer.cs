@@ -20,6 +20,9 @@ namespace Tomboy
 		[Outlet]
 		MonoMac.AppKit.NSSearchField searchField { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSMenuItem _dockSynchronize { get; set; }
+
 		[Action ("BackForwardAction:")]
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender);
 
@@ -31,6 +34,9 @@ namespace Tomboy
 
 		[Action ("DeleteNote:")]
 		partial void DeleteNote (MonoMac.Foundation.NSObject sender);
+
+		[Action ("_dockNewNote:")]
+		partial void _dockNewNote (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -47,6 +53,11 @@ namespace Tomboy
 			if (searchField != null) {
 				searchField.Dispose ();
 				searchField = null;
+			}
+
+			if (_dockSynchronize != null) {
+				_dockSynchronize.Dispose ();
+				_dockSynchronize = null;
 			}
 		}
 	}

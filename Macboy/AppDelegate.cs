@@ -37,17 +37,18 @@ namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
+		DashboardWindowController controller;
+
 		public AppDelegate ()
 		{
 			string backup_path = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 			// TODO, set it in a generic way
 			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-			Tomboy.DiskStorage.Instance.SetBackupPath (backup_path);
-			if (!Directory.Exists (backup_path))
-				Tomboy.DiskStorage.Instance.Backup ();
+			//Tomboy.DiskStorage.Instance.SetBackupPath (backup_path);
+			//if (!Directory.Exists (backup_path))
+			//	Tomboy.DiskStorage.Instance.Backup ();
 
 			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
-			Notes = NoteEngine.GetNotes ();
 
 			// Create our cache directory
 			if (!Directory.Exists (BaseUrlPath))
@@ -93,6 +94,41 @@ namespace Tomboy
 		{
 			return true;
 		}
+
+		/// <summary>
+		/// _searchs all notes which loads the Tomboy Dashboard
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
+		partial void _searchAllNotes (NSObject sender)
+		{
+			LoadDashboardWindow ();
+		}
+
+		partial void _dockSearchNotes (NSObject sender)
+		{
+			LoadDashboardWindow ();
+		}
+
+		partial void _dockSynchronize (NSObject sender)
+		{
+		}
+
+		partial void _dockNewNotes (NSObject sender)
+		{
+			Console.WriteLine ("new Note clicked");
+		}
+
+		#region private methods
+		private void LoadDashboardWindow ()
+		{
+			if (controller == null)
+				controller = new DashboardWindowController ();
+			controller.Window.MakeKeyAndOrderFront (this);
+		}
+
+		#endregion private methods
 	}
 }
 

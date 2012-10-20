@@ -433,8 +433,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference ref="291944582"/>
 						<reference ref="20568313"/>
-						<reference ref="237973430"/>
-						<reference ref="20568313"/>
 						<reference ref="41438124"/>
 						<reference ref="903088165"/>
 						<reference ref="808914092"/>
@@ -506,6 +504,7 @@
 					<string key="NSFrameSize">{771, 413}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView" ref="879740691"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{94, 141}</string>
@@ -834,7 +833,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">74</int>
+			<int key="maxID">83</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -850,6 +849,7 @@
 							<string>DeleteNote:</string>
 							<string>ShowNotes:</string>
 							<string>StartSearch:</string>
+							<string>_dockNewNote:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -857,6 +857,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>NSSearchField</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -867,6 +868,7 @@
 							<string>DeleteNote:</string>
 							<string>ShowNotes:</string>
 							<string>StartSearch:</string>
+							<string>_dockNewNote:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -886,18 +888,24 @@
 								<string key="name">StartSearch:</string>
 								<string key="candidateClassName">NSSearchField</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">_dockNewNote:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSMenuItem</string>
 							<string>NSSegmentedControl</string>
 							<string>WebView</string>
 							<string>NSSearchField</string>
@@ -907,12 +915,17 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_dockSynchronize</string>
+								<string key="candidateClassName">NSMenuItem</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">backForwardControl</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
