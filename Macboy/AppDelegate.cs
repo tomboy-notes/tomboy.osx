@@ -54,7 +54,8 @@ namespace Tomboy
 				Directory.CreateDirectory (BaseUrlPath);
 
 			Engine.NoteAdded += HandleNoteAdded;
-
+			ControlCenterController cc = new ControlCenterController ();
+			cc.Window.MakeKeyAndOrderFront (this);
 
 		}
 
@@ -77,6 +78,7 @@ namespace Tomboy
 		void HandleNoteAdded (Note note)
 		{
 			Logger.Debug ("Handling Note Added {0}", note.Title);
+
 		}
 
 		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows)
