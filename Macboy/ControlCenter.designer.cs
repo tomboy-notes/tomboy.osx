@@ -16,6 +16,12 @@ namespace Tomboy
 
 		[Outlet]
 		MonoMac.AppKit.NSTableView _notebooksTableView { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSSearchFieldCell _searchNotesInControlCenter { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSSearchField _searchNotes { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -27,6 +33,16 @@ namespace Tomboy
 			if (_notebooksTableView != null) {
 				_notebooksTableView.Dispose ();
 				_notebooksTableView = null;
+			}
+
+			if (_searchNotesInControlCenter != null) {
+				_searchNotesInControlCenter.Dispose ();
+				_searchNotesInControlCenter = null;
+			}
+
+			if (_searchNotes != null) {
+				_searchNotes.Dispose ();
+				_searchNotes = null;
 			}
 		}
 	}

@@ -94,7 +94,6 @@
 									<string key="NSFrame">{{0, 14}, {96, 22}}</string>
 									<reference key="NSSuperview"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="968368086">
@@ -198,7 +197,6 @@
 									<string key="NSFrame">{{3, 14}, {53, 32}}</string>
 									<reference key="NSSuperview"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="1055314911">
@@ -224,7 +222,7 @@
 								<reference key="NSToolbarItemImage" ref="326125999"/>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
-								<string key="NSToolbarItemMinSize">{53, 38}</string>
+								<string key="NSToolbarItemMinSize">{53, 32}</string>
 								<string key="NSToolbarItemMaxSize">{82, 38}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">YES</bool>
@@ -413,7 +411,7 @@
 																	<string key="NSFrameSize">{423, 336}</string>
 																	<reference key="NSSuperview" ref="463961263"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="57576881"/>
+																	<reference key="NSNextKeyView" ref="790928915"/>
 																	<string key="NSReuseIdentifierKey">_NS:13</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -591,7 +589,7 @@
 													<string key="NSFrameSize">{425, 354}</string>
 													<reference key="NSSuperview" ref="64379367"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="790928915"/>
+													<reference key="NSNextKeyView" ref="463961263"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<int key="NSsFlags">133682</int>
 													<reference key="NSVScroller" ref="57576881"/>
@@ -631,7 +629,6 @@
 									<string key="NSFrame">{{410, 1}, {16, 354}}</string>
 									<reference key="NSSuperview" ref="857561148"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:15</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="857561148"/>
@@ -698,7 +695,7 @@
 																	<string key="NSFrameSize">{172, 336}</string>
 																	<reference key="NSSuperview" ref="911428750"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="979946803"/>
+																	<reference key="NSNextKeyView" ref="866756866"/>
 																	<string key="NSReuseIdentifierKey">_NS:13</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -826,7 +823,7 @@
 													<string key="NSFrameSize">{171, 354}</string>
 													<reference key="NSSuperview" ref="372826449"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="866756866"/>
+													<reference key="NSNextKeyView" ref="911428750"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<int key="NSsFlags">133810</int>
 													<reference key="NSVScroller" ref="979946803"/>
@@ -934,6 +931,22 @@
 						<reference key="destination" ref="861920683"/>
 					</object>
 					<int key="connectionID">40</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_searchNotesInControlCenter</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="968368086"/>
+					</object>
+					<int key="connectionID">53</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_searchNotes</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="651849518"/>
+					</object>
+					<int key="connectionID">54</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1199,29 +1212,6 @@
 						<reference key="parent" ref="44434425"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">49</int>
-						<reference key="object" ref="985908805"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="651849518"/>
-						</object>
-						<reference key="parent" ref="755598461"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">47</int>
-						<reference key="object" ref="651849518"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="968368086"/>
-						</object>
-						<reference key="parent" ref="985908805"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">48</int>
-						<reference key="object" ref="968368086"/>
-						<reference key="parent" ref="651849518"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">52</int>
 						<reference key="object" ref="434272769"/>
 						<object class="NSMutableArray" key="children">
@@ -1243,6 +1233,29 @@
 						<int key="objectID">51</int>
 						<reference key="object" ref="1055314911"/>
 						<reference key="parent" ref="534774000"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">49</int>
+						<reference key="object" ref="985908805"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="651849518"/>
+						</object>
+						<reference key="parent" ref="755598461"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">47</int>
+						<reference key="object" ref="651849518"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="968368086"/>
+						</object>
+						<reference key="parent" ref="985908805"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">48</int>
+						<reference key="object" ref="968368086"/>
+						<reference key="parent" ref="651849518"/>
 					</object>
 				</object>
 			</object>
@@ -1359,7 +1372,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">54</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1381,11 +1394,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_notebooksTableView</string>
 							<string>_notesTableView</string>
+							<string>_searchNotesInControlCenter</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTableView</string>
 							<string>NSTableView</string>
+							<string>NSSearchFieldCell</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1394,6 +1409,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_notebooksTableView</string>
 							<string>_notesTableView</string>
+							<string>_searchNotesInControlCenter</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1404,6 +1420,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">_notesTableView</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_searchNotesInControlCenter</string>
+								<string key="candidateClassName">NSSearchFieldCell</string>
 							</object>
 						</object>
 					</object>

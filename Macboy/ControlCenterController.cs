@@ -43,12 +43,34 @@ namespace Tomboy
 			this.tags.Add (systemTag);
 		}
 
+
+		/// <summary>
+		/// Handles the text did change in search notes field
+		/// </summary>
+		/// <param name='obj'>
+		/// Object.
+		/// </param>
+		void handleTextDidChange(NSNotification obj)
+		{
+			
+			// As per the documentation: 
+			//  Use the key "NSFieldEditor" to obtain the field editor from the userInfo 
+			//	dictionary of the notification object
+			NSTextView textView = (NSTextView)obj.UserInfo.ObjectForKey ((NSString) "NSFieldEditor");
+			Console.WriteLine ("DidTextChange {0}", textView.Value);
+		}
+
 		// This method will be called automatically when the main window "wakes up".
 		[Export ("awakeFromNib:")]
 		public override void AwakeFromNib()
 		{
 			_notesTableView.DataSource = new ControlCenterNotesDataSource (notes);
 			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
+
+			// handle search notes
+			_searchNotes.Changed += delegate (object sender, EventArgs e) {
+				handleTextDidChange ((NSNotification) sender);
+			};
 		}
 
 		#endregion
