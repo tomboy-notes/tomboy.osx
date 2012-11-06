@@ -59,6 +59,10 @@ namespace Tomboy
 		{
 		}
 
+		public MyDocument () : base ()
+		{
+		}
+
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
 		{
 			base.WindowControllerDidLoadNib (windowController);

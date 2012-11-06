@@ -65,12 +65,22 @@ namespace Tomboy
 		public override void AwakeFromNib()
 		{
 			_notesTableView.DataSource = new ControlCenterNotesDataSource (notes);
+			// handle users doubleClicking on a note in the list of notes
+			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
+
 
 			// handle search notes
 			_searchNotes.Changed += delegate (object sender, EventArgs e) {
 				handleTextDidChange ((NSNotification) sender);
 			};
+		}
+
+		void HandleNoteDoubleClick (object sender, EventArgs e)
+		{
+			NSWindowController cc = new NSWindowController ();
+			MyDocument myDoc = new MyDocument ();
+			myDoc.AddWindowController (cc);
 		}
 
 		#endregion
