@@ -50,20 +50,10 @@ namespace Tomboy
 
 		#region private methods
 
-		/// <summary>
-		/// Handles the text did change in search notes field
-		/// </summary>
-		/// <param name='obj'>
-		/// Object.
-		/// </param>
-		void HandleTextDidChange(NSNotification obj)
+		partial void FindNotes (MonoMac.AppKit.NSSearchField sender)
 		{
-			
-			// As per the documentation: 
-			//  Use the key "NSFieldEditor" to obtain the field editor from the userInfo 
-			//	dictionary of the notification object
-			NSTextView textView = (NSTextView)obj.UserInfo.ObjectForKey ((NSString) "NSFieldEditor");
-			Console.WriteLine ("DidTextChange {0}", textView.Value);
+			this.notes = AppDelegate.NoteEngine.GetNotes (sender.StringValue, true);
+			_notesTableView.ReloadData ();
 		}
 
 		// This method will be called automatically when the main window "wakes up".
@@ -71,15 +61,10 @@ namespace Tomboy
 		public override void AwakeFromNib()
 		{
 			_notesTableView.DataSource = new ControlCenterNotesDataSource (this);
-			// handle users doubleClicking on a note in the list of notes
-			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
 
-
-			// handle search notes
-			_searchNotes.Changed += delegate (object sender, EventArgs e) {
-				HandleTextDidChange ((NSNotification) sender);
-			};
+			// handle users doubleClicking on a note in the list of notes
+			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 		}
 
 		/// <summary>
@@ -94,11 +79,7 @@ namespace Tomboy
 		void HandleNoteDoubleClick (object sender, EventArgs e)
 		{
 			int selectedRow = _notesTableView.SelectedRow;
-			var selectObj = _notesTableView.GetCell (1, selectedRow);
-
-			Console.WriteLine ("Selected value {0}", selectObj.ObjectValue);
 			Note note = notes.ElementAt (selectedRow).Value;
-
 			MyDocument myDoc = new MyDocument (note);
 			_sharedDocumentController.AddDocument (myDoc);
 			myDoc.MakeWindowControllers ();
@@ -112,7 +93,7 @@ namespace Tomboy
 
 		public Dictionary<string, Note> Notes {
 			get {
-				return notes;
+				return this.notes;
 			}
 		}
 

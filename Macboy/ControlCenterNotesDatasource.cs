@@ -34,6 +34,7 @@ namespace Tomboy
 	[Register ("ControlCenterNotesDataSource")]
 	public class ControlCenterNotesDataSource : NSTableViewDataSource
 	{
+		// should represent the Tomboy image, but this isn't loading correctly
 		private NSImage image = new NSImage ("Tomboy.tomboy.icns");
 
 		ControlCenterController MyControlCenterController {
@@ -47,6 +48,8 @@ namespace Tomboy
 
 		public ControlCenterNotesDataSource (ControlCenterController controller)
 		{
+			if (controller == null)
+				throw new ArgumentNullException ("controller");
 			MyControlCenterController = controller;
 		}
 
@@ -61,13 +64,12 @@ namespace Tomboy
 		[Export ("tableView:objectValueForTableColumn:row:")]
 		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row)
 		{
-
 			// Get the current row index
 			var note_at = MyControlCenterController.Notes.Keys.ElementAt (row);
 			var colKey = (NSString)col.Identifier.ToString ();
 			switch (colKey) {
 			case "_notesImageColumn":
-				return image;
+				return image; //FIXME: This is not working. An image is not being returned.
 			case "modifiedDate":
 				return (NSString)MyControlCenterController.Notes[note_at].ChangeDate.ToShortDateString ();
 			case "title":

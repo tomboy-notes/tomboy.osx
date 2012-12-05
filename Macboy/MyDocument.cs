@@ -163,10 +163,7 @@ namespace Tomboy
 
 			Logger.Debug ("Note text before Translator {0}", currentNote.Text);
 			string content = translator.From (currentNote);
-			Logger.Debug ("Note text after Translator {0}", content);
-
 			content = content.Replace (currentNote.Title, "<h1>" + currentNote.Title + "</h1>");
-			Logger.Debug ("Note text after title {0}", content);
 
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
