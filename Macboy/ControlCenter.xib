@@ -15,6 +15,7 @@
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
+			<string>NSImageCell</string>
 			<string>NSScrollView</string>
 			<string>NSScroller</string>
 			<string>NSSearchField</string>
@@ -89,11 +90,9 @@
 								<string key="NSToolbarItemPaletteLabel">Search Notes</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSSearchField" key="NSToolbarItemView" id="651849518">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {96, 22}}</string>
-									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="968368086">
@@ -192,11 +191,9 @@
 								<string key="NSToolbarItemPaletteLabel">New Note</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSButton" key="NSToolbarItemView" id="534774000">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{3, 14}, {53, 32}}</string>
-									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
+									<string key="NSFrame">{{13, 14}, {34, 32}}</string>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="1055314911">
@@ -222,7 +219,7 @@
 								<reference key="NSToolbarItemImage" ref="326125999"/>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
-								<string key="NSToolbarItemMinSize">{53, 32}</string>
+								<string key="NSToolbarItemMinSize">{34, 32}</string>
 								<string key="NSToolbarItemMaxSize">{82, 38}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">YES</bool>
@@ -435,6 +432,44 @@
 																	</object>
 																	<object class="NSMutableArray" key="NSTableColumns">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
+																		<object class="NSTableColumn" id="822666404">
+																			<string key="NSIdentifier">_notesImageColumn</string>
+																			<double key="NSWidth">23</double>
+																			<double key="NSMinWidth">10</double>
+																			<double key="NSMaxWidth">3.4028234663852886e+38</double>
+																			<object class="NSTableHeaderCell" key="NSHeaderCell">
+																				<int key="NSCellFlags">75497536</int>
+																				<int key="NSCellFlags2">2048</int>
+																				<string key="NSContents"/>
+																				<object class="NSFont" key="NSSupport" id="26">
+																					<string key="NSName">LucidaGrande</string>
+																					<double key="NSSize">11</double>
+																					<int key="NSfFlags">3100</int>
+																				</object>
+																				<object class="NSColor" key="NSBackgroundColor">
+																					<int key="NSColorSpace">6</int>
+																					<string key="NSCatalogName">System</string>
+																					<string key="NSColorName">headerColor</string>
+																					<reference key="NSColor" ref="439288534"/>
+																				</object>
+																				<object class="NSColor" key="NSTextColor" id="33067820">
+																					<int key="NSColorSpace">6</int>
+																					<string key="NSCatalogName">System</string>
+																					<string key="NSColorName">headerTextColor</string>
+																					<reference key="NSColor" ref="951438799"/>
+																				</object>
+																			</object>
+																			<object class="NSImageCell" key="NSDataCell" id="904219061">
+																				<int key="NSCellFlags">671088640</int>
+																				<int key="NSCellFlags2">33554432</int>
+																				<string key="NSCellIdentifier">_NS:9</string>
+																				<int key="NSAlign">0</int>
+																				<int key="NSScale">0</int>
+																				<int key="NSStyle">0</int>
+																				<bool key="NSAnimates">NO</bool>
+																			</object>
+																			<reference key="NSTableView" ref="1024103096"/>
+																		</object>
 																		<object class="NSTableColumn" id="975222044">
 																			<string key="NSIdentifier">title</string>
 																			<double key="NSWidth">300</double>
@@ -444,21 +479,12 @@
 																				<int key="NSCellFlags">75497536</int>
 																				<int key="NSCellFlags2">2048</int>
 																				<string key="NSContents">Title</string>
-																				<object class="NSFont" key="NSSupport" id="26">
-																					<string key="NSName">LucidaGrande</string>
-																					<double key="NSSize">11</double>
-																					<int key="NSfFlags">3100</int>
-																				</object>
+																				<reference key="NSSupport" ref="26"/>
 																				<object class="NSColor" key="NSBackgroundColor" id="470964987">
 																					<int key="NSColorSpace">3</int>
 																					<bytes key="NSWhite">MC4zMzMzMzI5ODU2AA</bytes>
 																				</object>
-																				<object class="NSColor" key="NSTextColor" id="33067820">
-																					<int key="NSColorSpace">6</int>
-																					<string key="NSCatalogName">System</string>
-																					<string key="NSColorName">headerTextColor</string>
-																					<reference key="NSColor" ref="951438799"/>
-																				</object>
+																				<reference key="NSTextColor" ref="33067820"/>
 																			</object>
 																			<object class="NSTextFieldCell" key="NSDataCell" id="788665281">
 																				<int key="NSCellFlags">337641536</int>
@@ -483,7 +509,7 @@
 																		</object>
 																		<object class="NSTableColumn" id="94353059">
 																			<string key="NSIdentifier">modifiedDate</string>
-																			<double key="NSWidth">117</double>
+																			<double key="NSWidth">91</double>
 																			<double key="NSMinWidth">40</double>
 																			<double key="NSMaxWidth">1000</double>
 																			<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -567,7 +593,7 @@
 															<int key="NSsFlags">1</int>
 															<reference key="NSTarget" ref="334209794"/>
 															<string key="NSAction">_doScroller:</string>
-															<double key="NSPercent">0.92763157894736847</double>
+															<double key="NSPercent">0.81976744186046513</double>
 														</object>
 														<object class="NSClipView" id="790928915">
 															<reference key="NSNextResponder" ref="334209794"/>
@@ -948,6 +974,22 @@
 					</object>
 					<int key="connectionID">54</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">_newNoteButton:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1055314911"/>
+					</object>
+					<int key="connectionID">58</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_notesImage</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="904219061"/>
+					</object>
+					<int key="connectionID">59</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1115,6 +1157,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="975222044"/>
 							<reference ref="94353059"/>
+							<reference ref="822666404"/>
 						</object>
 						<reference key="parent" ref="334209794"/>
 					</object>
@@ -1257,6 +1300,20 @@
 						<reference key="object" ref="968368086"/>
 						<reference key="parent" ref="651849518"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="822666404"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="904219061"/>
+						</object>
+						<reference key="parent" ref="1024103096"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">57</int>
+						<reference key="object" ref="904219061"/>
+						<reference key="parent" ref="822666404"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1306,6 +1363,9 @@
 					<string>50.IBPluginDependency</string>
 					<string>51.IBPluginDependency</string>
 					<string>52.IBPluginDependency</string>
+					<string>55.IBPluginDependency</string>
+					<string>57.IBPluginDependency</string>
+					<string>57.userInterfaceItemIdentifier</string>
 					<string>7.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
@@ -1357,6 +1417,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>_notesImage</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
@@ -1372,7 +1435,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">54</int>
+			<int key="maxID">61</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1388,18 +1451,33 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ControlCenterController</string>
 					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">_newNoteButton:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">_newNoteButton:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">_newNoteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_notebooksTableView</string>
+							<string>_notesImage</string>
 							<string>_notesTableView</string>
+							<string>_searchNotes</string>
 							<string>_searchNotesInControlCenter</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTableView</string>
+							<string>NSImageCell</string>
 							<string>NSTableView</string>
+							<string>NSSearchField</string>
 							<string>NSSearchFieldCell</string>
 						</object>
 					</object>
@@ -1408,7 +1486,9 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_notebooksTableView</string>
+							<string>_notesImage</string>
 							<string>_notesTableView</string>
+							<string>_searchNotes</string>
 							<string>_searchNotesInControlCenter</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -1418,8 +1498,16 @@
 								<string key="candidateClassName">NSTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">_notesImage</string>
+								<string key="candidateClassName">NSImageCell</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">_notesTableView</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_searchNotes</string>
+								<string key="candidateClassName">NSSearchField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">_searchNotesInControlCenter</string>

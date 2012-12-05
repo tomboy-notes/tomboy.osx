@@ -166,6 +166,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
   <ItemGroup>
     <EmbeddedResource Include="transform_from_note.xsl" />
     <EmbeddedResource Include="transform_to_note.xsl" />
+    <EmbeddedResource Include="tomboy.icns" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

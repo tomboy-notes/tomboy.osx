@@ -34,36 +34,44 @@ namespace Tomboy
 	[Register ("ControlCenterNotesDataSource")]
 	public class ControlCenterNotesDataSource : NSTableViewDataSource
 	{
-		private Dictionary <string, Note> notes;
+		private NSImage image = new NSImage ("Tomboy.tomboy.icns");
+
+		ControlCenterController MyControlCenterController {
+			get;
+			set;
+		}
 
 		public ControlCenterNotesDataSource ()
 		{
 		}
 
-		public ControlCenterNotesDataSource (Dictionary <string, Note> notes)
+		public ControlCenterNotesDataSource (ControlCenterController controller)
 		{
-			this.notes = notes;
+			MyControlCenterController = controller;
 		}
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
 		public int NumberOfRowsInTableView(NSTableView table)
 		{
-			return this.notes.Count;
+			return MyControlCenterController == null ? 0 : MyControlCenterController.Notes.Count;
 		}
 
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
 		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row)
 		{
+
 			// Get the current row index
-			var note_at = notes.Keys.ElementAt (row);
+			var note_at = MyControlCenterController.Notes.Keys.ElementAt (row);
 			var colKey = (NSString)col.Identifier.ToString ();
 			switch (colKey) {
+			case "_notesImageColumn":
+				return image;
 			case "modifiedDate":
-				return (NSString)notes[note_at].ChangeDate.ToShortDateString ();
+				return (NSString)MyControlCenterController.Notes[note_at].ChangeDate.ToShortDateString ();
 			case "title":
-				return (NSString)notes[note_at].Title;
+				return (NSString)MyControlCenterController.Notes[note_at].Title;
 			default:
 				return null;
 			}

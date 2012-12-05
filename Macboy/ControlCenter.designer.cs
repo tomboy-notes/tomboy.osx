@@ -22,6 +22,12 @@ namespace Tomboy
 
 		[Outlet]
 		MonoMac.AppKit.NSSearchField _searchNotes { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSImageCell _notesImage { get; set; }
+
+		[Action ("_newNoteButton:")]
+		partial void NewNoteClicked (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -43,6 +49,11 @@ namespace Tomboy
 			if (_searchNotes != null) {
 				_searchNotes.Dispose ();
 				_searchNotes = null;
+			}
+
+			if (_notesImage != null) {
+				_notesImage.Dispose ();
+				_notesImage = null;
 			}
 		}
 	}

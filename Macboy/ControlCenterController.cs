@@ -10,8 +10,9 @@ namespace Tomboy
 	public partial class ControlCenterController : MonoMac.AppKit.NSWindowController
 	{
 
-		private Dictionary <string, Note> notes;
-		private List <Tags.Tag> tags;
+		Dictionary <string, Note> notes;
+		List <Tags.Tag> tags;
+		NSDocumentController _sharedDocumentController;
 
 		#region Constructors
 		
@@ -38,11 +39,16 @@ namespace Tomboy
 		void Initialize ()
 		{
 			this.notes = AppDelegate.NoteEngine.GetNotes ();
+			//TODO: Tags are not working properly
 			this.tags = AppDelegate.NoteEngine.GetTags ();
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
 			this.tags.Add (systemTag);
+			_sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
 		}
 
+		#endregion
+
+		#region private methods
 
 		/// <summary>
 		/// Handles the text did change in search notes field
@@ -50,7 +56,7 @@ namespace Tomboy
 		/// <param name='obj'>
 		/// Object.
 		/// </param>
-		void handleTextDidChange(NSNotification obj)
+		void HandleTextDidChange(NSNotification obj)
 		{
 			
 			// As per the documentation: 
@@ -64,7 +70,7 @@ namespace Tomboy
 		[Export ("awakeFromNib:")]
 		public override void AwakeFromNib()
 		{
-			_notesTableView.DataSource = new ControlCenterNotesDataSource (notes);
+			_notesTableView.DataSource = new ControlCenterNotesDataSource (this);
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
@@ -72,15 +78,42 @@ namespace Tomboy
 
 			// handle search notes
 			_searchNotes.Changed += delegate (object sender, EventArgs e) {
-				handleTextDidChange ((NSNotification) sender);
+				HandleTextDidChange ((NSNotification) sender);
 			};
 		}
 
+		/// <summary>
+		/// Handles the note double click which a Note in the Notes list is Double-clicked causing an open action
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
+		/// <param name='e'>
+		/// E.
+		/// </param>
 		void HandleNoteDoubleClick (object sender, EventArgs e)
 		{
-			NSWindowController cc = new NSWindowController ();
-			MyDocument myDoc = new MyDocument ();
-			myDoc.AddWindowController (cc);
+			int selectedRow = _notesTableView.SelectedRow;
+			var selectObj = _notesTableView.GetCell (1, selectedRow);
+
+			Console.WriteLine ("Selected value {0}", selectObj.ObjectValue);
+			Note note = notes.ElementAt (selectedRow).Value;
+
+			MyDocument myDoc = new MyDocument (note);
+			_sharedDocumentController.AddDocument (myDoc);
+			myDoc.MakeWindowControllers ();
+			myDoc.ShowWindows ();
+		}
+
+		partial void NewNoteClicked (NSObject sender)
+		{
+			_sharedDocumentController.NewDocument (null);
+		}
+
+		public Dictionary<string, Note> Notes {
+			get {
+				return notes;
+			}
 		}
 
 		#endregion
