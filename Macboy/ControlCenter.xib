@@ -55,7 +55,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{131, 74}, {606, 354}}</string>
 				<int key="NSWTFlags">611844096</int>
-				<string key="NSWindowTitle">Tomboy Control Center</string>
+				<string key="NSWindowTitle">Tomboy Dashboard</string>
 				<string key="NSWindowClass">ControlCenter</string>
 				<object class="NSToolbar" key="NSViewClass" id="755598461">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
@@ -94,6 +94,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {96, 22}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="968368086">
@@ -176,8 +177,8 @@
 								<nil key="NSToolbarItemImage"/>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
-								<string key="NSToolbarItemMinSize">{96, 22}</string>
-								<string key="NSToolbarItemMaxSize">{96, 22}</string>
+								<string key="NSToolbarItemMinSize">{150, 22}</string>
+								<string key="NSToolbarItemMaxSize">{150, 22}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">YES</bool>
 								<int key="NSToolbarItemTag">0</int>
@@ -196,6 +197,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{13, 14}, {34, 32}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="1055314911">
@@ -222,7 +224,7 @@
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
 								<string key="NSToolbarItemMinSize">{34, 32}</string>
-								<string key="NSToolbarItemMaxSize">{82, 38}</string>
+								<string key="NSToolbarItemMaxSize">{34, 32}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">YES</bool>
 								<int key="NSToolbarItemTag">0</int>
@@ -365,8 +367,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference ref="434272769"/>
 						<reference ref="731219924"/>
-						<reference ref="493933415"/>
-						<reference ref="313089928"/>
 						<reference ref="985908805"/>
 					</object>
 					<object class="NSArray" key="NSToolbarIBSelectableItems" id="0">

@@ -50,6 +50,12 @@ namespace Tomboy
 
 		#region private methods
 
+		/// <summary>
+		/// Responds to searches in Search Field
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
 		partial void FindNotes (MonoMac.AppKit.NSSearchField sender)
 		{
 			this.notes = AppDelegate.NoteEngine.GetNotes (sender.StringValue, true);
@@ -89,6 +95,8 @@ namespace Tomboy
 		partial void NewNoteClicked (NSObject sender)
 		{
 			_sharedDocumentController.NewDocument (null);
+			//FIXME: Should insert data into tableview maybe instead or reloading the whole view?
+			_notesTableView.ReloadData ();
 		}
 
 		public Dictionary<string, Note> Notes {
