@@ -54,9 +54,6 @@ namespace Tomboy
 				Directory.CreateDirectory (BaseUrlPath);
 
 			Engine.NoteAdded += HandleNoteAdded;
-			ControlCenterController cc = new ControlCenterController ();
-			cc.Window.MakeKeyAndOrderFront (this);
-
 		}
 
 		public static string BaseUrlPath {
@@ -79,6 +76,12 @@ namespace Tomboy
 		{
 			Logger.Debug ("Handling Note Added {0}", note.Title);
 
+		}
+
+		partial void OpenDashboard (NSObject sender)
+		{
+			ControlCenterController cc = new ControlCenterController ();
+			cc.Window.MakeKeyAndOrderFront (this);
 		}
 
 		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows)
