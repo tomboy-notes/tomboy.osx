@@ -11,17 +11,8 @@ namespace Tomboy
 	[Register ("AppDelegate")]
 	partial class AppDelegate
 	{
-		[Action ("_searchAllNotes:")]
-		partial void _searchAllNotes (MonoMac.Foundation.NSObject sender);
-
-		[Action ("_dockNewNotes:")]
-		partial void _dockNewNotes (MonoMac.Foundation.NSObject sender);
-
-		[Action ("_dockSynchronize:")]
-		partial void _dockSynchronize (MonoMac.Foundation.NSObject sender);
-
-		[Action ("_dockSearchNotes:")]
-		partial void _dockSearchNotes (MonoMac.Foundation.NSObject sender);
+		[Action ("OpenDashboard:")]
+		partial void OpenDashboard (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

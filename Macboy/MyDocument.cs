@@ -45,7 +45,7 @@ namespace Tomboy
 		Note currentNote;
 
 		// Used as a marker. Are we loading a Note or something else that the Policy Handler should act on
-		bool LoadingFromString;
+		private bool _loadingFromString;
 
 		NSPopover popover;
 		NoteLegacyTranslator translator= new NoteLegacyTranslator ();
@@ -59,17 +59,32 @@ namespace Tomboy
 		{
 		}
 
+		public MyDocument () : base ()
+		{
+		}
+
+		public MyDocument (Note note) : base ()
+		{
+			// some contructors might pass in null and not an actual note.
+			if (note != null) {
+				this.currentNoteID = note.Uri;
+				this.currentNote = note;
+			}
+		}
+
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
 		{
 			base.WindowControllerDidLoadNib (windowController);
 			UpdateBackForwardSensitivity ();
 			noteWebView.FinishedLoad += HandleFinishedLoad;
 			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
+
 			Editable (true);
 			if (currentNoteID == null || currentNoteID.Length == 0)
 				LoadNewNote ();
+			else
+				LoadNote (currentNoteID, true);
 		}
-
 		/// <summary>
 		/// Handles the web view decide policy for navigation.
 		/// </summary>
@@ -84,7 +99,7 @@ namespace Tomboy
 			// Reference for examples of this method in use
 			// https://github.com/mono/monomac/commit/efc6e28fc03005638ce2cd217dc6c9281ad9c1c5
 
-			if (LoadingFromString){
+			if (_loadingFromString){
 				WebView.DecideUse (e.DecisionToken);
 				return;
 			}
@@ -107,44 +122,48 @@ namespace Tomboy
 			}
 		}
 
-		private void LoadNewNote ()
+		void LoadNewNote ()
 		{
 			// this thing still has issues. The noteWebView is not initialized and I don't know how to get it.
-			LoadingFromString = true;
+			_loadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
 			
 			noteWebView.MainFrame.LoadHtmlString ("<h1>" + currentNote.Title + "</h1>", new NSUrl (AppDelegate.BaseUrlPath));
 
 			InvalidateRestorableState ();
-			LoadingFromString = false;
+			_loadingFromString = false;
 		}
 
-		private void LoadNote (string newNoteId, bool withHistory = true)
-		{
-			if (HasUnautosavedChanges)
-				SaveData ();
-
-			LoadingFromString = true;
+		void LoadNote (string newNoteId, bool withHistory = true)
+		{			
 			try {
 				// on a crash, the document restore may try to load a key that doesn't exist any more.
 				currentNote = AppDelegate.Notes[newNoteId];
+				currentNoteID = newNoteId;
+				LoadNote (withHistory);
 			} catch (Exception e) {
 				Logger.Error (e.Message, e);
 				return;
 			}
+
+		}
+
+		void LoadNote (bool withHistory = true)
+		{
+			if (HasUnautosavedChanges)
+				SaveData ();
+
+			_loadingFromString = true;
+
 			if (currentNote == null)
 				return;
 
-			currentNoteID = newNoteId;
 			InvalidateRestorableState ();
 
 			Logger.Debug ("Note text before Translator {0}", currentNote.Text);
 			string content = translator.From (currentNote);
-			Logger.Debug ("Note text after Translator {0}", content);
-
 			content = content.Replace (currentNote.Title, "<h1>" + currentNote.Title + "</h1>");
-			Logger.Debug ("Note text after title {0}", content);
 
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
@@ -161,10 +180,10 @@ namespace Tomboy
 				currentHistoryPosition = history.Count - 1;
 			}
 			UpdateBackForwardSensitivity ();
-			LoadingFromString = false;
+			_loadingFromString = false;
 			if (popover != null)
 				popover.Close ();
-			Logger.Debug ("Finished loading Note ID {0} \n Note Body '{1}'", newNoteId, content);
+			Logger.Debug ("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
 		/// <summary>
