@@ -2,7 +2,7 @@
 // ControlCenterNotesDatasource.cs
 //
 // Author:
-//       Jared Jennings <jjennings@gnome.org>
+//       Jared L Jennings <jared@jaredjennings.org>
 //
 // Copyright (c) 2012 Jared Jennings 2012
 //
@@ -23,6 +23,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

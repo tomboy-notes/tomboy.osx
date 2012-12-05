@@ -2,9 +2,9 @@
 // ControlCenterNotebooksDataSource.cs
 //
 // Author:
-//       Jared Jennings <jjennings@gnome.org>
+//       Jared L Jennings <jared@jaredjennings.org>
 //
-// Copyright (c) 2012 Jared Jennings 2012
+// Copyright (c) 2012 jjennings
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
