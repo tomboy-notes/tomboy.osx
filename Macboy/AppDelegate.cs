@@ -37,7 +37,7 @@ namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
-		DashboardWindowController controller;
+		ControlCenterController controller;
 
 		public AppDelegate ()
 		{
@@ -81,8 +81,9 @@ namespace Tomboy
 
 		partial void OpenDashboard (NSObject sender)
 		{
-			ControlCenterController cc = new ControlCenterController ();
-			cc.Window.MakeKeyAndOrderFront (this);
+			if (controller == null)
+				controller = new ControlCenterController ();
+			controller.Window.MakeKeyAndOrderFront (this);
 		}
 
 		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows)
@@ -106,30 +107,30 @@ namespace Tomboy
 		/// <param name='sender'>
 		/// Sender.
 		/// </param>
-		partial void _searchAllNotes (NSObject sender)
-		{
-			LoadDashboardWindow ();
-		}
-
-		partial void _dockSearchNotes (NSObject sender)
-		{
-			LoadDashboardWindow ();
-		}
-
-		partial void _dockSynchronize (NSObject sender)
-		{
-		}
-
-		partial void _dockNewNotes (NSObject sender)
-		{
-			Console.WriteLine ("new Note clicked");
-		}
+//		partial void _searchAllNotes (NSObject sender)
+//		{
+//			LoadDashboardWindow ();
+//		}
+//
+//		partial void _dockSearchNotes (NSObject sender)
+//		{
+//			LoadDashboardWindow ();
+//		}
+//
+//		partial void _dockSynchronize (NSObject sender)
+//		{
+//		}
+//
+//		partial void _dockNewNotes (NSObject sender)
+//		{
+//			Console.WriteLine ("new Note clicked");
+//		}
 
 		#region private methods
 		private void LoadDashboardWindow ()
 		{
 			if (controller == null)
-				controller = new DashboardWindowController ();
+				controller = new ControlCenterController ();
 			controller.Window.MakeKeyAndOrderFront (this);
 		}
 

@@ -83,7 +83,7 @@ namespace Tomboy
 			if (currentNoteID == null || currentNoteID.Length == 0)
 				LoadNewNote ();
 			else
-				LoadNote (currentNoteID, true);
+				LoadNote (true);
 		}
 		/// <summary>
 		/// Handles the web view decide policy for navigation.
