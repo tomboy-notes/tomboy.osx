@@ -44,9 +44,9 @@ namespace Tomboy
 			string backup_path = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 			// TODO, set it in a generic way
 			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-			//Tomboy.DiskStorage.Instance.SetBackupPath (backup_path);
-			//if (!Directory.Exists (backup_path))
-			//	Tomboy.DiskStorage.Instance.Backup ();
+			Tomboy.DiskStorage.Instance.SetBackupPath (backup_path);
+			if (!Directory.Exists (backup_path))
+				Tomboy.DiskStorage.Instance.Backup ();
 
 			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
 
