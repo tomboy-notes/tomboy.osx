@@ -31,8 +31,6 @@ using System.Collections.Generic;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-using Tomboy;
-
 namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
