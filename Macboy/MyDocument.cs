@@ -227,7 +227,7 @@ namespace Tomboy
 				 */
 				UpdateChangeCount (NSDocumentChangeType.Cleared);
 			} catch (Exception e) {
-				Logger.Error ("Failed to Save Note", e);
+				Logger.Error ("Failed to Save Note {0}", e);
 			}
 		}
 
