@@ -99,8 +99,8 @@
 								</object>
 								<object class="NSMenuItem" id="109658862">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Open Dashboard</string>
-									<string key="NSKeyEquiv">d</string>
+									<string key="NSTitle">Search All Notes</string>
+									<string key="NSKeyEquiv">S</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
