@@ -59,7 +59,7 @@
 			<object class="NSWindowTemplate" id="252265233">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{133, 235}, {771, 413}}</string>
+				<string key="NSWindowRect">{{466, 235}, {450, 300}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">New Note</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -96,9 +96,10 @@
 								<string key="NSToolbarItemPaletteLabel">Delete</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSButton" key="NSToolbarItemView" id="509272090">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{1, 14}, {39, 25}}</string>
+									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="450441236">
@@ -144,9 +145,10 @@
 								<string key="NSToolbarItemPaletteLabel">Notes</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSButton" key="NSToolbarItemView" id="920921493">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {39, 25}}</string>
+									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:22</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="856306270">
@@ -188,9 +190,10 @@
 								<string key="NSToolbarItemPaletteLabel">Back/Forward</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSSegmentedControl" key="NSToolbarItemView" id="158615865">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{7, 14}, {67, 25}}</string>
+									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSegmentedCell" key="NSCell" id="924709543">
@@ -248,9 +251,10 @@
 								<string key="NSToolbarItemPaletteLabel">Search</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSSearchField" key="NSToolbarItemView" id="878041094">
-									<nil key="NSNextResponder"/>
-									<int key="NSvFlags">268</int>
+									<reference key="NSNextResponder"/>
+									<int key="NSvFlags">298</int>
 									<string key="NSFrame">{{0, 14}, {198, 22}}</string>
+									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="823755240">
@@ -472,7 +476,7 @@
 									<string>public.url-name</string>
 								</object>
 							</object>
-							<string key="NSFrameSize">{771, 413}</string>
+							<string key="NSFrame">{{0, -70}, {745, 370}}</string>
 							<reference key="NSSuperview" ref="21739532"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
@@ -501,7 +505,7 @@
 							<bool key="AllowsUndo">YES</bool>
 						</object>
 					</object>
-					<string key="NSFrameSize">{771, 413}</string>
+					<string key="NSFrameSize">{450, 300}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="879740691"/>
