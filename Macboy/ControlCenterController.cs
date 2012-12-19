@@ -69,6 +69,25 @@ namespace Tomboy
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
 			this.tags.Add (systemTag);
 			_sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+			Engine.NoteRemoved += HandleNoteRemoved;
+			Engine.NoteAdded += HandleNoteAdded;
+			Engine.NoteUpdated += HandleNoteUpdated;
+		}
+
+		void HandleNoteUpdated (Note note)
+		{
+			_notesTableView.ReloadData ();
+		}
+
+		void HandleNoteAdded (Note note)
+		{
+			_notesTableView.ReloadData ();
+		}
+
+		void HandleNoteRemoved (Note note)
+		{
+			notes.Remove (note.Uri);
+			_notesTableView.ReloadData ();
 		}
 
 		#endregion

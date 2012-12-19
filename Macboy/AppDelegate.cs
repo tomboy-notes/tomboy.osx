@@ -53,6 +53,12 @@ namespace Tomboy
 				Directory.CreateDirectory (BaseUrlPath);
 
 			Engine.NoteAdded += HandleNoteAdded;
+			Engine.NoteRemoved += HandleNoteRemoved;
+		}
+
+		void HandleNoteRemoved (Note note)
+		{
+			Console.WriteLine ("AppDelegate Handling Note {0} removed", note.Title);
 		}
 
 		public static string BaseUrlPath {
