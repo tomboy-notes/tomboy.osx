@@ -27,6 +27,7 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 using MonoMac.Foundation;
 using MonoMac.AppKit;
@@ -52,8 +53,59 @@ namespace Tomboy
 			if (!Directory.Exists (BaseUrlPath))
 				Directory.CreateDirectory (BaseUrlPath);
 
+			// Currently lazy load because otherwise the Dock Menu throws an error about there being no notes.
+			if (Notes == null)
+				Notes = NoteEngine.GetNotes ();
+
 			Engine.NoteAdded += HandleNoteAdded;
 			Engine.NoteRemoved += HandleNoteRemoved;
+		}
+
+		[Export ("awakeFromNib:")]
+		public override void AwakeFromNib ()
+		{
+			BuildDockMenuNotes ();
+		}
+
+		/// <summary>
+		/// Builds the dock menu notes, currently populating the Menu with Notes. ALL NOTES
+		/// </summary>
+		void BuildDockMenuNotes ()
+		{
+			if (Notes != null || Notes.Count > 0) {
+				var max = 10;
+				if (Notes.Count < 10)
+					max = Notes.Count;
+				for (int i = 0; i < max; i++) {
+					var item = new NSMenuItem ();
+					var key_at = Notes.Keys.ElementAt (i);
+					item.Title = Notes[key_at].Title;
+					item.Activated += HandleActivated;
+					dockMenu.AddItem (item);
+				}
+			}
+		}
+
+		void HandleActivated (object sender, EventArgs e)
+		{
+			NSMenuItem item = (NSMenuItem)sender;
+			OpenNote (item.Title);
+		}
+
+		/// <summary>
+		/// Opens the note that was selected from the Dock Menu
+		/// </summary>
+		/// <param name='title'>
+		/// Title.
+		/// </param>
+		void OpenNote (string title)
+		{
+			var note = NoteEngine.GetNote (title);
+			MyDocument myDoc = new MyDocument (note);
+			var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+			_sharedDocumentController.AddDocument (myDoc);
+			myDoc.MakeWindowControllers ();
+			myDoc.ShowWindows ();
 		}
 
 		void HandleNoteRemoved (Note note)
@@ -105,30 +157,21 @@ namespace Tomboy
 			return true;
 		}
 
-		/// <summary>
-		/// _searchs all notes which loads the Tomboy Dashboard
-		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-//		partial void _searchAllNotes (NSObject sender)
-//		{
-//			LoadDashboardWindow ();
-//		}
-//
-//		partial void _dockSearchNotes (NSObject sender)
-//		{
-//			LoadDashboardWindow ();
-//		}
-//
-//		partial void _dockSynchronize (NSObject sender)
-//		{
-//		}
-//
-//		partial void _dockNewNotes (NSObject sender)
-//		{
-//			Console.WriteLine ("new Note clicked");
-//		}
+		partial void MenuClickedAboutTomboy (NSObject sender)
+		{
+			Console.WriteLine ("Tomboy is an opensource Note application");
+		}
+
+		partial void MenuClickedNewNote (NSObject sender)
+		{
+			var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+			_sharedDocumentController.NewDocument (null);
+		}
+
+		partial void MenuClickedSearchNotes (NSObject sender)
+		{
+			OpenDashboard (sender);
+		}
 
 		#region private methods
 		private void LoadDashboardWindow ()

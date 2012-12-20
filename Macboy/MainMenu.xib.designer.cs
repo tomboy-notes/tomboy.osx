@@ -11,11 +11,27 @@ namespace Tomboy
 	[Register ("AppDelegate")]
 	partial class AppDelegate
 	{
+		[Outlet]
+		MonoMac.AppKit.NSMenu dockMenu { get; set; }
+
 		[Action ("OpenDashboard:")]
 		partial void OpenDashboard (MonoMac.Foundation.NSObject sender);
+
+		[Action ("aboutTomboy:")]
+		partial void MenuClickedAboutTomboy (MonoMac.Foundation.NSObject sender);
+
+		[Action ("menuNewNote:")]
+		partial void MenuClickedNewNote (MonoMac.Foundation.NSObject sender);
+
+		[Action ("menuSearchNotes:")]
+		partial void MenuClickedSearchNotes (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (dockMenu != null) {
+				dockMenu.Dispose ();
+				dockMenu = null;
+			}
 		}
 	}
 }
