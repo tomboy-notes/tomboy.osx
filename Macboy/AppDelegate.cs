@@ -37,6 +37,7 @@ namespace Tomboy
 	public partial class AppDelegate : NSApplicationDelegate
 	{
 		ControlCenterController controller;
+		private int max_notes_in_menu = 10;
 
 		public AppDelegate ()
 		{
@@ -73,10 +74,9 @@ namespace Tomboy
 		void BuildDockMenuNotes ()
 		{
 			if (Notes != null || Notes.Count > 0) {
-				var max = 10;
-				if (Notes.Count < 10)
-					max = Notes.Count;
-				for (int i = 0; i < max; i++) {
+				if (Notes.Count < max_notes_in_menu)
+					max_notes_in_menu = Notes.Count;
+				for (int i = 0; i < max_notes_in_menu; i++) {
 					var item = new NSMenuItem ();
 					var key_at = Notes.Keys.ElementAt (i);
 					item.Title = Notes[key_at].Title;
