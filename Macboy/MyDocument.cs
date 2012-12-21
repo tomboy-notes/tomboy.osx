@@ -222,6 +222,8 @@ namespace Tomboy
 				if (this.WindowForSheet != null) // on closing of the Window this will not have a value
 					this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
 				AppDelegate.NoteEngine.SaveNote (currentNote);
+				if (!currentNote.Title.Equals (DisplayName))
+					SetDisplayName (currentNote.Title);
 
 				/*
 				 * Very important piece of code.(UpdateChangeCount)
