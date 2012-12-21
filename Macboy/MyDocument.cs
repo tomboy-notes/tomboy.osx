@@ -120,6 +120,8 @@ namespace Tomboy
 				if (es.Count > 0 && !string.IsNullOrWhiteSpace (es [0].TextContent))
 					this.WindowForSheet.Title = es [0].TextContent + " — Tomboy";
 			}
+			// this sets thename of the document, which for example is used in a save operation.
+			SetDisplayName (this.WindowForSheet.Title);
 		}
 
 		void LoadNewNote ()
@@ -382,11 +384,13 @@ namespace Tomboy
 		public override NSData GetAsData (string documentType, out NSError outError)
 		{
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
+			Console.WriteLine ("ReadFromData {0}", outError);
 			return null;
 		}
 
 		public override void SaveDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector didSaveSelector, IntPtr contextInfo)
 		{
+			Console.WriteLine ("Not sure what this is doing yet SaveDocuments");
 			SaveData ();
 		}
 
@@ -402,16 +406,29 @@ namespace Tomboy
 				base.FileUrl = value;
 			}
 		}
-		public override void SaveDocumentTo (NSObject sender)
-		{
-			Console.WriteLine ("SaveDocumentTo");
-			base.SaveDocumentTo (sender);
-		}
 
 		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
 		{
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
+			Console.WriteLine ("******* ReadFromData {0}", outError);
 			return false;
+		}
+
+		public override void SaveDocument (NSObject sender)
+		{
+			SaveData ();
+			// this appears to be working when ctrl + s is hit.
+		}
+		public override void SaveDocumentAs (NSObject sender)
+		{
+			SaveData ();
+		}
+
+		public override void CanCloseDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector shouldCloseSelector, IntPtr contextInfo)
+		{
+			SaveData ();
+			// we must call the base class again otherwise the Window will not close.
+			base.CanCloseDocument (delegateObject, shouldCloseSelector, contextInfo);
 		}
 
 		public override string WindowNibName { 

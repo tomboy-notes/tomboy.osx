@@ -62,9 +62,9 @@ namespace Tomboy
 			Engine.NoteRemoved += HandleNoteRemoved;
 		}
 
-		[Export ("awakeFromNib:")]
-		public override void AwakeFromNib ()
+		public override void FinishedLaunching (NSObject notification)
 		{
+			//moving from nibFinishedLoading may address a few issues with crashes.
 			BuildDockMenuNotes ();
 		}
 
@@ -73,6 +73,9 @@ namespace Tomboy
 		/// </summary>
 		void BuildDockMenuNotes ()
 		{
+			if (dockMenu == null)
+				return;
+
 			if (Notes != null || Notes.Count > 0) {
 				if (Notes.Count < max_notes_in_menu)
 					max_notes_in_menu = Notes.Count;
