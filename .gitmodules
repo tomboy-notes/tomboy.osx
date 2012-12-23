@@ -1,0 +1,3 @@
+[submodule "tomboy-library"]
+	path = tomboy-library
+	url = git@github.com:trepidity/tomboy-library.git

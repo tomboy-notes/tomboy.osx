@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy", "Macboy\Macboy.csproj", "{CBEFA338-7B6F-432C-A7B4-32F80F36D672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-library", "..\tomboy-library\Tomboy-library\Tomboy-library.csproj", "{040AA912-9738-438A-A7FD-5BB02C40C30A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy-UnitTests", "Macboy-UnitTests\Macboy-UnitTests.csproj", "{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-library", "tomboy-library\Tomboy-library\Tomboy-library.csproj", "{040AA912-9738-438A-A7FD-5BB02C40C30A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

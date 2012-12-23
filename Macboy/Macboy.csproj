@@ -145,12 +145,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\tomboy-library\Tomboy-library\Tomboy-library.csproj">
-      <Project>{040AA912-9738-438A-A7FD-5BB02C40C30A}</Project>
-      <Name>Tomboy-library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ToolbarNotesTemplate.pdf" />
     <Content Include="Default.css" />
     <Content Include="note.html" />
@@ -177,4 +171,10 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\tomboy-library\Tomboy-library\Tomboy-library.csproj">
+      <Project>{040AA912-9738-438A-A7FD-5BB02C40C30A}</Project>
+      <Name>Tomboy-library</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
