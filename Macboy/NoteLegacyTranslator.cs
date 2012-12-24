@@ -147,6 +147,10 @@ namespace Tomboy
 			// br needs to end in proper xml, so we are replacing <br> with <br />
 			string result = r.Replace (body.OuterHTML, "<br />");
 
+		// Was getting XSLT crashes until we replaced nbsp.
+		// there may be a better way to handle this, but at this time I don't know what that is.
+			result = result.Replace ("&nbsp;", "&#160;");
+			// run the remaining of the document through t
 			// run the remaining of the document through the xslt
 			StringReader stringReader = new StringReader (result);
 			XPathDocument doc = new XPathDocument(stringReader);
