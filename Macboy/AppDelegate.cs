@@ -60,6 +60,7 @@ namespace Tomboy
 
 			Engine.NoteAdded += HandleNoteAdded;
 			Engine.NoteRemoved += HandleNoteRemoved;
+			Engine.NoteUpdated += HandleNoteUpdated;
 		}
 
 		public override void FinishedLaunching (NSObject notification)
@@ -75,6 +76,8 @@ namespace Tomboy
 		{
 			if (dockMenu == null)
 				return;
+
+			dockMenu.RemoveAllItems ();
 
 			if (Notes != null || Notes.Count > 0) {
 				if (Notes.Count < max_notes_in_menu)
@@ -113,7 +116,27 @@ namespace Tomboy
 
 		void HandleNoteRemoved (Note note)
 		{
-			Console.WriteLine ("AppDelegate Handling Note {0} removed", note.Title);
+			Logger.Debug ("AppDelegate Handling Note {0} removed", note.Title);
+			Notes.Remove (note.Uri);
+			try {
+				NSMenuItem item = dockMenu.ItemWithTitle (note.Title);
+				item.Activated -= HandleActivated;
+				dockMenu.RemoveItem (item);
+			} catch (Exception e) {
+				Logger.Error ("Failed to remove item from Dock Menu {0}", e);
+			}
+		}
+
+		void HandleNoteUpdated (Note note)
+		{
+			Logger.Debug ("AppDelegate Handling Note {0} updated", note.Title);
+			Notes.Remove (note.Uri);
+			Notes.Add (note.Uri, note);
+			try {
+				BuildDockMenuNotes ();
+			} catch (Exception e) {
+				Logger.Error ("Failed to update Dock Menu {0}", e);
+			}
 		}
 
 		public static string BaseUrlPath {
@@ -136,6 +159,14 @@ namespace Tomboy
 		{
 			Logger.Debug ("Handling Note Added {0}", note.Title);
 
+			try {
+				NSMenuItem item = new NSMenuItem ();
+				item.Title = note.Title;
+				item.Activated += HandleActivated;
+				dockMenu.AddItem (item);
+			} catch (Exception e) {
+				Logger.Error ("Failed to add item from Dock Menu {0}", e);
+			}
 		}
 
 		partial void OpenDashboard (NSObject sender)
