@@ -128,6 +128,11 @@ namespace Tomboy
 		/// </param>
 		void HandleNoteDoubleClick (object sender, EventArgs e)
 		{
+			if (e == null)
+				throw new ArgumentNullException ("e");
+			if (sender == null)
+				throw new ArgumentNullException ("sender");
+
 			int selectedRow = _notesTableView.SelectedRow;
 			if (selectedRow == -1) {
 				Logger.Debug ("No Note selected in tableview");
