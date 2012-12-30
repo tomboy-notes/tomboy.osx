@@ -129,6 +129,10 @@ namespace Tomboy
 		void HandleNoteDoubleClick (object sender, EventArgs e)
 		{
 			int selectedRow = _notesTableView.SelectedRow;
+			if (selectedRow == -1) {
+				Logger.Debug ("No Note selected in tableview");
+				return;
+			}
 			Note note = notes.ElementAt (selectedRow).Value;
 			MyDocument myDoc = new MyDocument (note);
 			_sharedDocumentController.AddDocument (myDoc);
