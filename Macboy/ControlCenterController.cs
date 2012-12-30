@@ -63,7 +63,7 @@ namespace Tomboy
 		// Shared initialization code
 		void Initialize ()
 		{
-			this.notes = AppDelegate.NoteEngine.GetNotes ();
+			this.notes = AppDelegate.Notes;
 			//TODO: Tags are not working properly
 			this.tags = AppDelegate.NoteEngine.GetTags ();
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
