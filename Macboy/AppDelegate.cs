@@ -37,7 +37,7 @@ namespace Tomboy
 	public partial class AppDelegate : NSApplicationDelegate
 	{
 		ControlCenterController controller;
-		private int max_notes_in_menu = 10;
+		private int _maxNotesInMenu = 10;
 
 		public AppDelegate ()
 		{
@@ -80,9 +80,9 @@ namespace Tomboy
 			dockMenu.RemoveAllItems ();
 
 			if (Notes != null || Notes.Count > 0) {
-				if (Notes.Count < max_notes_in_menu)
-					max_notes_in_menu = Notes.Count;
-				for (int i = 0; i < max_notes_in_menu; i++) {
+				if (Notes.Count < _maxNotesInMenu)
+					_maxNotesInMenu = Notes.Count;
+				for (int i = 0; i < _maxNotesInMenu; i++) {
 					var item = new NSMenuItem ();
 					var key_at = Notes.Keys.ElementAt (i);
 					item.Title = Notes[key_at].Title;
