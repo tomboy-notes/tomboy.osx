@@ -38,6 +38,8 @@ namespace Tomboy
 	{
 		// should represent the Tomboy image, but this isn't loading correctly
 		private NSImage image = new NSImage ("Tomboy.tomboy.icns");
+		// Sorted list of the notes
+		List<KeyValuePair<string, Note>> orderedList = null;
 
 		ControlCenterController MyControlCenterController {
 			get;
@@ -53,6 +55,8 @@ namespace Tomboy
 			if (controller == null)
 				throw new ArgumentNullException ("controller");
 			MyControlCenterController = controller;
+			// Sort the notes by Date
+			orderedList = MyControlCenterController.Notes.ToList ().OrderByDescending(x => x.Value.ChangeDate).ToList();
 		}
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
@@ -67,15 +71,15 @@ namespace Tomboy
 		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row)
 		{
 			// Get the current row index
-			var note_at = MyControlCenterController.Notes.Keys.ElementAt (row);
 			var colKey = (NSString)col.Identifier.ToString ();
+			var note_at = orderedList.ElementAt (row).Value;
 			switch (colKey) {
 			case "_notesImageColumn":
 				return image; //FIXME: This is not working. An image is not being returned.
 			case "modifiedDate":
-				return (NSString)MyControlCenterController.Notes[note_at].ChangeDate.ToShortDateString ();
+				return (NSString)note_at.ChangeDate.ToShortDateString ();
 			case "title":
-				return (NSString)MyControlCenterController.Notes[note_at].Title;
+				return (NSString)note_at.Title;
 			default:
 				return null;
 			}
