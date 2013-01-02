@@ -73,7 +73,7 @@ namespace Tomboy
 			case "_notesImageColumn":
 				return image; //FIXME: This is not working. An image is not being returned.
 			case "modifiedDate":
-				return (NSString)note_at.ChangeDate.ToShortDateString ();
+				return (NSString)note_at.ChangeDate.ToLocalTime ().ToShortDateString ();
 			case "title":
 				return (NSString)note_at.Title;
 			default:
