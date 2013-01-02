@@ -36,16 +36,11 @@ namespace Tomboy
 	[Register ("ControlCenterNotesDataSource")]
 	public class ControlCenterNotesDataSource : NSTableViewDataSource
 	{
-		// should represent the Tomboy image, but this isn't loading correctly
 		NSImage image = NSImage.ImageNamed ("note.png");
 
 		ControlCenterController MyControlCenterController {
 			get;
 			set;
-		}
-
-		public ControlCenterNotesDataSource ()
-		{
 		}
 
 		public ControlCenterNotesDataSource (ControlCenterController controller)
