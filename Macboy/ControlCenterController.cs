@@ -34,8 +34,7 @@ namespace Tomboy
 {
 	public partial class ControlCenterController : MonoMac.AppKit.NSWindowController
 	{
-
-		Dictionary <string, Note> notes;
+		List<KeyValuePair<string, Note>> notes;
 		List <Tags.Tag> tags;
 		NSDocumentController _sharedDocumentController;
 
@@ -63,7 +62,7 @@ namespace Tomboy
 		// Shared initialization code
 		void Initialize ()
 		{
-			this.notes = AppDelegate.Notes;
+			SortNotesIntoOrder (AppDelegate.Notes);
 			//TODO: Tags are not working properly
 			this.tags = AppDelegate.NoteEngine.GetTags ();
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
@@ -74,25 +73,55 @@ namespace Tomboy
 			Engine.NoteUpdated += HandleNoteUpdated;
 		}
 
-		void HandleNoteUpdated (Note note)
+		public int GetNoteCount ()
 		{
-			_notesTableView.ReloadData ();
+			return notes.Count;
 		}
 
-		void HandleNoteAdded (Note note)
+		// This method will be called automatically when the main window "wakes up".
+		[Export ("awakeFromNib:")]
+		public override void AwakeFromNib()
 		{
-			_notesTableView.ReloadData ();
+			_notesTableView.DataSource = new ControlCenterNotesDataSource (this);
+			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
+			
+			// handle users doubleClicking on a note in the list of notes
+			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 		}
 
-		void HandleNoteRemoved (Note note)
+		/// <summary>
+		/// Gets the note at elementAt.
+		/// </summary>
+		/// <returns>
+		/// The <see cref="Tomboy.Note"/>.
+		/// </returns>
+		/// <param name='elementAt'>
+		/// Element at.
+		/// </param>
+		public Note GetNoteAt (int elementAt)
 		{
-			notes.Remove (note.Uri);
-			_notesTableView.ReloadData ();
+			return notes.ElementAt (elementAt).Value;
 		}
 
 		#endregion
 
 		#region private methods
+		
+		void HandleNoteUpdated (Note note)
+		{
+			_notesTableView.ReloadData ();
+		}
+		
+		void HandleNoteAdded (Note note)
+		{
+			_notesTableView.ReloadData ();
+		}
+		
+		void HandleNoteRemoved (Note note)
+		{
+			notes.Remove (notes.First(item => item.Value.Uri.Equals (note.Uri)));
+			_notesTableView.ReloadData ();
+		}
 
 		/// <summary>
 		/// Responds to searches in Search Field
@@ -102,19 +131,8 @@ namespace Tomboy
 		/// </param>
 		partial void FindNotes (MonoMac.AppKit.NSSearchField sender)
 		{
-			this.notes = AppDelegate.NoteEngine.GetNotes (sender.StringValue, true);
+			SortNotesIntoOrder (AppDelegate.NoteEngine.GetNotes (sender.StringValue, true));
 			_notesTableView.ReloadData ();
-		}
-
-		// This method will be called automatically when the main window "wakes up".
-		[Export ("awakeFromNib:")]
-		public override void AwakeFromNib()
-		{
-			_notesTableView.DataSource = new ControlCenterNotesDataSource (this);
-			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
-
-			// handle users doubleClicking on a note in the list of notes
-			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 		}
 
 		/// <summary>
@@ -138,8 +156,8 @@ namespace Tomboy
 				Logger.Debug ("No Note selected in tableview");
 				return;
 			}
-			Note note = notes.ElementAt (selectedRow).Value;
-			MyDocument myDoc = new MyDocument (note);
+
+			MyDocument myDoc = new MyDocument (notes.ElementAt (selectedRow).Value);
 			_sharedDocumentController.AddDocument (myDoc);
 			myDoc.MakeWindowControllers ();
 			myDoc.ShowWindows ();
@@ -152,10 +170,17 @@ namespace Tomboy
 			_notesTableView.ReloadData ();
 		}
 
-		public Dictionary<string, Note> Notes {
-			get {
-				return this.notes;
-			}
+		/// <summary>
+		/// Sorts the notes into order.
+		/// </summary>
+		/// <description>This should be called when loading notes or anything that interacts with the 
+		/// local notes list</description>
+		/// <param name='notes'>
+		/// Notes.
+		/// </param>
+		void SortNotesIntoOrder (Dictionary <string, Note> notes)
+		{
+			this.notes = notes.ToList ().OrderByDescending(x => x.Value.ChangeDate).ToList();
 		}
 
 		#endregion
