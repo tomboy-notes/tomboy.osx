@@ -154,6 +154,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Content Include="IBAlignTextRight.png" />
     <Content Include="ToolbarBinTemplate.pdf" />
     <Content Include="MacBoy.icns" />
+    <Content Include="note.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="unit-tests\" />
