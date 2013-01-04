@@ -17,7 +17,7 @@ Macboy/test-results/*
 *.dll
 
 Macboy-UnitTests/bin/*
-
+Macboy-UnitTests/test-results/*
 *.test-cache
 
 *.exe
