@@ -66,7 +66,7 @@ namespace Tomboy
 		public override void FinishedLaunching (NSObject notification)
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.
-			BuildDockMenuNotes ();
+			//BuildDockMenuNotes ();
 		}
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace Tomboy
 			Notes.Remove (note.Uri);
 			Notes.Add (note.Uri, note);
 			try {
-				BuildDockMenuNotes ();
+				//BuildDockMenuNotes ();
 			} catch (Exception e) {
 				Logger.Error ("Failed to update Dock Menu {0}", e);
 			}
