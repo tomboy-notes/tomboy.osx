@@ -80,11 +80,13 @@ namespace Tomboy
 			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
 
 			Editable (true);
-			if (currentNoteID == null || currentNoteID.Length == 0)
-				LoadNewNote ();
+
+			if (string.IsNullOrEmpty(currentNoteID))
+				LoadNewNote();
 			else
-				LoadNote (true);
+				LoadNote(true);
 		}
+
 		/// <summary>
 		/// Handles the web view decide policy for navigation.
 		/// </summary>
@@ -110,12 +112,12 @@ namespace Tomboy
 
 		private void HandleFinishedLoad (object sender, MonoMac.WebKit.WebFrameEventArgs e)
 		{
-			var dom = e.ForFrame.DomDocument;
 
 			if (!string.IsNullOrEmpty (currentNote.Title)) {
 				this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
 			} else {
 				// Update the title of the current page from HTML
+				var dom = e.ForFrame.DomDocument;
 				var es = dom.GetElementsByTagName ("title");
 				if (es.Count > 0 && !string.IsNullOrWhiteSpace (es [0].TextContent))
 					this.WindowForSheet.Title = es [0].TextContent + " — Tomboy";
@@ -171,9 +173,6 @@ namespace Tomboy
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
 			noteWebView.MainFrame.LoadHtmlString (content, new NSUrl (AppDelegate.BaseUrlPath));
 
-			// Make the note editable
-			Editable (true);
-
 			if (withHistory) {
 				if (currentHistoryPosition < history.Count - 1)
 					history.RemoveRange (currentHistoryPosition + 1,
@@ -181,10 +180,15 @@ namespace Tomboy
 				history.Add (currentNoteID);
 				currentHistoryPosition = history.Count - 1;
 			}
+
+			// Make the note editable
+			Editable (true);
 			UpdateBackForwardSensitivity ();
 			_loadingFromString = false;
+
 			if (popover != null)
 				popover.Close ();
+
 			Logger.Debug ("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
@@ -203,15 +207,18 @@ namespace Tomboy
 		{
 			if (noteWebView == null)
 				return;
+
 			Logger.Info ("Saving Note ID {0}", currentNoteID);
+
 			try {
 				string results = translator.To (noteWebView.MainFrame.DomDocument);
-				if (results == null || results.Length == 0) {
-					Logger.Debug ("note content empty or null. Nothing to save for {0}", currentNoteID);
+				if (string.IsNullOrEmpty(results)) {
+					Logger.Debug("note content empty or null. Nothing to save for {0}", currentNoteID);
 					return;
 				}
 
 				string title = GetTitleFromBody ();
+
 				if (title == null) {
 					Logger.Debug ("note title null. Nothing to save for {0}", currentNoteID);
 					return;
@@ -219,9 +226,12 @@ namespace Tomboy
 				
 				currentNote.Text = results;
 				currentNote.Title = title;
+
 				if (this.WindowForSheet != null) // on closing of the Window this will not have a value
 					this.WindowForSheet.Title = currentNote.Title + " — Tomboy";
+
 				AppDelegate.NoteEngine.SaveNote (currentNote);
+
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);
 
@@ -230,6 +240,7 @@ namespace Tomboy
 				 * This allows us to trick NSDOcument into believing that we have saved the document
 				 */
 				UpdateChangeCount (NSDocumentChangeType.Cleared);
+
 			} catch (Exception e) {
 				Logger.Error ("Failed to Save Note {0}", e);
 			}
@@ -273,9 +284,11 @@ namespace Tomboy
 		{
 			// we do not care about any HTML markup. We just want the raw text.
 			string innerText = GetBody ().InnerText;
-			int loc = innerText.IndexOf ("\n",0);
+			int loc = innerText.IndexOf ("\n", 0, StringComparison.CurrentCulture);
+
 			if (loc <= 0)
 				return null;
+
 			// crop the text at the first line break.
 			return innerText.Substring (0, loc);
 		}
@@ -283,13 +296,14 @@ namespace Tomboy
 		partial void BackForwardAction (MonoMac.AppKit.NSSegmentedControl sender)
 		{
 			var selected = sender.SelectedSegment;
+
 			if (selected == 0)
 				LoadNote (history[--currentHistoryPosition], false);
 			else
 				LoadNote (history[++currentHistoryPosition], false);
+
 			sender.SetSelected (false, 0);
 			sender.SetSelected (false, 1);
-			
 			UpdateBackForwardSensitivity ();
 		}
 
@@ -376,9 +390,12 @@ namespace Tomboy
 		public override void RestoreState (NSCoder coder)
 		{
 			base.RestoreState (coder);
+
 			if (!coder.ContainsKey ("savedNoteId"))
 				return;
+
 			var id = (NSString)coder.DecodeObject ("savedNoteId");
+
 			if (!string.IsNullOrEmpty (id))
 				LoadNote (id);
 		}
@@ -386,13 +403,13 @@ namespace Tomboy
 		public override NSData GetAsData (string documentType, out NSError outError)
 		{
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
-			Console.WriteLine ("ReadFromData {0}", outError);
+			Logger.Debug ("ReadFromData {0}", outError);
 			return null;
 		}
 
 		public override void SaveDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector didSaveSelector, IntPtr contextInfo)
 		{
-			Console.WriteLine ("Not sure what this is doing yet SaveDocuments");
+			Logger.Debug ("Not sure what this is doing yet SaveDocument {0}", delegateObject.GetType ());
 			SaveData ();
 		}
 
@@ -402,6 +419,7 @@ namespace Tomboy
 			get {
 				if (HasUnautosavedChanges)
 					SaveData ();
+
 				return base.FileUrl;
 			}
 			set {
@@ -412,7 +430,7 @@ namespace Tomboy
 		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
 		{
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
-			Console.WriteLine ("******* ReadFromData {0}", outError);
+			Logger.Debug ("ReadFromData error:{0}", outError);
 			return false;
 		}
 

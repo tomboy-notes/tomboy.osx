@@ -38,15 +38,20 @@ namespace Tomboy
 	{
 		ControlCenterController controller;
 		private int _maxNotesInMenu = 10;
+		// if Macboy is being launched for the first time on a machine that had a previous version (tomboy)
+		// make sure we get a copy as we are still in a development release.
+		private string BackupPathURI = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 
 		public AppDelegate ()
 		{
-			string backup_path = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 			// TODO, set it in a generic way
 			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-			Tomboy.DiskStorage.Instance.SetBackupPath (backup_path);
-			if (!Directory.Exists (backup_path))
+			Tomboy.DiskStorage.Instance.SetBackupPath (BackupPathURI);
+
+			if (!Directory.Exists (BackupPathURI))
 				Tomboy.DiskStorage.Instance.Backup ();
+
+			Logger.Debug ("Backup Path set to {0}", BackupPathURI);
 
 			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
 
@@ -141,8 +146,10 @@ namespace Tomboy
 
 		public static string BaseUrlPath {
 			get {
-				return Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
+				String SpecialFolderCache = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
 				                     "Library", "Cache", "Tomboy");
+				Logger.Debug ("cache directory set to {0}", SpecialFolderCache);
+				return SpecialFolderCache;
 			}
 		}
 
@@ -157,7 +164,7 @@ namespace Tomboy
 		}
 		void HandleNoteAdded (Note note)
 		{
-			Logger.Debug ("Handling Note Added {0}", note.Title);
+			Logger.Debug ("AppDelegate Handling Note Added {0}", note.Title);
 
 			try {
 				NSMenuItem item = new NSMenuItem ();
@@ -193,7 +200,7 @@ namespace Tomboy
 
 		partial void MenuClickedAboutTomboy (NSObject sender)
 		{
-			Console.WriteLine ("Tomboy is an opensource Note application");
+			// TODO implement this method
 		}
 
 		partial void MenuClickedNewNote (NSObject sender)
