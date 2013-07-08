@@ -40,18 +40,18 @@ namespace Tomboy
 		private int _maxNotesInMenu = 10;
 		// if Macboy is being launched for the first time on a machine that had a previous version (tomboy)
 		// make sure we get a copy as we are still in a development release.
-		private string BackupPathURI = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
+		private string backupPathUri = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 
 		public AppDelegate ()
 		{
 			// TODO, set it in a generic way
 			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-			Tomboy.DiskStorage.Instance.SetBackupPath (BackupPathURI);
+			Tomboy.DiskStorage.Instance.SetBackupPath (backupPathUri);
 
-			if (!Directory.Exists (BackupPathURI))
+			if (!Directory.Exists (backupPathUri))
 				Tomboy.DiskStorage.Instance.Backup ();
 
-			Logger.Debug ("Backup Path set to {0}", BackupPathURI);
+			Logger.Debug ("Backup Path set to {0}", backupPathUri);
 
 			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
 
