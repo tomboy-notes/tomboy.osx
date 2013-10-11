@@ -47,6 +47,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
     <CodeSignResourceRules>Info.plist</CodeSignResourceRules>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -63,6 +64,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <CreatePackage>True</CreatePackage>
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|x86' ">
     <DebugType>none</DebugType>
@@ -79,6 +81,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <EnablePackageSigning>True</EnablePackageSigning>
     <CreatePackage>True</CreatePackage>
     <CodeSigningKey>3rd Party Mac Developer Application</CodeSigningKey>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -115,7 +118,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
       <DependentUpon>NoteCollectionViewItem.cs</DependentUpon>
     </Compile>
     <Compile Include="CocoaNoteAdapter.cs" />
-    <Compile Include="KeyboardListener.cs" />
     <Compile Include="DomDocumentListener.cs" />
     <Compile Include="StyleBar.cs" />
     <Compile Include="Logger.cs" />

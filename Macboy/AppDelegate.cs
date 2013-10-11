@@ -135,7 +135,7 @@ namespace Tomboy
 		void HandleNoteUpdated (Note note)
 		{
 			Logger.Debug ("AppDelegate Handling Note {0} updated", note.Title);
-			Notes.Remove (note.Uri);
+			Notes.Remove (note.Uri); //FIXME: Why is this being removed and then added again?
 			Notes.Add (note.Uri, note);
 			try {
 				//BuildDockMenuNotes ();

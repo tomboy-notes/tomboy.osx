@@ -45,14 +45,15 @@ namespace Tomboy
 	/// </summary>
     public class NoteLegacyTranslator
     {
-        private XslCompiledTransform xslTransformTo;
-        private XslCompiledTransform xslTransformFrom;
+        const string Pattern = @"(<br *\>)";
+        private readonly XslCompiledTransform xslTransformTo;
+        private readonly XslCompiledTransform xslTransformFrom;
         private Assembly _assembly;
         private string _xslToPathFile = "";
         private string _xslFromPathFile = "";
         private const string _xslFrom = "Tomboy.transform_from_note.xsl";
         private const string _xslTo = "Tomboy.transform_to_note.xsl";
-        private string _styleSheetLocation = Path.Combine(
+        private readonly string _styleSheetLocation = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Personal), 
             "Library", 
             "Caches", 
@@ -121,6 +122,7 @@ namespace Tomboy
             stringReader.Close();
             return sb.ToString().Trim();
         }
+
 		/// <summary>
 		/// Translates to.traditional Tomboy Note formats
 		/// </summary>
@@ -135,23 +137,22 @@ namespace Tomboy
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
             XmlTextWriter xmlTextWriter = new XmlTextWriter(stringWriter);
-
             DomNodeList element = domDocument.GetElementsByTagName("body");
-            //DomNodeList elementTitle = domDocument.GetElementsByTagName ("h1");
             DomHtmlElement body = (DomHtmlElement)element.First();
-            string pattern = @"(<br *\>)";
-            Regex r = new Regex(pattern);
+
+            Regex r = new Regex(Pattern);
             // br needs to end in proper xml, so we are replacing <br> with <br />
             string result = r.Replace(body.OuterHTML, "<br />");
 
             // Was getting XSLT crashes until we replaced nbsp.
             // there may be a better way to handle this, but at this time I don't know what that is.
             result = result.Replace("&nbsp;", "&#160;");
-            // run the remaining of the document through t
+
             // run the remaining of the document through the xslt
             StringReader stringReader = new StringReader(result);
             XPathDocument doc = new XPathDocument(stringReader);
             stringReader.Close();
+
             try {
                 xslTransformTo.Transform(doc, null, xmlTextWriter);
             } catch (System.Xml.XmlException e) {
