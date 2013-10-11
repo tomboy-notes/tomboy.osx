@@ -100,8 +100,12 @@ namespace Tomboy
 		{
 			// Reference for examples of this method in use
 			// https://github.com/mono/monomac/commit/efc6e28fc03005638ce2cd217dc6c9281ad9c1c5
-            var noteID = e.Request.Url.AbsoluteString;
-            LoadNote(noteID, false);
+
+            var linked_note = e.Request.Url.AbsoluteString;
+                        
+            if (linked_note != null && linked_note.StartsWith("note:", StringComparison.CurrentCulture))
+                OpenNote(e.Request.Url.AbsoluteString);
+
 			if (_loadingFromString){
 				WebView.DecideUse (e.DecisionToken);
 				return;
@@ -112,6 +116,18 @@ namespace Tomboy
             //FIXME: Not sure why this was in here, but it causes problems if I want WikiLinks to work.
 			//LoadNote (currentNoteID, true);
 		}
+
+        private void OpenNote (string title)
+        {
+            var notes = AppDelegate.NoteEngine.GetNotes();
+            Note note = null;
+            notes.TryGetValue(title, out note);
+            MyDocument myDoc = new MyDocument (note);
+            var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+            _sharedDocumentController.AddDocument (myDoc);
+            myDoc.MakeWindowControllers ();
+            myDoc.ShowWindows ();
+        }
 
 		private void HandleFinishedLoad (object sender, WebFrameEventArgs e)
 		{
