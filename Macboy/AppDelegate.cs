@@ -64,9 +64,9 @@ namespace Tomboy
 			if (Notes == null)
 				Notes = NoteEngine.GetNotes ();
 
-			Engine.NoteAdded += HandleNoteAdded;
-			Engine.NoteRemoved += HandleNoteRemoved;
-			Engine.NoteUpdated += HandleNoteUpdated;
+			NoteEngine.NoteAdded += HandleNoteAdded;
+			NoteEngine.NoteRemoved += HandleNoteRemoved;
+			NoteEngine.NoteUpdated += HandleNoteUpdated;
 		}
 
 		public override void FinishedLaunching (NSObject notification)

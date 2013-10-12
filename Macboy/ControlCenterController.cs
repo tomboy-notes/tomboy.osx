@@ -68,9 +68,9 @@ namespace Tomboy
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
 			this.tags.Add (systemTag);
 			_sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
-			Engine.NoteRemoved += HandleNoteRemoved;
-			Engine.NoteAdded += HandleNoteAdded;
-			Engine.NoteUpdated += HandleNoteUpdated;
+			AppDelegate.NoteEngine.NoteRemoved += HandleNoteRemoved;
+			AppDelegate.NoteEngine.NoteAdded += HandleNoteAdded;
+			AppDelegate.NoteEngine.NoteUpdated += HandleNoteUpdated;
 		}
 
 		public int GetNoteCount ()
