@@ -41,6 +41,9 @@ namespace Tomboy
 		private IStorage noteStorage;
 		private ManifestTracker manifestTracker;
 
+		// TODO this should not go here
+		public static string FilesystemSyncPath;
+
 		ControlCenterController controller;
 		private int _maxNotesInMenu = 10;
 		// if Macboy is being launched for the first time on a machine that had a previous version (tomboy)
@@ -80,11 +83,27 @@ namespace Tomboy
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 		}
 
+        public static bool EnableAutoSync
+        {
+            get;
+            set;
+        }
+
+        partial void SyncNotes(NSObject sender)
+        {
+
+        }
 		public override void FinishedLaunching (NSObject notification)
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.
 			//BuildDockMenuNotes ();
 		}
+
+        partial void Preferences(NSObject sender)
+        {
+            var prefC = new SyncPrefDialogController ();
+            prefC.Window.MakeKeyAndOrderFront (this);
+        }
 
 		/// <summary>
 		/// Builds the dock menu notes, currently populating the Menu with Notes. ALL NOTES
@@ -211,11 +230,6 @@ namespace Tomboy
 		{
 			// TODO implement this method
             throw new NotImplementedException ();
-		}
-
-		partial void Sync (NSObject sender)
-		{
-
 		}
 
 		partial void MenuClickedNewNote (NSObject sender)
