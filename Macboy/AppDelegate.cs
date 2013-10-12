@@ -30,12 +30,17 @@ using System.Linq;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
+using Tomboy.Sync;
+using Tomboy.Sync.Filesystem;
+using System.Xml;
 
 namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
 		private IStorage noteStorage;
+		private ManifestTracker manifestTracker;
+
 		ControlCenterController controller;
 		private int _maxNotesInMenu = 10;
 		// if Macboy is being launched for the first time on a machine that had a previous version (tomboy)
@@ -44,9 +49,10 @@ namespace Tomboy
 
 		public AppDelegate ()
         {
+			var storage_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy");
             // TODO, set it in a generic way
 			noteStorage = new DiskStorage ();
-            noteStorage.SetPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
+            noteStorage.SetPath(storage_path);
             noteStorage.SetBackupPath(backupPathUri);
 
             if (!Directory.Exists(backupPathUri))
@@ -55,6 +61,11 @@ namespace Tomboy
 			Logger.Debug ("Backup Path set to {0}", backupPathUri);
 
 			NoteEngine = new Engine (noteStorage);
+
+			// keep track of note for syncing
+			// TODO move this into an Add-in one day
+			var manifest_path = Path.Combine (storage_path, "manifest.xml");
+			manifestTracker = new ManifestTracker (NoteEngine, manifest_path);
 
 			// Create our cache directory
 			if (!Directory.Exists (BaseUrlPath))
@@ -202,6 +213,11 @@ namespace Tomboy
             throw new NotImplementedException ();
 		}
 
+		partial void Sync (NSObject sender)
+		{
+
+		}
+
 		partial void MenuClickedNewNote (NSObject sender)
 		{
 			var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
@@ -222,6 +238,12 @@ namespace Tomboy
 		}
 
 		#endregion private methods
+
+		public new void Dispose ()
+		{
+			base.Dispose ();
+			manifestTracker.Dispose ();
+		}
 	}
 }
 
