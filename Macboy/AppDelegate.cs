@@ -122,13 +122,8 @@ namespace Tomboy
 		{
 			Logger.Debug ("AppDelegate Handling Note {0} removed", note.Title);
 			Notes.Remove (note.Uri);
-			try {
-				NSMenuItem item = dockMenu.ItemWithTitle (note.Title);
-				item.Activated -= HandleActivated;
-				dockMenu.RemoveItem (item);
-			} catch (Exception e) {
-				Logger.Error ("Failed to remove item from Dock Menu {0}", e);
-			}
+            using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title))
+                dockMenu.RemoveItem(item);
 		}
 
 		void HandleNoteUpdated (Note note)
