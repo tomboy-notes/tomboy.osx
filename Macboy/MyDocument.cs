@@ -103,7 +103,7 @@ namespace Tomboy
 		/// </param>
 		/// <param name='e'>
 		/// E.
-		/// </param>
+        /// </param>//WebNavigationPolicyEventArgs
 		void HandleWebViewDecidePolicyForNavigation (object sender, WebNavigatioPolicyEventArgs e)
 		{
 			// Reference for examples of this method in use
@@ -173,6 +173,7 @@ namespace Tomboy
             NoteTitle(null);
 			InvalidateRestorableState ();
 			_loadingFromString = false;
+            WindowForSheet.Title = "Tomboy";
 		}
 
 		void LoadNote (string newNoteId, bool withHistory = true)
@@ -203,20 +204,26 @@ namespace Tomboy
         }
 
 		void LoadNote (bool withHistory = true)
-		{
-			if (HasUnautosavedChanges)
-				SaveData ();
+        {
+            if (HasUnautosavedChanges)
+                SaveData();
 
-			_loadingFromString = true;
+            _loadingFromString = true;
 
-			if (currentNote == null)
-				return;
+            if (currentNote == null)
+                return;
 
-			InvalidateRestorableState ();
-			Logger.Debug ("Note text before Translator {0}", currentNote.Text);
+            InvalidateRestorableState();
+            Logger.Debug("Translating Note:{0} \n Note text before Translator {1}", currentNoteID, currentNote.Text);
             var content = translator.From(currentNote);
             var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
-            content = content.Remove(beginIndx, (currentNote.Title.Length +1)); // +1 to remove the NewLine char after the title
+
+            if (beginIndx != -1) // it's possible that some notes do not have any content
+            {
+                var len = currentNote.Title.Length;
+                content = content.Remove(beginIndx, (len + 1)); // +1 to remove the NewLine char after the title
+            }
+
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
             noteWebView.MainFrame.LoadHtmlString (WikiLinks(content), new NSUrl (AppDelegate.BaseUrlPath));
