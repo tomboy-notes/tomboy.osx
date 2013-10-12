@@ -29,6 +29,9 @@ namespace Tomboy
 
 		[Action ("OpenDashboard:")]
 		partial void OpenDashboard (MonoMac.Foundation.NSObject sender);
+
+		[Action ("Preferences:")]
+		partial void Preferences (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

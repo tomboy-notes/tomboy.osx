@@ -67,11 +67,23 @@ namespace Tomboy
 			Engine.NoteUpdated += HandleNoteUpdated;
 		}
 
+        public static bool EnableAutoSync
+        {
+            get;
+            set;
+        }
+
 		public override void FinishedLaunching (NSObject notification)
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.
 			//BuildDockMenuNotes ();
 		}
+
+        partial void Preferences(NSObject sender)
+        {
+            var prefC = new SyncPrefDialogController ();
+            prefC.Window.MakeKeyAndOrderFront (this);
+        }
 
 		/// <summary>
 		/// Builds the dock menu notes, currently populating the Menu with Notes. ALL NOTES

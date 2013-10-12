@@ -233,6 +233,15 @@
 										<string key="NSName">_NSRecentDocumentsMenu</string>
 									</object>
 								</object>
+								<object class="NSMenuItem" id="590580468">
+									<reference key="NSMenu" ref="720053764"/>
+									<string key="NSTitle">Preferences</string>
+									<string key="NSKeyEquiv">,</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="425164168">
 									<reference key="NSMenu" ref="720053764"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -1686,6 +1695,14 @@
 					</object>
 					<int key="connectionID">562</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">Preferences:</string>
+						<reference key="source" ref="947627720"/>
+						<reference key="destination" ref="590580468"/>
+					</object>
+					<int key="connectionID">573</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1779,6 +1796,7 @@
 							<reference ref="776162233"/>
 							<reference ref="425164168"/>
 							<reference ref="1010469920"/>
+							<reference ref="590580468"/>
 						</object>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -2549,6 +2567,11 @@
 						<reference key="object" ref="1044981767"/>
 						<reference key="parent" ref="92803299"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">572</int>
+						<reference key="object" ref="590580468"/>
+						<reference key="parent" ref="720053764"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2671,6 +2694,7 @@
 					<string>56.IBPluginDependency</string>
 					<string>563.IBPluginDependency</string>
 					<string>57.IBPluginDependency</string>
+					<string>572.IBPluginDependency</string>
 					<string>58.IBPluginDependency</string>
 					<string>73.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
@@ -2684,6 +2708,7 @@
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2824,7 +2849,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">571</int>
+			<int key="maxID">573</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2837,6 +2862,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>OpenDashboard:</string>
+							<string>Preferences:</string>
 							<string>aboutTomboy:</string>
 							<string>deleteNote:</string>
 							<string>menuNewNote:</string>
@@ -2844,6 +2870,7 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2856,6 +2883,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>OpenDashboard:</string>
+							<string>Preferences:</string>
 							<string>aboutTomboy:</string>
 							<string>deleteNote:</string>
 							<string>menuNewNote:</string>
@@ -2865,6 +2893,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">OpenDashboard:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">Preferences:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
