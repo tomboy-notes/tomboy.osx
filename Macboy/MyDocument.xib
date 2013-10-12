@@ -101,6 +101,8 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{1, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="450441236">
@@ -115,13 +117,13 @@
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="509272090"/>
 										<int key="NSButtonFlags">-2033434624</int>
-										<int key="NSButtonFlags2">163</int>
+										<int key="NSButtonFlags2">268435619</int>
 										<object class="NSCustomResource" key="NSNormalImage" id="16914708">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">ToolbarBinTemplate</string>
 										</object>
 										<string key="NSAlternateContents"/>
-										<string key="NSKeyEquivalent"/>
+										<string key="NSKeyEquivalent">d</string>
 										<int key="NSPeriodicDelay">200</int>
 										<int key="NSPeriodicInterval">25</int>
 									</object>
@@ -150,6 +152,8 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:22</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="856306270">
@@ -195,6 +199,8 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{7, 14}, {67, 25}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSegmentedCell" key="NSCell" id="924709543">
@@ -256,6 +262,8 @@
 									<int key="NSvFlags">298</int>
 									<string key="NSFrame">{{0, 14}, {198, 22}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="823755240">
@@ -354,6 +362,8 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{9, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="218917552">
@@ -469,7 +479,7 @@
 							</object>
 						</object>
 					</object>
-					<object class="NSMutableArray" key="NSToolbarIBAllowedItems">
+					<object class="NSArray" key="NSToolbarIBAllowedItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference ref="336544324"/>
 						<reference ref="903088165"/>

@@ -73,12 +73,21 @@ namespace Tomboy
 			}
 		}
 
+        public string CurrentNoteID
+        {
+            get
+            {
+                return currentNoteID;
+            }
+        }
+
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
 		{
 			base.WindowControllerDidLoadNib (windowController);
 			UpdateBackForwardSensitivity ();
 			noteWebView.FinishedLoad += HandleFinishedLoad;
 			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
+
 			Editable (true);
 
 			if (string.IsNullOrEmpty(currentNoteID))

@@ -122,8 +122,10 @@ namespace Tomboy
 		{
 			Logger.Debug ("AppDelegate Handling Note {0} removed", note.Title);
 			Notes.Remove (note.Uri);
-            using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title))
-                dockMenu.RemoveItem(item);
+            using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title)) {
+                if (item != null)
+                    dockMenu.RemoveItem(item);
+            }
 		}
 
 		void HandleNoteUpdated (Note note)
@@ -195,6 +197,7 @@ namespace Tomboy
 		partial void MenuClickedAboutTomboy (NSObject sender)
 		{
 			// TODO implement this method
+            throw new NotImplementedException ();
 		}
 
 		partial void MenuClickedNewNote (NSObject sender)
