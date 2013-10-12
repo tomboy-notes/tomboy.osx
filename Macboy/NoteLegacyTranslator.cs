@@ -49,10 +49,10 @@ namespace Tomboy
         private readonly XslCompiledTransform xslTransformTo;
         private readonly XslCompiledTransform xslTransformFrom;
         private Assembly _assembly;
-        private string _xslToPathFile = "";
+        private string xslToPathFile = "";
         private string _xslFromPathFile = "";
-        private const string _xslFrom = "Tomboy.transform_from_note.xsl";
-        private const string _xslTo = "Tomboy.transform_to_note.xsl";
+        private const string xsltTransformFrom = "Tomboy.transform_from_note.xsl";
+        private const string xsltTransformTo = "Tomboy.transform_to_note.xsl";
         private readonly string _styleSheetLocation = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Personal), 
             "Library", 
@@ -68,7 +68,7 @@ namespace Tomboy
 
             if (xslTransformTo == null) {
                 xslTransformTo = new XslCompiledTransform(true);
-                xslTransformTo.Load(_xslToPathFile);
+                xslTransformTo.Load(xslToPathFile);
             }
 
             if (xslTransformFrom == null) {
@@ -78,14 +78,16 @@ namespace Tomboy
 
             /* end of orderness */
         }
+
 		/// <summary>
 		/// Translate the note content from legacy XML format to WebKit
 		/// </summary>
-		/// <param name='text'>
-		/// Text.
-		/// </param>
+        /// <param name = "note">
+        /// </param>
         public string From(Note note)
         {
+            if (note == null)
+                throw new ArgumentNullException("note");
             /*
 			 * I'm sure there must be a better way to do this.
 			 * Basically the translator needs to be on this side of the library
@@ -155,14 +157,14 @@ namespace Tomboy
 
             try {
                 xslTransformTo.Transform(doc, null, xmlTextWriter);
-            } catch (System.Xml.XmlException e) {
+            } catch (XmlException e) {
                 Logger.Error(e.Message, body.OuterHTML);
-                throw new System.Xml.XmlException("XSLT transform failed to handle the note");
+                throw new XmlException("XSLT transform failed to handle the note");
             }
 
             return sb.ToString();
-            ;
         }
+
 		#region private methods
 
         private void GetAssembly()
@@ -178,17 +180,17 @@ namespace Tomboy
         /// </summary>
         private void DetectCustomXSL()
         {
-            _xslFromPathFile = Path.Combine(_styleSheetLocation, _xslFrom);
-            _xslToPathFile = Path.Combine(_styleSheetLocation, _xslTo);
+            _xslFromPathFile = Path.Combine(_styleSheetLocation, xsltTransformFrom);
+            xslToPathFile = Path.Combine(_styleSheetLocation, xsltTransformTo);
 
             if (!(Directory.Exists(_styleSheetLocation)))
                 Directory.CreateDirectory(_styleSheetLocation);
 
             if (!File.Exists(_xslFromPathFile))
-                CopyXSLT(_xslFrom, _xslFromPathFile);
+                CopyXSLT(xsltTransformFrom, _xslFromPathFile);
 
-            if (!File.Exists(_xslToPathFile))
-                CopyXSLT(_xslTo, _xslToPathFile);
+            if (!File.Exists(xslToPathFile))
+                CopyXSLT(xsltTransformTo, xslToPathFile);
         }
 		/// <summary>
 		/// Copies the XSL to the correct location

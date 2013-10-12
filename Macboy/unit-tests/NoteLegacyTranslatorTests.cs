@@ -18,12 +18,8 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using System;
-using NUnit.Framework;
-using System.Text;
 
-using Tomboy;
-using MonoMac.WebKit;
+using NUnit.Framework;
 
 namespace TomboyMacUnitTests
 {

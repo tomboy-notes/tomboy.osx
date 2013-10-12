@@ -26,18 +26,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
-using MonoMac.Foundation;
+using System.Linq;
 using MonoMac.AppKit;
+using MonoMac.Foundation;
 using MonoMac.WebKit;
 
 namespace Tomboy
 {
 	public partial class MyDocument : NSDocument
 	{
-		List<string> history = new List<string> ();
+		readonly List<string> history = new List<string> ();
 		int currentHistoryPosition;
 
 		// A unique identifier for a note
@@ -83,7 +84,7 @@ namespace Tomboy
 			if (string.IsNullOrEmpty(currentNoteID))
 				LoadNewNote();
 			else
-				LoadNote(true);
+				LoadNote();
           
 		}
 
@@ -119,8 +120,8 @@ namespace Tomboy
 
         private void OpenNote (string title)
         {
+            Note note;
             var notes = AppDelegate.NoteEngine.GetNotes();
-            Note note = null;
             notes.TryGetValue(title, out note);
             MyDocument myDoc = new MyDocument (note);
             var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
@@ -338,14 +339,24 @@ namespace Tomboy
 		void SearchResultSelected (NSObject sender)
 		{
 			NSMenuItem item = (NSMenuItem)sender;
-			LoadNote (AppDelegate.NoteEngine.GetNote (item.Title).Uri, true);
+			LoadNote(AppDelegate.NoteEngine.GetNote(item.Title).Uri);
 		}
+
+        /// <summary>
+        /// Opens the ALL Notes Window
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        partial void AllNotes (NSObject sender)
+        {
+            ControlCenterController controller = new ControlCenterController ();
+            controller.Window.MakeKeyAndOrderFront (this);
+        }
 
 		partial void ShowNotes (NSObject sender)
 		{
 			popover = new NSPopover ();
 			ShowNotesPopupController controller = new ShowNotesPopupController ();
-			controller.NoteNodeClicked += (s, e) => LoadNote (e.NoteId, true);
+			controller.NoteNodeClicked += (s, e) => LoadNote(e.NoteId);
 			popover.Behavior = NSPopoverBehavior.Transient;
 			popover.ContentViewController = controller;
 			popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
@@ -368,8 +379,11 @@ namespace Tomboy
 		}
 
 		[Export ("alertDidEnd:returnCode:contextInfo:")]
-		void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo)
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo)
 		{
+            if (alert == null)
+                throw new ArgumentNullException("alert");
 			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
 				AppDelegate.NoteEngine.DeleteNote (currentNote);
 				currentNote = null;

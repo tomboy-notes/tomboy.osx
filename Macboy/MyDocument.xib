@@ -82,6 +82,7 @@
 							<string>28ED769D-1E83-4DD3-9841-9FE6BD884B4E</string>
 							<string>352E75AC-2945-4BD9-8A96-9B3F7253E9DD</string>
 							<string>44637DB0-6B82-4287-93AB-964B25AEE727</string>
+							<string>FBDA598E-E699-49A1-B4FB-89261A1303FB</string>
 							<string>NSToolbarFlexibleSpaceItem</string>
 							<string>NSToolbarPrintItem</string>
 							<string>NSToolbarSpaceItem</string>
@@ -341,6 +342,51 @@
 								<bool key="NSToolbarIsUserRemovable">YES</bool>
 								<int key="NSToolbarItemVisibilityPriority">0</int>
 							</object>
+							<object class="NSToolbarItem" id="24384612">
+								<object class="NSMutableString" key="NSToolbarItemIdentifier">
+									<characters key="NS.bytes">FBDA598E-E699-49A1-B4FB-89261A1303FB</characters>
+								</object>
+								<string key="NSToolbarItemLabel">All Notes</string>
+								<string key="NSToolbarItemPaletteLabel">All Notes</string>
+								<nil key="NSToolbarItemToolTip"/>
+								<object class="NSButton" key="NSToolbarItemView" id="521103202">
+									<reference key="NSNextResponder"/>
+									<int key="NSvFlags">268</int>
+									<string key="NSFrame">{{9, 14}, {39, 25}}</string>
+									<reference key="NSSuperview"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell" id="218917552">
+										<int key="NSCellFlags">67108864</int>
+										<int key="NSCellFlags2">134217728</int>
+										<string key="NSContents"/>
+										<reference key="NSSupport" ref="327392590"/>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<reference key="NSControlView" ref="521103202"/>
+										<int key="NSButtonFlags">-2033434624</int>
+										<int key="NSButtonFlags2">163</int>
+										<object class="NSCustomResource" key="NSNormalImage" id="209635188">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">NSQuickLookTemplate</string>
+										</object>
+										<string key="NSAlternateContents"/>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">200</int>
+										<int key="NSPeriodicInterval">25</int>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
+								<reference key="NSToolbarItemImage" ref="209635188"/>
+								<nil key="NSToolbarItemTarget"/>
+								<nil key="NSToolbarItemAction"/>
+								<string key="NSToolbarItemMinSize">{33, 25}</string>
+								<string key="NSToolbarItemMaxSize">{50, 32}</string>
+								<bool key="NSToolbarItemEnabled">YES</bool>
+								<bool key="NSToolbarItemAutovalidates">YES</bool>
+								<int key="NSToolbarItemTag">0</int>
+								<bool key="NSToolbarIsUserRemovable">YES</bool>
+								<int key="NSToolbarItemVisibilityPriority">0</int>
+							</object>
 							<object class="NSToolbarFlexibleSpaceItem" id="20568313">
 								<string key="NSToolbarItemIdentifier">NSToolbarFlexibleSpaceItem</string>
 								<string key="NSToolbarItemLabel"/>
@@ -432,13 +478,12 @@
 						<reference ref="237973430"/>
 						<reference ref="808914092"/>
 						<reference ref="41438124"/>
+						<reference ref="24384612"/>
 					</object>
 					<object class="NSArray" key="NSToolbarIBDefaultItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<reference ref="291944582"/>
+						<reference ref="24384612"/>
 						<reference ref="20568313"/>
-						<reference ref="237973430"/>
-						<reference ref="903088165"/>
 						<reference ref="41438124"/>
 					</object>
 					<object class="NSArray" key="NSToolbarIBSelectableItems" id="0">
@@ -598,6 +643,22 @@
 					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">AllNotes:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="521103202"/>
+					</object>
+					<int key="connectionID">94</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">myNoteWindow</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="252265233"/>
+					</object>
+					<int key="connectionID">95</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="252265233"/>
@@ -665,6 +726,7 @@
 							<reference ref="237973430"/>
 							<reference ref="808914092"/>
 							<reference ref="41438124"/>
+							<reference ref="24384612"/>
 						</object>
 						<reference key="parent" ref="252265233"/>
 					</object>
@@ -780,6 +842,29 @@
 						<reference key="object" ref="450441236"/>
 						<reference key="parent" ref="509272090"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">90</int>
+						<reference key="object" ref="24384612"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="521103202"/>
+						</object>
+						<reference key="parent" ref="837282677"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">91</int>
+						<reference key="object" ref="521103202"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="218917552"/>
+						</object>
+						<reference key="parent" ref="24384612"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">92</int>
+						<reference key="object" ref="218917552"/>
+						<reference key="parent" ref="521103202"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -810,6 +895,9 @@
 					<string>72.IBPluginDependency</string>
 					<string>73.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
+					<string>90.IBPluginDependency</string>
+					<string>91.IBPluginDependency</string>
+					<string>92.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -837,6 +925,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -851,7 +942,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">83</int>
+			<int key="maxID">95</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -863,6 +954,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>AllNotes:</string>
 							<string>BackForwardAction:</string>
 							<string>DeleteNote:</string>
 							<string>ShowNotes:</string>
@@ -871,6 +963,7 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>NSSegmentedControl</string>
 							<string>id</string>
 							<string>id</string>
@@ -882,6 +975,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>AllNotes:</string>
 							<string>BackForwardAction:</string>
 							<string>DeleteNote:</string>
 							<string>ShowNotes:</string>
@@ -890,6 +984,10 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">AllNotes:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 							<object class="IBActionInfo">
 								<string key="name">BackForwardAction:</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
@@ -918,6 +1016,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
+							<string>myNoteWindow</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
@@ -925,6 +1024,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSMenuItem</string>
 							<string>NSSegmentedControl</string>
+							<string>NSWindow</string>
 							<string>WebView</string>
 							<string>NSSearchField</string>
 						</object>
@@ -935,6 +1035,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
+							<string>myNoteWindow</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
@@ -947,6 +1048,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">backForwardControl</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">myNoteWindow</string>
+								<string key="candidateClassName">NSWindow</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">noteWebView</string>
@@ -981,6 +1086,7 @@
 				<string>NSGoRightTemplate</string>
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
+				<string>NSQuickLookTemplate</string>
 				<string>NSToolbarPrint</string>
 				<string>ToolbarBinTemplate</string>
 				<string>ToolbarNotesTemplate</string>
@@ -991,6 +1097,7 @@
 				<string>{9, 9}</string>
 				<string>{11, 11}</string>
 				<string>{10, 3}</string>
+				<string>{21, 16}</string>
 				<string>{32, 32}</string>
 				<string>{128, 128}</string>
 				<string>{128, 128}</string>

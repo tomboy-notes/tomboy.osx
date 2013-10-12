@@ -24,13 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.IO;
-using System.Drawing;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
-using MonoMac.Foundation;
 using MonoMac.AppKit;
+using MonoMac.Foundation;
 
 namespace Tomboy
 {
@@ -43,17 +42,17 @@ namespace Tomboy
 		private string backupPathUri = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 
 		public AppDelegate ()
-		{
-			// TODO, set it in a generic way
-			Tomboy.DiskStorage.Instance.SetPath (Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-			Tomboy.DiskStorage.Instance.SetBackupPath (backupPathUri);
+        {
+            // TODO, set it in a generic way
+            DiskStorage.Instance.SetPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
+            DiskStorage.Instance.SetBackupPath(backupPathUri);
 
-			if (!Directory.Exists (backupPathUri))
-				Tomboy.DiskStorage.Instance.Backup ();
+            if (!Directory.Exists(backupPathUri))
+                DiskStorage.Instance.Backup(); //FIXME: Need to better handle status messages.
 
 			Logger.Debug ("Backup Path set to {0}", backupPathUri);
 
-			NoteEngine = new Engine (Tomboy.DiskStorage.Instance);
+			NoteEngine = new Engine (DiskStorage.Instance);
 
 			// Create our cache directory
 			if (!Directory.Exists (BaseUrlPath))
@@ -153,7 +152,7 @@ namespace Tomboy
 			}
 		}
 
-		public static Tomboy.Engine NoteEngine {
+		public static Engine NoteEngine {
 			get;
 			set;
 		}

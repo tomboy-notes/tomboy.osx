@@ -58,7 +58,6 @@ namespace Tomboy
 		{
 			// Get the current row index
 			var tag_at = tags.ElementAt (row);
-			var colKey = (NSString)col.Identifier.ToString ();
 			return (NSString)tag_at.Name;
 		}
 	}
