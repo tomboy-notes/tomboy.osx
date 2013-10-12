@@ -87,14 +87,12 @@ namespace Tomboy
 			UpdateBackForwardSensitivity ();
 			noteWebView.FinishedLoad += HandleFinishedLoad;
 			noteWebView.DecidePolicyForNavigation += HandleWebViewDecidePolicyForNavigation;
-
 			Editable (true);
 
 			if (string.IsNullOrEmpty(currentNoteID))
 				LoadNewNote();
 			else
 				LoadNote();
-          
 		}
 
 		/// <summary>
@@ -141,18 +139,28 @@ namespace Tomboy
 
 		private void HandleFinishedLoad (object sender, WebFrameEventArgs e)
 		{
-            var dom = e.ForFrame.DomDocument;
-			if (!string.IsNullOrEmpty (currentNote.Title)) {
-				WindowForSheet.Title = currentNote.Title + " — Tomboy";
-			} else {
-				// Update the title of the current page from HTML
-				
-				var es = dom.GetElementsByTagName ("title");
-				if (es.Count > 0 && !string.IsNullOrWhiteSpace (es [0].TextContent))
-					WindowForSheet.Title = es [0].TextContent + " — Tomboy";
-			}
-			// this sets thename of the document, which for example is used in a save operation.
-			SetDisplayName (WindowForSheet.Title);
+            NoteTitle(null);
+        }
+
+        partial void NoteTitleFieldSelector(NSObject sender)
+        {
+            if (!currentNote.Title.Equals (noteTitleField.Title)) {
+                Logger.Debug ("Note Title Changing " + noteTitleField.Title);
+                NoteTitle (noteTitleField.Title);
+                SaveData ();
+            }
+        }
+
+        private void NoteTitle (string title)
+        {
+            if (!string.IsNullOrEmpty(title))
+                currentNote.Title = title;
+
+            //WindowForSheet.Title = "Tomboy";
+            SetDisplayName (WindowForSheet.Title);
+            noteTitleField.TextColor = NSColor.Black;
+            if (!string.IsNullOrEmpty(currentNote.Title))
+                noteTitleField.Title = currentNote.Title;
         }
 
 		void LoadNewNote ()
@@ -161,7 +169,8 @@ namespace Tomboy
 			_loadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
-            noteWebView.MainFrame.LoadHtmlString ("<h1>" + currentNote.Title + "</h1>", new NSUrl (AppDelegate.BaseUrlPath));
+            //noteWebView.MainFrame.LoadHtmlString ("<h1>" + currentNote.Title + "</h1>", new NSUrl (AppDelegate.BaseUrlPath));
+            NoteTitle(null);
 			InvalidateRestorableState ();
 			_loadingFromString = false;
 		}
@@ -172,6 +181,7 @@ namespace Tomboy
 				// on a crash, the document restore may try to load a key that doesn't exist any more.
 				currentNote = AppDelegate.Notes[newNoteId];
 				currentNoteID = newNoteId;
+                NoteTitle (null);
 				LoadNote (withHistory);
 			} catch (Exception e) {
 				Logger.Error (e.Message, e);
@@ -205,7 +215,8 @@ namespace Tomboy
 			InvalidateRestorableState ();
 			Logger.Debug ("Note text before Translator {0}", currentNote.Text);
             var content = translator.From(currentNote);
-            content = content.Replace(currentNote.Title, "<h1>" + currentNote.Title + "</h1>");
+            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+            content = content.Remove(beginIndx, (currentNote.Title.Length +1)); // +1 to remove the NewLine char after the title
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
             noteWebView.MainFrame.LoadHtmlString (WikiLinks(content), new NSUrl (AppDelegate.BaseUrlPath));
@@ -249,31 +260,15 @@ namespace Tomboy
 
 			try {
 				string results = translator.To (noteWebView.MainFrame.DomDocument);
-				if (string.IsNullOrEmpty(results)) {
+                if (string.IsNullOrEmpty(results) || currentNote.Title == null) {
 					Logger.Debug("note content empty or null. Nothing to save for {0}", currentNoteID);
 					return;
 				}
-
-                DomNodeList element = noteWebView.MainFrame.DomDocument.GetElementsByTagName ("body");
-                //FIXME: Need to make sure that we check for no body
-                DomHtmlElement body = (DomHtmlElement)element.FirstOrDefault ();
-                string innerText = body.InnerText;
-                int loc = innerText.IndexOf ("\n", 0, StringComparison.CurrentCulture);
-                // crop the text at the first line break.
-                var title = innerText.Substring (0, loc);
-
-                Logger.Debug ("Saving Note Title {0} \n Content {1}", title, results);
-				if (title == null) {
-					Logger.Debug ("note title null. Nothing to save for {0}", currentNoteID);
-					return;
-				}
-				
-				currentNote.Text = results;
-				currentNote.Title = title;
+                currentNote.Title = noteTitleField.Title;
+                currentNote.Text = noteTitleField.Title;//FIXME Need to see if we should actually add the title to the contents.
+                currentNote.Text += Environment.NewLine; 
+				currentNote.Text += results;
                 AppDelegate.NoteEngine.SaveNote (currentNote);
-				
-                if (WindowForSheet != null) // on closing of the Window this will not have a value
-					WindowForSheet.Title = currentNote.Title + " — Tomboy";
 
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);

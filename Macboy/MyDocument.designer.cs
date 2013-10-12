@@ -22,6 +22,9 @@ namespace Tomboy
 		MonoMac.AppKit.NSWindow myNoteWindow { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSTextFieldCell noteTitleField { get; set; }
+
+		[Outlet]
 		MonoMac.WebKit.WebView noteWebView { get; set; }
 
 		[Outlet]
@@ -38,6 +41,9 @@ namespace Tomboy
 
 		[Action ("DeleteNote:")]
 		partial void DeleteNote (MonoMac.Foundation.NSObject sender);
+
+		[Action ("noteTitleFieldSelector:")]
+		partial void NoteTitleFieldSelector (MonoMac.Foundation.NSObject sender);
 
 		[Action ("ShowNotes:")]
 		partial void ShowNotes (MonoMac.Foundation.NSObject sender);
@@ -57,6 +63,11 @@ namespace Tomboy
 				backForwardControl = null;
 			}
 
+			if (myNoteWindow != null) {
+				myNoteWindow.Dispose ();
+				myNoteWindow = null;
+			}
+
 			if (noteWebView != null) {
 				noteWebView.Dispose ();
 				noteWebView = null;
@@ -67,9 +78,9 @@ namespace Tomboy
 				searchField = null;
 			}
 
-			if (myNoteWindow != null) {
-				myNoteWindow.Dispose ();
-				myNoteWindow = null;
+			if (noteTitleField != null) {
+				noteTitleField.Dispose ();
+				noteTitleField = null;
 			}
 		}
 	}

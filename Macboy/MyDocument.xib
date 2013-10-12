@@ -28,6 +28,8 @@
 			<string>NSSearchFieldCell</string>
 			<string>NSSegmentedCell</string>
 			<string>NSSegmentedControl</string>
+			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
 			<string>NSToolbar</string>
 			<string>NSToolbarFlexibleSpaceItem</string>
 			<string>NSToolbarItem</string>
@@ -61,7 +63,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{466, 235}, {450, 300}}</string>
 				<int key="NSWTFlags">1886912512</int>
-				<string key="NSWindowTitle">New Note</string>
+				<string key="NSWindowTitle"/>
 				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSToolbar" key="NSViewClass" id="837282677">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
@@ -101,8 +103,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{1, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="450441236">
@@ -152,8 +152,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:22</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="856306270">
@@ -199,8 +197,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{7, 14}, {67, 25}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSegmentedCell" key="NSCell" id="924709543">
@@ -262,8 +258,6 @@
 									<int key="NSvFlags">298</int>
 									<string key="NSFrame">{{0, 14}, {198, 22}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSearchFieldCell" key="NSCell" id="823755240">
@@ -275,7 +269,7 @@
 										<reference key="NSControlView" ref="878041094"/>
 										<bool key="NSDrawsBackground">YES</bool>
 										<int key="NSTextBezelStyle">1</int>
-										<object class="NSColor" key="NSBackgroundColor">
+										<object class="NSColor" key="NSBackgroundColor" id="309038707">
 											<int key="NSColorSpace">6</int>
 											<string key="NSCatalogName">System</string>
 											<string key="NSColorName">textBackgroundColor</string>
@@ -288,7 +282,7 @@
 											<int key="NSColorSpace">6</int>
 											<string key="NSCatalogName">System</string>
 											<string key="NSColorName">controlTextColor</string>
-											<object class="NSColor" key="NSColor">
+											<object class="NSColor" key="NSColor" id="596800844">
 												<int key="NSColorSpace">3</int>
 												<bytes key="NSWhite">MAA</bytes>
 											</object>
@@ -362,8 +356,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{9, 14}, {39, 25}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="218917552">
@@ -531,7 +523,7 @@
 									<string>public.url-name</string>
 								</object>
 							</object>
-							<string key="NSFrameSize">{450, 300}</string>
+							<string key="NSFrameSize">{450, 267}</string>
 							<reference key="NSSuperview" ref="21739532"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
@@ -573,11 +565,42 @@
 							<bool key="UseBackForwardList">NO</bool>
 							<bool key="AllowsUndo">YES</bool>
 						</object>
+						<object class="NSTextField" id="880428626">
+							<reference key="NSNextResponder" ref="21739532"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{0, 266}, {450, 34}}</string>
+							<reference key="NSSuperview" ref="21739532"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="879740691"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="1023462048">
+								<int key="NSCellFlags">-1808793535</int>
+								<int key="NSCellFlags2">138417216</int>
+								<string key="NSContents">Note Title</string>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">LucidaGrande-Bold</string>
+									<double key="NSSize">18</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<reference key="NSControlView" ref="880428626"/>
+								<bool key="NSDrawsBackground">YES</bool>
+								<reference key="NSBackgroundColor" ref="309038707"/>
+								<object class="NSColor" key="NSTextColor">
+									<int key="NSColorSpace">6</int>
+									<string key="NSCatalogName">System</string>
+									<string key="NSColorName">textColor</string>
+									<reference key="NSColor" ref="596800844"/>
+								</object>
+							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						</object>
 					</object>
 					<string key="NSFrameSize">{450, 300}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="879740691"/>
+					<reference key="NSNextKeyView" ref="880428626"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{94, 141}</string>
@@ -670,6 +693,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">noteTitleField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1023462048"/>
+					</object>
+					<int key="connectionID">102</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">noteTitleFieldSelector:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="880428626"/>
+					</object>
+					<int key="connectionID">103</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="252265233"/>
 						<reference key="destination" ref="1001"/>
@@ -721,6 +760,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="879740691"/>
+							<reference ref="880428626"/>
 						</object>
 						<reference key="parent" ref="252265233"/>
 					</object>
@@ -739,6 +779,7 @@
 							<reference ref="24384612"/>
 						</object>
 						<reference key="parent" ref="252265233"/>
+						<string key="objectName">Note Toolbar</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">8</int>
@@ -875,6 +916,20 @@
 						<reference key="object" ref="218917552"/>
 						<reference key="parent" ref="521103202"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100</int>
+						<reference key="object" ref="880428626"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="1023462048"/>
+						</object>
+						<reference key="parent" ref="21739532"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">101</int>
+						<reference key="object" ref="1023462048"/>
+						<reference key="parent" ref="880428626"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -886,6 +941,10 @@
 					<string>-3.IBPluginDependency</string>
 					<string>1.IBPluginDependency</string>
 					<string>1.IBWindowTemplateEditedContentRect</string>
+					<string>1.userInterfaceItemIdentifier</string>
+					<string>100.IBPluginDependency</string>
+					<string>100.userInterfaceItemIdentifier</string>
+					<string>101.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
@@ -901,6 +960,7 @@
 					<string>33.IBPluginDependency</string>
 					<string>36.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
+					<string>7.designableToolbarIdentifier</string>
 					<string>71.IBPluginDependency</string>
 					<string>72.IBPluginDependency</string>
 					<string>73.IBPluginDependency</string>
@@ -916,6 +976,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{332, 170}, {507, 413}}</string>
+					<string>NoteWindow</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>noteTitleField</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -931,6 +995,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.WebKitIBPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>noteToolBar</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -952,7 +1017,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">95</int>
+			<int key="maxID">103</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -970,6 +1035,7 @@
 							<string>ShowNotes:</string>
 							<string>StartSearch:</string>
 							<string>_dockNewNote:</string>
+							<string>noteTitleFieldSelector:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -978,6 +1044,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>NSSearchField</string>
+							<string>id</string>
 							<string>id</string>
 						</object>
 					</object>
@@ -991,6 +1058,7 @@
 							<string>ShowNotes:</string>
 							<string>StartSearch:</string>
 							<string>_dockNewNote:</string>
+							<string>noteTitleFieldSelector:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1018,6 +1086,10 @@
 								<string key="name">_dockNewNote:</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">noteTitleFieldSelector:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -1027,6 +1099,7 @@
 							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
 							<string>myNoteWindow</string>
+							<string>noteTitleField</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
@@ -1035,6 +1108,7 @@
 							<string>NSMenuItem</string>
 							<string>NSSegmentedControl</string>
 							<string>NSWindow</string>
+							<string>NSTextFieldCell</string>
 							<string>WebView</string>
 							<string>NSSearchField</string>
 						</object>
@@ -1046,6 +1120,7 @@
 							<string>_dockSynchronize</string>
 							<string>backForwardControl</string>
 							<string>myNoteWindow</string>
+							<string>noteTitleField</string>
 							<string>noteWebView</string>
 							<string>searchField</string>
 						</object>
@@ -1062,6 +1137,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">myNoteWindow</string>
 								<string key="candidateClassName">NSWindow</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">noteTitleField</string>
+								<string key="candidateClassName">NSTextFieldCell</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">noteWebView</string>
