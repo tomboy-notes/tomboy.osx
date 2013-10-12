@@ -35,6 +35,7 @@ namespace Tomboy
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
+		private IStorage noteStorage;
 		ControlCenterController controller;
 		private int _maxNotesInMenu = 10;
 		// if Macboy is being launched for the first time on a machine that had a previous version (tomboy)
@@ -44,15 +45,16 @@ namespace Tomboy
 		public AppDelegate ()
         {
             // TODO, set it in a generic way
-            DiskStorage.Instance.SetPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
-            DiskStorage.Instance.SetBackupPath(backupPathUri);
+			noteStorage = new DiskStorage ();
+            noteStorage.SetPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy"));
+            noteStorage.SetBackupPath(backupPathUri);
 
             if (!Directory.Exists(backupPathUri))
-                DiskStorage.Instance.Backup(); //FIXME: Need to better handle status messages.
+                noteStorage.Backup(); //FIXME: Need to better handle status messages.
 
 			Logger.Debug ("Backup Path set to {0}", backupPathUri);
 
-			NoteEngine = new Engine (DiskStorage.Instance);
+			NoteEngine = new Engine (noteStorage);
 
 			// Create our cache directory
 			if (!Directory.Exists (BaseUrlPath))
