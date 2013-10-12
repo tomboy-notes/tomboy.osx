@@ -233,6 +233,14 @@
 										<string key="NSName">_NSRecentDocumentsMenu</string>
 									</object>
 								</object>
+								<object class="NSMenuItem" id="403197321">
+									<reference key="NSMenu" ref="720053764"/>
+									<string key="NSTitle">Sync Notes</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="590580468">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">Preferences</string>
@@ -1703,6 +1711,14 @@
 					</object>
 					<int key="connectionID">573</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">SyncNotes:</string>
+						<reference key="source" ref="947627720"/>
+						<reference key="destination" ref="403197321"/>
+					</object>
+					<int key="connectionID">575</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1797,6 +1813,7 @@
 							<reference ref="425164168"/>
 							<reference ref="1010469920"/>
 							<reference ref="590580468"/>
+							<reference ref="403197321"/>
 						</object>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -2572,6 +2589,11 @@
 						<reference key="object" ref="590580468"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">574</int>
+						<reference key="object" ref="403197321"/>
+						<reference key="parent" ref="720053764"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2695,6 +2717,8 @@
 					<string>563.IBPluginDependency</string>
 					<string>57.IBPluginDependency</string>
 					<string>572.IBPluginDependency</string>
+					<string>574.IBAttributePlaceholdersKey</string>
+					<string>574.IBPluginDependency</string>
 					<string>58.IBPluginDependency</string>
 					<string>73.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
@@ -2825,6 +2849,28 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSMutableDictionary">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>AccessibilityDescription</string>
+							<string>ToolTip</string>
+						</object>
+						<object class="NSArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBAccessibilityAttribute">
+								<string key="name">AccessibilityDescription</string>
+								<reference key="object" ref="403197321"/>
+								<string key="accessibilityValue">Initiate a sync of Notes</string>
+							</object>
+							<object class="IBToolTipAttribute">
+								<string key="name">ToolTip</string>
+								<reference key="object" ref="403197321"/>
+								<string key="toolTip">Initiate a sync of Notes</string>
+							</object>
+						</object>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2849,7 +2895,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">573</int>
+			<int key="maxID">575</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2863,6 +2909,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>OpenDashboard:</string>
 							<string>Preferences:</string>
+							<string>SyncNotes:</string>
 							<string>aboutTomboy:</string>
 							<string>deleteNote:</string>
 							<string>menuNewNote:</string>
@@ -2870,6 +2917,7 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2884,6 +2932,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>OpenDashboard:</string>
 							<string>Preferences:</string>
+							<string>SyncNotes:</string>
 							<string>aboutTomboy:</string>
 							<string>deleteNote:</string>
 							<string>menuNewNote:</string>
@@ -2897,6 +2946,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">Preferences:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">SyncNotes:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

@@ -73,6 +73,10 @@ namespace Tomboy
             set;
         }
 
+        partial void SyncNotes(NSObject sender)
+        {
+            throw new System.NotImplementedException();
+        }
 		public override void FinishedLaunching (NSObject notification)
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.

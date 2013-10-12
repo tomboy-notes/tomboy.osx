@@ -32,6 +32,9 @@ namespace Tomboy
 
 		[Action ("Preferences:")]
 		partial void Preferences (MonoMac.Foundation.NSObject sender);
+
+		[Action ("SyncNotes:")]
+		partial void SyncNotes (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
