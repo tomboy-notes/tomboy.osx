@@ -91,6 +91,22 @@ namespace Tomboy
 
         partial void SyncNotes(NSObject sender)
         {
+			var dest_manifest_path = Path.Combine (AppDelegate.FilesystemSyncPath, "manifest.xml");
+			SyncManifest dest_manifest;
+			if (!File.Exists (dest_manifest_path))
+				SyncManifest.Write (dest_manifest_path, new SyncManifest ());
+			dest_manifest = SyncManifest.Read (dest_manifest_path);
+			var dest_storage = new DiskStorage ();
+			dest_storage.SetPath (AppDelegate.FilesystemSyncPath);
+			var dest_engine = new Engine (dest_storage);
+
+			var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
+			var server = new FilesystemSyncServer (dest_engine, dest_manifest);
+			var sync_manager = new SyncManager(client, server);
+			sync_manager.DoSync ();
+
+			// write back the dest manifest
+			SyncManifest.Write (dest_manifest_path, dest_manifest);
 
         }
 		public override void FinishedLaunching (NSObject notification)

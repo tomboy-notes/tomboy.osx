@@ -33,7 +33,7 @@ namespace Tomboy
 
 	public class ManifestTracker : IDisposable
 	{
-		private SyncManifest manifest;
+		public SyncManifest Manifest;
 		private string path;
 
 		public ManifestTracker (Engine engine, string path)
@@ -41,36 +41,36 @@ namespace Tomboy
 			this.path = path;
 
 			if (!File.Exists (path)) {
-				manifest = new SyncManifest ();
-				SyncManifest.Write (path, manifest);
+				Manifest = new SyncManifest ();
+				SyncManifest.Write (path, Manifest);
 
 				foreach (Note note in engine.GetNotes ().Values) {
-					manifest.NoteRevisions [note.Guid] = manifest.LastSyncRevision + 1;
+					Manifest.NoteRevisions [note.Guid] = Manifest.LastSyncRevision + 1;
 				}
 				Flush ();
 			}
 
-			this.manifest = SyncManifest.Read (path);
+			this.Manifest = SyncManifest.Read (path);
 			engine.NoteAdded += (Note note) => {
 				Console.WriteLine ("Note added");
-				manifest.NoteRevisions [note.Guid] = manifest.LastSyncRevision + 1;
+				Manifest.NoteRevisions [note.Guid] = Manifest.LastSyncRevision + 1;
 			};
 
 			engine.NoteUpdated += (Note note) => {
 				Console.WriteLine ("Note updated");
-				manifest.NoteRevisions [note.Guid] = manifest.LastSyncRevision + 1;
+				Manifest.NoteRevisions [note.Guid] = Manifest.LastSyncRevision + 1;
 			};
 
 			engine.NoteRemoved += (Note note) => {
 				Console.WriteLine ("Note removed: " + note.Guid);
-				manifest.NoteDeletions.Add (note.Guid, note.Title);
+				Manifest.NoteDeletions.Add (note.Guid, note.Title);
 			};
 		}
 
 		private void Flush ()
 		{
 			// write out the manifest to our xml file
-			SyncManifest.Write (path, manifest);
+			SyncManifest.Write (path, Manifest);
 		}
 
 		public void Dispose ()
