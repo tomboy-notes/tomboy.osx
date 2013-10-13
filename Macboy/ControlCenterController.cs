@@ -119,8 +119,12 @@ namespace Tomboy
 		
 		void HandleNoteRemoved (Note note)
 		{
-			notes.Remove (notes.First(item => item.Value.Uri.Equals (note.Uri)));
-			_notesTableView.ReloadData ();
+            int index = notes.FindIndex(f => f.Key == note.Uri);
+            if (index != -1)
+            {
+                notes.RemoveAt(index);
+                _notesTableView.ReloadData();
+            }
 		}
 
 		/// <summary>
