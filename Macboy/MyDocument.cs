@@ -120,9 +120,6 @@ namespace Tomboy
 			}
 
 			WebView.DecideIgnore (e.DecisionToken);
-
-            //FIXME: Not sure why this was in here, but it causes problems if I want WikiLinks to work.
-			//LoadNote (currentNoteID, true);
 		}
 
         private void OpenNote (string title)
@@ -139,41 +136,39 @@ namespace Tomboy
 
 		private void HandleFinishedLoad (object sender, WebFrameEventArgs e)
 		{
-            NoteTitle(null);
+            NoteTitle(currentNote.Title); // this needs to be here once the Window has loaded, otherwise the default window settings will override
         }
 
         partial void NoteTitleFieldSelector(NSObject sender)
         {
-            if (!currentNote.Title.Equals (noteTitleField.Title)) {
+            if (!currentNote.Title.Equals (noteTitleField.Title, StringComparison.CurrentCulture)) {
                 Logger.Debug ("Note Title Changing " + noteTitleField.Title);
                 NoteTitle (noteTitleField.Title);
-                SaveData ();
             }
         }
 
         private void NoteTitle (string title)
         {
-            if (!string.IsNullOrEmpty(title))
-                currentNote.Title = title;
+            Logger.Debug("Setting Note Title to {0}", title);
+            if (title == null)
+                Logger.Error("NoteTitle cannot be null");
 
-            //WindowForSheet.Title = "Tomboy";
-            SetDisplayName (WindowForSheet.Title);
-            noteTitleField.TextColor = NSColor.Black;
-            if (!string.IsNullOrEmpty(currentNote.Title))
-                noteTitleField.Title = currentNote.Title;
+            if (title != null) {
+                WindowForSheet.Title = title;
+                SetDisplayName (title);
+                noteTitleField.TextColor = NSColor.Black;
+                noteTitleField.Title = title;
+            }
         }
 
 		void LoadNewNote ()
 		{
-			// this thing still has issues. The noteWebView is not initialized and I don't know how to get it.
 			_loadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
-            //noteWebView.MainFrame.LoadHtmlString ("<h1>" + currentNote.Title + "</h1>", new NSUrl (AppDelegate.BaseUrlPath));
-            NoteTitle(null);
+            NoteTitle(currentNote.Title);
 			InvalidateRestorableState ();
 			_loadingFromString = false;
-            WindowForSheet.Title = "Tomboy";
 		}
 
 		void LoadNote (string newNoteId, bool withHistory = true)
@@ -182,13 +177,11 @@ namespace Tomboy
 				// on a crash, the document restore may try to load a key that doesn't exist any more.
 				currentNote = AppDelegate.Notes[newNoteId];
 				currentNoteID = newNoteId;
-                NoteTitle (null);
 				LoadNote (withHistory);
 			} catch (Exception e) {
 				Logger.Error (e.Message, e);
 				return;
 			}
-
 		}
 
         string WikiLinks (string body)
@@ -223,7 +216,6 @@ namespace Tomboy
                 var len = currentNote.Title.Length;
                 content = content.Remove(beginIndx, (len + 1)); // +1 to remove the NewLine char after the title
             }
-
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
             noteWebView.MainFrame.LoadHtmlString (WikiLinks(content), new NSUrl (AppDelegate.BaseUrlPath));
