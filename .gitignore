@@ -25,3 +25,6 @@ Macboy-UnitTests/test-results/*
 *.exe
 
 *.mdb
+tomboy/test-results
+tomboy/obj
+tomboy/deploy
