@@ -104,7 +104,7 @@ namespace Tomboy
 		/// <param name='e'>
 		/// E.
         /// </param>//WebNavigationPolicyEventArgs
-		void HandleWebViewDecidePolicyForNavigation (object sender, WebNavigatioPolicyEventArgs e)
+		void HandleWebViewDecidePolicyForNavigation (object sender, WebNavigationPolicyEventArgs e)
 		{
 			// Reference for examples of this method in use
 			// https://github.com/mono/monomac/commit/efc6e28fc03005638ce2cd217dc6c9281ad9c1c5
