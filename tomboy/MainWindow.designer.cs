@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace Macboy
+namespace Tomboy
 {
 	[Register ("MainWindowController")]
 	partial class MainWindowController
@@ -30,7 +30,7 @@ namespace Macboy
 		MonoMac.AppKit.NSSearchField searchField { get; set; }
 
 		[Outlet]
-		Macboy.MainWindow mainWindow { get; set; }
+		Tomboy.MainWindow mainWindow { get; set; }
 
 		[Outlet]
 		MonoMac.AppKit.NSScrollView notesScrollView { get; set; }

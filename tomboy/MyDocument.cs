@@ -430,7 +430,7 @@ namespace Tomboy
 
 		// This is called every time the document is saved.
 		// this is a default thing of NSDocument.
-		public override NSUrl FileUrl {
+		/*public override NSUrl FileUrl {
 			get {
 				if (HasUnautosavedChanges)
 					SaveData ();
@@ -440,7 +440,7 @@ namespace Tomboy
 			set {
 				base.FileUrl = value;
 			}
-		}
+		}*/
 
 		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
 		{

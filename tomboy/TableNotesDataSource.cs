@@ -21,13 +21,11 @@
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using MonoMac.WebKit;
-using Tomboy;
-
 using System.Collections.Generic;
 using System.Collections;
 using System;
 
-namespace Macboy
+namespace Tomboy
 {
 	public class TableNotesDataSource : NSTableViewSource
 	{
@@ -47,7 +45,8 @@ namespace Macboy
 			LoadNotes ();
 			//Handle Search Field
 			this.searchField.Changed += SearchFieldChanged;
-			Engine.NoteAdded += HandleNewNoteAdded;
+
+			AppDelegate.NoteEngine.NoteAdded += HandleNewNoteAdded;
 			KeyboardListener.NoteContentChanged += HandleContentUpdate;
 			DomDocumentListener.NoteContentChanged += HandleNoteContentClosing;
 		}
@@ -88,7 +87,7 @@ namespace Macboy
 			DomDocument document = webView.MainFrameDocument;
 			DomElement paraBlock = document.GetElementById("main_content");
 			GetActiveNoteObj ().Text = paraBlock.InnerText;
-			MainClass.GetEngine ().SaveNote (GetActiveNoteObj ());
+			AppDelegate.NoteEngine.SaveNote (GetActiveNoteObj ());
 		}
 
 		/// <summary>
@@ -103,7 +102,7 @@ namespace Macboy
 		private void SearchFieldChanged (object sender, EventArgs e)
 		{
 			Console.WriteLine ("Searching for {0}", this.searchField.StringValue);
-			LoadNotes (MainClass.GetEngine ().GetNotes (this.searchField.StringValue, true));
+			LoadNotes (AppDelegate.NoteEngine.GetNotes (this.searchField.StringValue, true));
 		}
 
 		/// <summary>
@@ -111,7 +110,7 @@ namespace Macboy
 		/// </summary>
 		private void LoadNotes ()
 		{
-			LoadNotes (MainClass.GetEngine ().GetNotes ());
+			LoadNotes (AppDelegate.NoteEngine.GetNotes ());
 		}
 
 		private void LoadNotes (Dictionary<string, Tomboy.Note> notes)

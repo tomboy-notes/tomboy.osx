@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace MacSuperBoy
+namespace Tomboy
 {
 	[Register ("NoteCollectionItem")]
 	partial class NoteCollectionItem

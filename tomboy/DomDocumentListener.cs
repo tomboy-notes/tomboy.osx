@@ -26,7 +26,7 @@
 
 using System;
 
-namespace tomboy
+namespace Tomboy
 {
 	public class DomDocumentListener : MonoMac.WebKit.DomEventListener
 	{

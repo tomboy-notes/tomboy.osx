@@ -6,7 +6,7 @@
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Module</OutputType>
     <RootNamespace>MacboyUnitTests</RootNamespace>
     <AssemblyName>Macboy-UnitTests</AssemblyName>
     <ReleaseVersion>0.3.1</ReleaseVersion>

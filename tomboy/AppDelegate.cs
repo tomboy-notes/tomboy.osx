@@ -32,7 +32,6 @@ using MonoMac.AppKit;
 using MonoMac.Foundation;
 using Tomboy.Sync;
 using Tomboy.Sync.Filesystem;
-using System.Xml;
 
 namespace Tomboy
 {

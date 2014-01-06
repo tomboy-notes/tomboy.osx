@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.WebKit;
 
-namespace Macboy
+namespace Tomboy
 {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow
 	{

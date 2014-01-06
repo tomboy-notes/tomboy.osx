@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace Macboy
+namespace Tomboy
 {
 	[Register ("AppDelegate")]
 	partial class AppDelegate

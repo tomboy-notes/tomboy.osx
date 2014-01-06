@@ -94,10 +94,10 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="MonoMac">
-      <HintPath>lib\MonoMac.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -127,7 +127,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="StyleBar.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NoteLegacyTranslator.cs" />
-    <Compile Include="unit-tests\NoteLegacyTranslatorTests.cs" />
     <Compile Include="LinkItem.cs" />
     <Compile Include="ControlCenter.cs" />
     <Compile Include="ControlCenterController.cs" />
@@ -143,6 +142,17 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="SyncPrefDialog.designer.cs">
       <DependentUpon>SyncPrefDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DashboardNotesTableViewDataSource.cs" />
+    <Compile Include="DashboardWindow.cs" />
+    <Compile Include="DashboardWindow.designer.cs" />
+    <Compile Include="DashboardWindowController.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="MainWindow.designer.cs" />
+    <Compile Include="MainWindowController.cs" />
+    <Compile Include="NoteCollectionItem.cs" />
+    <Compile Include="NoteCollectionItem.designer.cs" />
+    <Compile Include="TableNotesDataSource.cs" />
+    <Compile Include="KeyboardListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MyDocument.xib" />
@@ -151,6 +161,9 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
     <InterfaceDefinition Include="ControlCenter.xib" />
     <InterfaceDefinition Include="SyncPrefDialog.xib" />
+    <InterfaceDefinition Include="DashboardWindow.xib" />
+    <InterfaceDefinition Include="MainWindow.xib" />
+    <InterfaceDefinition Include="NoteCollectionItem.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist">
@@ -170,9 +183,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Content Include="ToolbarBinTemplate.pdf" />
     <Content Include="MacBoy.icns" />
     <Content Include="note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="unit-tests\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="transform_from_note.xsl" />
@@ -200,5 +210,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\tomboy.icns" />
+    <BundleResource Include="note-new.png" />
   </ItemGroup>
 </Project>

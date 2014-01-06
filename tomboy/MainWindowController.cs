@@ -4,11 +4,10 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-using Tomboy;
 using System.IO;
 using MonoMac.WebKit;
 
-namespace Macboy
+namespace Tomboy
 {
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
 	{
@@ -18,8 +17,8 @@ namespace Macboy
 		/// </summary>
 		private DomDocument document;
 		private DomElement paraBlock;
-		public Macboy.KeyboardListener keyboardListener = new KeyboardListener ();
-		public Macboy.DomDocumentListener domDocumentListener = new DomDocumentListener ();
+		public KeyboardListener keyboardListener = new KeyboardListener ();
+		public DomDocumentListener domDocumentListener = new DomDocumentListener ();
 
 		#endregion fields
 
@@ -110,7 +109,7 @@ namespace Macboy
 
 		private void NewNote ()
 		{
-			Note note = MainClass.GetEngine ().NewNote ();
+			Note note = AppDelegate.NoteEngine.NewNote ();
 			note.Title = "New Note";
 			paraBlock = document.GetElementById("main_content");
 			paraBlock.TextContent = "Example Note";
