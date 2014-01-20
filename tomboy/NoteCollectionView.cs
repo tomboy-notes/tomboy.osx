@@ -75,7 +75,25 @@ namespace Tomboy
 
 		public void UpdateColumnCountBasedOnNumber (int number)
 		{
-			MaxNumberOfColumns = number;
+
+			switch (number)
+			{
+				case 1:
+					MaxNumberOfColumns = 5;
+					break;
+				case 2:
+					MaxNumberOfColumns = 4;
+					break;
+				case 3:
+					MaxNumberOfColumns = 3;
+					break;
+				case 4:
+					MaxNumberOfColumns = 2;
+					break;
+				case 5:
+					MaxNumberOfColumns = 1;
+					break;
+			}
 			var viewSize = FittingSize;
 			var width = viewSize.Width / MaxNumberOfColumns;
 			MinItemSize = new SizeF (width, MinItemSize.Height);
