@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
@@ -17,10 +17,11 @@
                 <menuItem title="Tomboy" id="56">
                     <menu key="submenu" title="Tomboy" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About Tomboy" id="58">
+                            <menuItem title="About Tomboy" id="dRH-Gs-ikr">
+                                <attributedString key="attributedTitle"/>
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
+                                    <action selector="aboutTomboy:" target="533" id="QtL-w1-qaK"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">

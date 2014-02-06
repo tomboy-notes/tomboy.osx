@@ -169,7 +169,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <InterfaceDefinition Include="DashboardWindow.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="NoteCollectionItem.xib" />
-    <InterfaceDefinition Include="Resources\AboutUs.xib" />
     <InterfaceDefinition Include="AboutUs.xib" />
   </ItemGroup>
   <ItemGroup>
