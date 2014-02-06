@@ -12,12 +12,12 @@ Please report bugs using http://bugzilla.gnome.org/
 Tomboy is licensed under the LGPL, see COPYING for more details.
 
 ----
-Macboy is a full implementation of Tomboy. Tomboy-library provices the backend features.
+Tomboy.osx is a full implementation of Tomboy. Tomboy-library provices the backend features.
 Tomboy-library[1] is another project to provide all Tomboy features by API.
 
 This project will be merged into the main Tomboy project at git.gnome.org at some point.
 
-Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or Windows.
+Tomboy.osx is based on MonoMac and will be fully compatible with Tomboy on Linux or Windows.
 ----
 
 Tomboy is a desktop note-taking application for Linux and Unix. Simple and
