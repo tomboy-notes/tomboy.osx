@@ -6,7 +6,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{589A7B13-E47A-4FCE-9916-F2B332AEC485}</ProjectGuid>
     <Packages>
-      <Packages xmlns="">
+      <Packages>
         <Package name="Tarball">
           <Builder TargetDirectory="Builds" DefaultConfiguration="Release|x86" ctype="TarballDeployTarget">
             <RootEntry path="tomboy\tomboy.csproj" />
@@ -14,5 +14,6 @@
         </Package>
       </Packages>
     </Packages>
+    <ReleaseVersion>0.3.1</ReleaseVersion>
   </PropertyGroup>
 </Project>
