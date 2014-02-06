@@ -44,6 +44,7 @@ namespace Tomboy
 		public static string FilesystemSyncPath;
 
 		ControlCenterController controller;
+		AboutUsController aboutUs;
 		private int _maxNotesInMenu = 10;
 		// if tomboy is being launched for the first time on a machine that had a previous version (tomboy)
 		// make sure we get a copy as we are still in a development release.
@@ -243,8 +244,9 @@ namespace Tomboy
 
 		partial void MenuClickedAboutTomboy (NSObject sender)
 		{
-			// TODO implement this method
-            throw new NotImplementedException ();
+			if(aboutUs == null)
+				aboutUs = new AboutUsController();
+			aboutUs.Window.MakeKeyAndOrderFront(this);
 		}
 
 		partial void MenuClickedNewNote (NSObject sender)

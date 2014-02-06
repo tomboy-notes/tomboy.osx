@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
@@ -27,22 +27,22 @@
                         <rect key="frame" x="180" y="-1" width="427" height="356"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="x4E-rN-93I">
-                            <rect key="frame" x="1" y="1" width="410" height="339"/>
+                            <rect key="frame" x="1" y="1" width="425" height="354"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="14">
-                                    <rect key="frame" x="0.0" y="0.0" width="410" height="339"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="425" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="21">
-                                            <rect key="frame" x="0.0" y="0.0" width="410" height="339"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="425" height="354"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="Wn9-A0-qai">
-                                                <rect key="frame" x="1" y="17" width="408" height="321"/>
+                                                <rect key="frame" x="1" y="17" width="423" height="336"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="_notesTableView" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" headerView="24" id="22">
-                                                        <rect key="frame" x="0.0" y="0.0" width="408" height="321"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="423" height="336"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -69,7 +69,7 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             </tableColumn>
-                                                            <tableColumn identifier="modifiedDate" editable="NO" width="76" minWidth="40" maxWidth="1000" id="27">
+                                                            <tableColumn identifier="modifiedDate" editable="NO" width="91" minWidth="40" maxWidth="1000" id="27">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Modified Date">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -91,12 +91,12 @@
                                                 <rect key="frame" x="1" y="337" width="423" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" horizontal="NO" id="25">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="25">
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <tableHeaderView key="headerView" id="24">
-                                                <rect key="frame" x="0.0" y="0.0" width="408" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="423" height="17"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
@@ -105,11 +105,11 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="15">
-                            <rect key="frame" x="1" y="340" width="410" height="15"/>
+                            <rect key="frame" x="1" y="339" width="425" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="16">
-                            <rect key="frame" x="411" y="1" width="15" height="339"/>
+                            <rect key="frame" x="410" y="1" width="16" height="354"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -117,29 +117,29 @@
                         <rect key="frame" x="-1" y="-1" width="173" height="356"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="44k-91-7Zg">
-                            <rect key="frame" x="1" y="1" width="156" height="339"/>
+                            <rect key="frame" x="1" y="1" width="171" height="354"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="18">
-                                    <rect key="frame" x="0.0" y="0.0" width="156" height="339"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="171" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="30">
-                                            <rect key="frame" x="0.0" y="0.0" width="171" height="339"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="171" height="354"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="AOl-en-Ehd">
-                                                <rect key="frame" x="1" y="17" width="169" height="321"/>
+                                                <rect key="frame" x="1" y="17" width="169" height="336"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="_notebooksTableView" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="33" id="31">
-                                                        <rect key="frame" x="0.0" y="0.0" width="169" height="321"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="169" height="336"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
                                                             <tableColumn identifier="_notebookName" editable="NO" width="166" minWidth="40" maxWidth="1000" id="35">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Notebooks">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,7 +160,7 @@
                                                 <rect key="frame" x="1" y="337" width="169" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" horizontal="NO" id="34">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="34">
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -174,17 +174,17 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="19">
-                            <rect key="frame" x="1" y="340" width="156" height="15"/>
+                            <rect key="frame" x="1" y="339" width="171" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="20">
-                            <rect key="frame" x="157" y="1" width="15" height="339"/>
+                            <rect key="frame" x="156" y="1" width="16" height="354"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="9C37A4E7-93F9-4F60-B91B-868AE5800E2C" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="7">
+            <toolbar key="toolbar" implicitIdentifier="9C37A4E7-93F9-4F60-B91B-868AE5800E2C" displayMode="iconAndLabel" sizeMode="regular" id="7">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="4B9D9DB8-8EF2-41D4-B211-D571418338FB" label="New Note" paletteLabel="New Note" image="tomboy" id="52">
                         <nil key="toolTip"/>
