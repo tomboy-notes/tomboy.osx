@@ -27,7 +27,11 @@
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Preferences…" keyEquivalent="," id="129"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="FGU-hS-Kd0">
+                                <connections>
+                                    <action selector="Preferences:" target="533" id="CU7-vz-zMr"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -77,6 +81,9 @@
                                     <action selector="newDocument:" target="-1" id="373"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Gih-6W-gDj">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Open Recent" id="124">
                                 <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="125">
                                     <items>
@@ -93,11 +100,6 @@
                                 <accessibility description="Initiate a sync of Notes"/>
                                 <connections>
                                     <action selector="SyncNotes:" target="533" id="575"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Preferences" keyEquivalent="," id="572">
-                                <connections>
-                                    <action selector="Preferences:" target="533" id="573"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="79">
