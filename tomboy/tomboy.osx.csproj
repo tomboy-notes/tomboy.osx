@@ -225,6 +225,90 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <None Include="tomboy.in">
       <Visible>False</Visible>
     </None>
+    <None Include="deploy\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\stderr.log">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\stdout.log">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\tomboy-0.3.1.pkg">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\MacOS\Tomboy">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\MonoBundle\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\AboutUs.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ControlCenter.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\DashboardWindow.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\Default.css">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextCenter.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextLeft.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextRight.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MacBoy.icns">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MainMenu.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MainWindow.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MyDocument.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\NoteCollectionItem.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\NoteCollectionViewItem.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ShowNotesPopup.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\SyncPrefDialog.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ToolbarBinTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ToolbarNotesTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note-new.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note.html">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\tomboy.icns">
+      <Visible>False</Visible>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />

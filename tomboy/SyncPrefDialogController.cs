@@ -45,7 +45,21 @@ namespace Tomboy
             if (result == 1) {
                 SyncPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
 				AppDelegate.FilesystemSyncPath = openPanel.DirectoryUrl.Path;
-			}
+			
+
+				string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+				string settingsDir = System.IO.Path.Combine(homeDir,".tomboy");
+
+				//CreateDirectory checks if the folder exists, if it does, then no exceptions are thrown
+				System.IO.Directory.CreateDirectory(settingsDir);
+
+				string settingsFile = System.IO.Path.Combine(settingsDir,"syncSettings.txt");
+
+				using (System.IO.StreamWriter writer = new System.IO.StreamWriter(settingsFile)){
+					writer.WriteLine(AppDelegate.FilesystemSyncPath);
+				}
+
+			}								                 
 
         }
 
@@ -56,6 +70,20 @@ namespace Tomboy
             // set according to AppDelegate, which later should be a preference.
             // FIXME: Turn into a system setting.
             EnableAutoSyncing.Enabled = AppDelegate.EnableAutoSync;
+
+			//Loads the Settings which was saved
+			string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+			string settingsDir = System.IO.Path.Combine(homeDir,".tomboy");
+			string settingsFile = System.IO.Path.Combine(settingsDir,"syncSettings.txt");
+
+			if (System.IO.File.Exists(settingsFile)){
+				using (System.IO.StreamReader reader = new System.IO.StreamReader(settingsFile)){
+					string syncPath = reader.ReadLine();
+
+					AppDelegate.FilesystemSyncPath = syncPath;
+					SyncPathTextField.StringValue = syncPath.ToString();
+				}
+			}
         }
 
         partial void EnableAutoSyncingAction(NSObject sender)
