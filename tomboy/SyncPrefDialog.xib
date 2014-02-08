@@ -77,7 +77,7 @@
                             <tabViewItem label="Web Server" identifier="2" id="15">
                                 <view key="view" id="16">
                                     <rect key="frame" x="10" y="33" width="446" height="292"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>

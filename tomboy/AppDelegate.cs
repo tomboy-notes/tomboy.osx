@@ -81,6 +81,17 @@ namespace Tomboy
 			NoteEngine.NoteAdded += HandleNoteAdded;
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
+
+			//Loads the Sync Settings once the applications starts up
+			string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+			string settingsDir = System.IO.Path.Combine(homeDir,".tomboy");
+			string settingsFile = System.IO.Path.Combine(settingsDir,"syncSettings.txt");
+			if (System.IO.File.Exists(settingsFile)){
+				using (System.IO.StreamReader reader = new System.IO.StreamReader(settingsFile)){
+					string syncPath = reader.ReadLine();
+					AppDelegate.FilesystemSyncPath = syncPath;
+				}
+			}
 		}
 
         public static bool EnableAutoSync
