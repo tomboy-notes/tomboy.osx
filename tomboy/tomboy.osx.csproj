@@ -140,10 +140,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="SyncPrefDialog.designer.cs">
       <DependentUpon>SyncPrefDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="DashboardNotesTableViewDataSource.cs" />
-    <Compile Include="DashboardWindow.cs" />
-    <Compile Include="DashboardWindow.designer.cs" />
-    <Compile Include="DashboardWindowController.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="MainWindow.designer.cs" />
     <Compile Include="MainWindowController.cs" />
@@ -164,7 +160,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
     <InterfaceDefinition Include="ControlCenter.xib" />
     <InterfaceDefinition Include="SyncPrefDialog.xib" />
-    <InterfaceDefinition Include="DashboardWindow.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="NoteCollectionItem.xib" />
     <InterfaceDefinition Include="AboutUs.xib" />
