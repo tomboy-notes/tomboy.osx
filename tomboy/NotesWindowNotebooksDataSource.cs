@@ -1,10 +1,10 @@
 //
-// ControlCenterNotesDatasource.cs
+// NotesWindowNotebooksDataSource.cs
 //
 // Author:
 //       Jared L Jennings <jared@jaredjennings.org>
 //
-// Copyright (c) 2012 Jared Jennings 2012
+// Copyright (c) 2012 jjennings
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,54 +24,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
 namespace Tomboy
 {
-	[Register ("ControlCenterNotesDataSource")]
-	public class ControlCenterNotesDataSource : NSTableViewDataSource
+	[Register ("NotesWindowNotebooksDataSource")]
+	public class NotesWindowNotebooksDataSource : NSTableViewDataSource
 	{
-		NSImage image = NSImage.ImageNamed ("note.png");
+		private List<Tags.Tag> tags;
 
-		ControlCenterController MyControlCenterController {
-			get;
-			set;
+		public NotesWindowNotebooksDataSource ()
+		{
 		}
 
-		public ControlCenterNotesDataSource (ControlCenterController controller)
+		public NotesWindowNotebooksDataSource (List<Tags.Tag> tags)
 		{
-			if (controller == null)
-				throw new ArgumentNullException ("controller");
-			MyControlCenterController = controller;
+			this.tags = tags;
 		}
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
 		public int NumberOfRowsInTableView(NSTableView table)
 		{
-			return MyControlCenterController == null ? 0 : MyControlCenterController.GetNoteCount ();
+			return this.tags.Count;
 		}
 
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
-		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row)
+		public NSObject ObjectValueForTableColumn (NSTableView table, NSTableColumn col, int row)
 		{
 			// Get the current row index
-			var colKey = (NSString)col.Identifier.ToString ();
-			var note_at = MyControlCenterController.GetNoteAt (row);
-			switch (colKey) {
-			case "_notesImageColumn":
-				return image; //FIXME: This is not working. An image is not being returned.
-			case "modifiedDate":
-				return DateTimeUtils.GetPrettyDate (note_at.ChangeDate);
-			case "title":
-				return (NSString)note_at.Title;
-			default:
-				return null;
-			}
+			var tag_at = tags.ElementAt (row);
+			return (NSString)tag_at.Name;
 		}
 	}
 }

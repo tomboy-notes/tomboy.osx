@@ -351,7 +351,7 @@ namespace Tomboy
         /// <param name="sender">Sender.</param>
         partial void AllNotes (NSObject sender)
         {
-            ControlCenterController controller = new ControlCenterController ();
+            NotesWindowController controller = new NotesWindowController ();
             controller.Window.MakeKeyAndOrderFront (this);
         }
 

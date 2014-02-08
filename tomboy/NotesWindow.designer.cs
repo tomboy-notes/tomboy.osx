@@ -8,8 +8,8 @@ using MonoMac.Foundation;
 
 namespace Tomboy
 {
-	[Register ("ControlCenterController")]
-	partial class ControlCenterController
+	[Register ("NotesWindowController")]
+	partial class NotesWindowController
 	{
 		[Outlet]
 		MonoMac.AppKit.NSTableView _notesTableView { get; set; }
@@ -45,8 +45,8 @@ namespace Tomboy
 		}
 	}
 
-	[Register ("ControlCenter")]
-	partial class ControlCenter
+	[Register ("NotesWindow")]
+	partial class NotesWindow
 	{
 		
 		void ReleaseDesignerOutlets ()

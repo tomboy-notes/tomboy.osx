@@ -1,5 +1,5 @@
 //
-// ControlCenter.cs
+// NotesWindow.cs
 //
 // Author:
 //       Jared L Jennings <jared@jaredjennings.org>
@@ -28,19 +28,19 @@ using MonoMac.Foundation;
 
 namespace Tomboy
 {
-	public partial class ControlCenter : MonoMac.AppKit.NSWindow
+	public partial class NotesWindow : MonoMac.AppKit.NSWindow
 	{
 		#region Constructors
 		
 		// Called when created from unmanaged code
-		public ControlCenter (IntPtr handle) : base (handle)
+		public NotesWindow (IntPtr handle) : base (handle)
 		{
 			Initialize ();
 		}
 		
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public ControlCenter (NSCoder coder) : base (coder)
+		public NotesWindow (NSCoder coder) : base (coder)
 		{
 			Initialize ();
 		}

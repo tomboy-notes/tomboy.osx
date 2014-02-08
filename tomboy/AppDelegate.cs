@@ -43,7 +43,7 @@ namespace Tomboy
 		// TODO this should not go here
 		public static string FilesystemSyncPath;
 
-		ControlCenterController controller;
+		NotesWindowController controller;
 		AboutUsController aboutUs;
 		private int _maxNotesInMenu = 10;
 		// if tomboy is being launched for the first time on a machine that had a previous version (tomboy)
@@ -223,7 +223,7 @@ namespace Tomboy
 		partial void OpenDashboard (NSObject sender)
 		{
 			if (controller == null)
-				controller = new ControlCenterController ();
+				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
 		}
 
@@ -264,7 +264,7 @@ namespace Tomboy
 		private void LoadDashboardWindow ()
 		{
 			if (controller == null)
-				controller = new ControlCenterController ();
+				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
 		}
 

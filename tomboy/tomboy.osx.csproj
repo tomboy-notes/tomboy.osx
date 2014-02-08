@@ -126,13 +126,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="Logger.cs" />
     <Compile Include="NoteLegacyTranslator.cs" />
     <Compile Include="LinkItem.cs" />
-    <Compile Include="ControlCenter.cs" />
-    <Compile Include="ControlCenterController.cs" />
-    <Compile Include="ControlCenter.designer.cs">
-      <DependentUpon>ControlCenter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ControlCenterNotesDatasource.cs" />
-    <Compile Include="ControlCenterNotebooksDataSource.cs" />
     <Compile Include="DateTimeUtils.cs" />
     <Compile Include="NoteSync.cs" />
     <Compile Include="SyncPrefDialog.cs" />
@@ -152,18 +145,25 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="AboutUs.designer.cs">
       <DependentUpon>AboutUs.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotesWindow.cs" />
+    <Compile Include="NotesWindowController.cs" />
+    <Compile Include="NotesWindowNotebooksDataSource.cs" />
+    <Compile Include="NotesWindowNotesDatasource.cs" />
+    <Compile Include="NotesWindow.designer.cs">
+      <DependentUpon>NotesWindow.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MyDocument.xib" />
     <InterfaceDefinition Include="MainMenu.xib" />
     <InterfaceDefinition Include="ShowNotesPopup.xib" />
     <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
-    <InterfaceDefinition Include="ControlCenter.xib" />
     <InterfaceDefinition Include="SyncPrefDialog.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="NoteCollectionItem.xib" />
     <InterfaceDefinition Include="AboutUs.xib" />
     <InterfaceDefinition Include="Resources\AboutUs.xib" />
+    <InterfaceDefinition Include="NotesWindow.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist">

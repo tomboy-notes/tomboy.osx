@@ -1,5 +1,5 @@
 //
-// ControlCenterController.cs
+// NotesWindowController.cs
 //
 // Author:
 //       Jared L Jennings <jared@jaredjennings.org>
@@ -32,7 +32,7 @@ using MonoMac.AppKit;
 
 namespace Tomboy
 {
-	public partial class ControlCenterController : MonoMac.AppKit.NSWindowController
+	public partial class NotesWindowController : NSWindowController
 	{
 		List<KeyValuePair<string, Note>> notes;
 		List <Tags.Tag> tags;
@@ -41,20 +41,20 @@ namespace Tomboy
 		#region Constructors
 		
 		// Called when created from unmanaged code
-		public ControlCenterController (IntPtr handle) : base (handle)
+		public NotesWindowController (IntPtr handle) : base (handle)
 		{
 			Initialize ();
 		}
 		
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public ControlCenterController (NSCoder coder) : base (coder)
+		public NotesWindowController (NSCoder coder) : base (coder)
 		{
 			Initialize ();
 		}
 		
 		// Call to load from the XIB/NIB file
-		public ControlCenterController () : base ("ControlCenter")
+		public NotesWindowController () : base ("NotesWindow")
 		{
 			Initialize ();
 		}
@@ -82,8 +82,8 @@ namespace Tomboy
 		[Export ("awakeFromNib:")]
 		public override void AwakeFromNib()
 		{
-			_notesTableView.DataSource = new ControlCenterNotesDataSource (this);
-			_notebooksTableView.DataSource = new ControlCenterNotebooksDataSource (this.tags);
+			_notesTableView.DataSource = new NotesWindowNotesDatasource (this);
+			_notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (this.tags);
 			
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
@@ -190,9 +190,9 @@ namespace Tomboy
 		#endregion
 		
 		//strongly typed window accessor
-		public new ControlCenter Window {
+		public new NotesWindow Window {
 			get {
-				return (ControlCenter)base.Window;
+				return (NotesWindow)base.Window;
 			}
 		}
 	}
