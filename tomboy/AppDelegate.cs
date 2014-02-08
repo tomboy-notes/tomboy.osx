@@ -82,7 +82,7 @@ namespace Tomboy
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
-			//Loads the path when the app starts up for Syncing
+			//Loads the Sync Settings once the applications starts up
 			string homeDir = System.Environment.GetEnvironmentVariable("HOME");
 			string settingsDir = System.IO.Path.Combine(homeDir,".tomboy");
 			string settingsFile = System.IO.Path.Combine(settingsDir,"syncSettings.txt");
