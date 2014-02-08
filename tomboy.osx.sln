@@ -240,6 +240,6 @@ Global
 		$35.inheritsSet = Mono
 		$35.inheritsScope = text/x-csharp
 		$35.scope = text/x-csharp
-		version = 0.3.1
+		version = 0.3.2
 	EndGlobalSection
 EndGlobal

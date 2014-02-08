@@ -27,7 +27,7 @@ This project will be merged into the main Tomboy project at git.gnome.org at som
 
 Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or Windows.
 ----</Description>
-    <ReleaseVersion>0.3.1</ReleaseVersion>
+    <ReleaseVersion>0.3.2</ReleaseVersion>
     <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
     <newfilesearch>OnLoad</newfilesearch>
   </PropertyGroup>
@@ -53,7 +53,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     </I18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>none</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>..\deploy</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -70,6 +69,9 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <UseSGen>false</UseSGen>
     <I18n>
     </I18n>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DocumentationFile>..\deploy\Tomboy.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|x86' ">
     <DebugType>none</DebugType>
@@ -94,12 +96,8 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyDocument.cs" />
