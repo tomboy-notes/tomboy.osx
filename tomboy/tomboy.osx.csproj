@@ -215,6 +215,11 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <None Include="Entitlements.plist">
       <Visible>False</Visible>
     </None>
+    <None Include="Default.css" />
+    <None Include="MacBoy.icns" />
+    <None Include="ToolbarBinTemplate.pdf" />
+    <None Include="ToolbarNotesTemplate.pdf" />
+    <None Include="note.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
