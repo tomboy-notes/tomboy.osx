@@ -2,6 +2,8 @@ using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
+using Tomboy.Sync;
+
 namespace Tomboy
 {
     public partial class SyncPrefDialogController : MonoMac.AppKit.NSWindowController
@@ -44,7 +46,10 @@ namespace Tomboy
             var result = openPanel.RunModal();
             if (result == 1) {
                 SyncPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
-				AppDelegate.FilesystemSyncPath = openPanel.DirectoryUrl.Path;
+				//AppDelegate.FilesystemSyncPath = openPanel.DirectoryUrl.Path;
+
+				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
+				SettingsSync.Write(AppDelegate.settings);
 			}
 
         }
@@ -55,15 +60,24 @@ namespace Tomboy
         {
             // set according to AppDelegate, which later should be a preference.
             // FIXME: Turn into a system setting.
-            EnableAutoSyncing.Enabled = AppDelegate.EnableAutoSync;
+			//EnableAutoSyncing.Enabled = AppDelegate.EnableAutoSync;
+
+			SyncPathTextField.StringValue = AppDelegate.settings.syncURL;
+			EnableAutoSyncing.Enabled = true;
+			//Console.WriteLine(AppDelegate.settings.autoSync.ToString());
+
         }
 
         partial void EnableAutoSyncingAction(NSObject sender)
         {
             if (EnableAutoSyncing.Enabled)
-                AppDelegate.EnableAutoSync = true;
+				AppDelegate.settings.autoSync = true;
             else
-                AppDelegate.EnableAutoSync = false;
+				AppDelegate.settings.autoSync = false;
+
+			SettingsSync.Write(AppDelegate.settings);
+			//Console.WriteLine("Enabled Auto Sync - ");
+			//Console.WriteLine(AppDelegate.settings.autoSync.ToString());
         }
 
         partial void StartFileSync(NSObject sender)
