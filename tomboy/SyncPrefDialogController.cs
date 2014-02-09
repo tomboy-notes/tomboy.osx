@@ -50,6 +50,8 @@ namespace Tomboy
 
 				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
 				SettingsSync.Write(AppDelegate.settings);
+
+				statusField.StringValue = "Sync path set at "+AppDelegate.settings.syncURL;
 			}
 
         }

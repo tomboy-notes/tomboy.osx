@@ -16,6 +16,9 @@ namespace Tomboy
 		MonoMac.AppKit.NSButton EnableAutoSyncing { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSTextField statusField { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField SyncPathTextField { get; set; }
 
 		[Outlet]
@@ -32,6 +35,11 @@ namespace Tomboy
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (EnableAutoSyncing != null) {
+				EnableAutoSyncing.Dispose ();
+				EnableAutoSyncing = null;
+			}
+
 			if (SyncPathTextField != null) {
 				SyncPathTextField.Dispose ();
 				SyncPathTextField = null;
@@ -42,9 +50,9 @@ namespace Tomboy
 				syncProgressIndicator = null;
 			}
 
-			if (EnableAutoSyncing != null) {
-				EnableAutoSyncing.Dispose ();
-				EnableAutoSyncing = null;
+			if (statusField != null) {
+				statusField.Dispose ();
+				statusField = null;
 			}
 		}
 	}
