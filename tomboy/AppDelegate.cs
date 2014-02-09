@@ -123,9 +123,6 @@ namespace Tomboy
 			if (controller == null)
 				controller = new NotesWindowController();
 			controller.Window.MakeMainWindow();
-
-			BuildDockMenuNotes();
-
 		}
 
         partial void Preferences(NSObject sender)
