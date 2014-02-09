@@ -43,6 +43,8 @@ namespace Tomboy
 		// TODO this should not go here
 		public static string FilesystemSyncPath;
 
+		public static SettingsSync settings;
+
 		NotesWindowController controller;
 		AboutUsController aboutUs;
 		private int _maxNotesInMenu = 10;
@@ -82,16 +84,9 @@ namespace Tomboy
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
-			//Loads the Sync Settings once the applications starts up
-			string homeDir = System.Environment.GetEnvironmentVariable("HOME");
-			string settingsDir = System.IO.Path.Combine(homeDir,".tomboy");
-			string settingsFile = System.IO.Path.Combine(settingsDir,"syncSettings.txt");
-			if (System.IO.File.Exists(settingsFile)){
-				using (System.IO.StreamReader reader = new System.IO.StreamReader(settingsFile)){
-					string syncPath = reader.ReadLine();
-					AppDelegate.FilesystemSyncPath = syncPath;
-				}
-			}
+		
+			settings = SettingsSync.Read();
+
 		}
 
         public static bool EnableAutoSync
@@ -102,13 +97,13 @@ namespace Tomboy
 
         partial void SyncNotes(NSObject sender)
         {
-			var dest_manifest_path = Path.Combine (AppDelegate.FilesystemSyncPath, "manifest.xml");
+			var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
 			SyncManifest dest_manifest;
 			if (!File.Exists (dest_manifest_path))
 				SyncManifest.Write (dest_manifest_path, new SyncManifest ());
 			dest_manifest = SyncManifest.Read (dest_manifest_path);
 			var dest_storage = new DiskStorage ();
-			dest_storage.SetPath (AppDelegate.FilesystemSyncPath);
+			dest_storage.SetPath (settings.syncURL);
 			var dest_engine = new Engine (dest_storage);
 
 			var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);

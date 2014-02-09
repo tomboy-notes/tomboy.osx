@@ -63,7 +63,7 @@
                                         <button id="55">
                                             <rect key="frame" x="15" y="187" width="156" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Enable Autosyncing" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="56">
+                                            <buttonCell key="cell" type="check" title="Enable Autosyncing" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="56">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
