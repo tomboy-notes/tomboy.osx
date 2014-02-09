@@ -119,6 +119,13 @@ namespace Tomboy
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.
 			//BuildDockMenuNotes ();
+
+			if (controller == null)
+				controller = new NotesWindowController();
+			controller.Window.MakeMainWindow();
+
+			BuildDockMenuNotes();
+
 		}
 
         partial void Preferences(NSObject sender)
