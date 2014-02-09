@@ -154,16 +154,16 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="MyDocument.xib" />
-    <InterfaceDefinition Include="MainMenu.xib" />
-    <InterfaceDefinition Include="ShowNotesPopup.xib" />
-    <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
-    <InterfaceDefinition Include="SyncPrefDialog.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="NoteCollectionItem.xib" />
     <InterfaceDefinition Include="AboutUs.xib" />
-    <InterfaceDefinition Include="Resources\AboutUs.xib" />
+    <InterfaceDefinition Include="MainMenu.xib" />
+    <InterfaceDefinition Include="MyDocument.xib" />
+    <InterfaceDefinition Include="NoteCollectionViewItem.xib" />
     <InterfaceDefinition Include="NotesWindow.xib" />
+    <InterfaceDefinition Include="ShowNotesPopup.xib" />
+    <InterfaceDefinition Include="SyncPrefDialog.xib" />
+    <InterfaceDefinition Include="Resources\AboutUs.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist">
@@ -194,9 +194,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <None Include="MainWindow.designer.cs">
       <Visible>False</Visible>
     </None>
-    <None Include="MainWindow.xib">
-      <Visible>False</Visible>
-    </None>
     <None Include="MainWindowController.cs">
       <Visible>False</Visible>
     </None>
@@ -204,9 +201,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
       <Visible>False</Visible>
     </None>
     <None Include="NoteCollectionItem.designer.cs">
-      <Visible>False</Visible>
-    </None>
-    <None Include="NoteCollectionItem.xib">
       <Visible>False</Visible>
     </None>
     <None Include="TableNotesDataSource.cs">
@@ -218,20 +212,111 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <None Include="tomboy.in">
       <Visible>False</Visible>
     </None>
+    <None Include="Entitlements.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\stderr.log">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\stdout.log">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\tomboy-0.3.1.pkg">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\MacOS\Tomboy">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\MonoBundle\Info.plist">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\AboutUs.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ControlCenter.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\DashboardWindow.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\Default.css">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextCenter.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextLeft.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\IBAlignTextRight.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MacBoy.icns">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MainMenu.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MainWindow.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\MyDocument.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\NoteCollectionItem.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\NoteCollectionViewItem.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ShowNotesPopup.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\SyncPrefDialog.nib">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ToolbarBinTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\ToolbarNotesTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note-new.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note.html">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\note.png">
+      <Visible>False</Visible>
+    </None>
+    <None Include="deploy\Tomboy.app\Contents\Resources\tomboy.icns">
+      <Visible>False</Visible>
+    </None>
+    <None Include="Default.css">
+      <Visible>False</Visible>
+    </None>
+    <None Include="MacBoy.icns">
+      <Visible>False</Visible>
+    </None>
+    <None Include="ToolbarBinTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="ToolbarNotesTemplate.pdf">
+      <Visible>False</Visible>
+    </None>
+    <None Include="note.html">
+      <Visible>False</Visible>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
-  <ItemGroup>
-    <Content Include="ToolbarNotesTemplate.pdf" />
-    <Content Include="Default.css" />
-    <Content Include="note.html" />
-    <Content Include="IBAlignTextCenter.png" />
-    <Content Include="IBAlignTextLeft.png" />
-    <Content Include="IBAlignTextRight.png" />
-    <Content Include="ToolbarBinTemplate.pdf" />
-    <Content Include="MacBoy.icns" />
-    <Content Include="note.png" />
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="transform_from_note.xsl" />
     <EmbeddedResource Include="transform_to_note.xsl" />
@@ -257,7 +342,10 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="IBAlignTextCenter.png" />
+    <BundleResource Include="IBAlignTextLeft.png" />
+    <BundleResource Include="IBAlignTextRight.png" />
+    <BundleResource Include="note.png" />
     <BundleResource Include="Resources\tomboy.icns" />
-    <BundleResource Include="note-new.png" />
   </ItemGroup>
 </Project>
