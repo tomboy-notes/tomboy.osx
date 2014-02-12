@@ -48,6 +48,12 @@ namespace Tomboy
 		NotesWindowController controller;
 		AboutUsController aboutUs;
 		private int _maxNotesInMenu = 10;
+
+		//Maintains the current count of Notes added to Dock
+		private int dockMenuNoteCounter = 0;
+		//Maximum Notes which can be added to the Dock is 10.
+		private const int MAXNOTES = 10;
+
 		// if tomboy is being launched for the first time on a machine that had a previous version (tomboy)
 		// make sure we get a copy as we are still in a development release.
 		private string backupPathUri = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
@@ -139,22 +145,13 @@ namespace Tomboy
 			if (dockMenu == null || Notes.Count == 0)
 				return;
 
-			//dockMenu.RemoveAllItems ();
-
-			if (Notes != null || Notes.Count > 0) {
-				if (Notes.Count < _maxNotesInMenu)
-					_maxNotesInMenu = Notes.Count;
-				/*for (int i = 0; i < _maxNotesInMenu; i++) {
-					var item = new NSMenuItem ();
-					var key_at = Notes.Keys.ElementAt (i);
-					item.Title = Notes[key_at].Title;
-					item.Activated += HandleActivated;
-					dockMenu.AddItem (item);
-				}*/
-				ArrangeDateWise();
-			}
+			ArrangeDateWise();
 		}
 
+		/// <summary>
+		/// Arranges the Dock Menu with lastest change date.
+		/// Last 10 modified Notes are shown up in the Dock Menu.
+		/// </summary>
 		void ArrangeDateWise(){
 			if (Notes != null || Notes.Count > 0)
 			{
@@ -170,20 +167,31 @@ namespace Tomboy
 				var dateList = dateDict.Keys.ToList();
 				dateList.Sort();
 
-				if (Notes.Count < _maxNotesInMenu)
-					_maxNotesInMenu = Notes.Count;
-				for (int i = 0; i < _maxNotesInMenu; i++)
-				{
-					var item = new NSMenuItem();
-					DateTime date = dateList.ElementAt(_maxNotesInMenu - i - 1);
-					item.Title = dateDict[date].Title;
-					item.Activated += HandleActivated;
-					dockMenu.AddItem(item);
-				}
+				if (dateDict.Count >= MAXNOTES)
+					for (int i = 0; i < MAXNOTES && dockMenuNoteCounter <= MAXNOTES; i++)
+					{
+						var item = new NSMenuItem();
+						DateTime date = dateList.ElementAt(dateDict.Count - i - 1);
+						item.Title = dateDict[date].Title;
+						item.Activated += HandleActivated;
+						dockMenu.AddItem(item);
+						dockMenuNoteCounter += 1;
+					}
+				else
+					for (int i = 0; i < dateDict.Count; i++)
+					{
+						var item = new NSMenuItem();
+						DateTime date = dateList.ElementAt(dateDict.Count - i - 1);
+						item.Title = dateDict[date].Title;
+						item.Activated += HandleActivated;
+						dockMenu.AddItem(item);
+						dockMenuNoteCounter += 1;
+					}
 
 			}
 
 		}
+
 		void HandleActivated (object sender, EventArgs e)
 		{
 			NSMenuItem item = (NSMenuItem)sender;
@@ -213,6 +221,7 @@ namespace Tomboy
             using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title)) {
                 if (item != null)
                     dockMenu.RemoveItem(item);
+				dockMenuNoteCounter -= 1;
             }
 		}
 
@@ -222,10 +231,27 @@ namespace Tomboy
 			Notes.Remove (note.Uri); //FIXME: Why is this being removed and then added again?
 			Notes.Add (note.Uri, note);
 			try {
-				//BuildDockMenuNotes ();
+				UpdateDock();
 			} catch (Exception e) {
 				Logger.Error ("Failed to update Dock Menu {0}", e);
 			}
+		}
+
+		/// <summary>
+		/// Updates the Dock Menu when the Notes are modified
+		/// </summary>
+		private void UpdateDock(){
+			int count = dockMenuNoteCounter;
+			while (count > 0)
+			{
+				/*Using the Index 4, becase 0 to 3 are reserved for About Us,
+				 * Search Notes, New Note and horizontal bar*/
+				dockMenu.RemoveItemAt(4);
+				dockMenuNoteCounter -= 1;
+				count--;
+			}
+
+			ArrangeDateWise();
 		}
 
 		public static string BaseUrlPath {
@@ -255,6 +281,7 @@ namespace Tomboy
 				item.Title = note.Title;
 				item.Activated += HandleActivated;
 				dockMenu.AddItem (item);
+				dockMenuNoteCounter += 1;
 			} catch (Exception e) {
 				Logger.Error ("Failed to add item from Dock Menu {0}", e);
 			}
@@ -303,8 +330,6 @@ namespace Tomboy
 		#region private methods
 		private void LoadDashboardWindow ()
 		{
-			BuildDockMenuNotes();
-
 			if (controller == null)
 				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
