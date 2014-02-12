@@ -118,7 +118,7 @@ namespace Tomboy
 		public override void FinishedLaunching (NSObject notification)
 		{
 			//moving from nibFinishedLoading may address a few issues with crashes.
-			//BuildDockMenuNotes ();
+			BuildDockMenuNotes ();
 
 			if (controller == null)
 				controller = new NotesWindowController();
@@ -136,24 +136,54 @@ namespace Tomboy
 		/// </summary>
 		void BuildDockMenuNotes ()
 		{
-			if (dockMenu == null)
+			if (dockMenu == null || Notes.Count == 0)
 				return;
 
-			dockMenu.RemoveAllItems ();
+			//dockMenu.RemoveAllItems ();
 
 			if (Notes != null || Notes.Count > 0) {
 				if (Notes.Count < _maxNotesInMenu)
 					_maxNotesInMenu = Notes.Count;
-				for (int i = 0; i < _maxNotesInMenu; i++) {
+				/*for (int i = 0; i < _maxNotesInMenu; i++) {
 					var item = new NSMenuItem ();
 					var key_at = Notes.Keys.ElementAt (i);
 					item.Title = Notes[key_at].Title;
 					item.Activated += HandleActivated;
 					dockMenu.AddItem (item);
-				}
+				}*/
+				ArrangeDateWise();
 			}
 		}
 
+		void ArrangeDateWise(){
+			if (Notes != null || Notes.Count > 0)
+			{
+				int count = Notes.Count;
+				Dictionary<DateTime,Note> dateDict = new Dictionary<DateTime, Note>();
+
+				for (int i = 0; i < count; i++)
+				{
+					Note temp = Notes.Values.ElementAt(i);
+					dateDict.Add(temp.ChangeDate, temp);
+				}
+
+				var dateList = dateDict.Keys.ToList();
+				dateList.Sort();
+
+				if (Notes.Count < _maxNotesInMenu)
+					_maxNotesInMenu = Notes.Count;
+				for (int i = 0; i < _maxNotesInMenu; i++)
+				{
+					var item = new NSMenuItem();
+					DateTime date = dateList.ElementAt(_maxNotesInMenu - i - 1);
+					item.Title = dateDict[date].Title;
+					item.Activated += HandleActivated;
+					dockMenu.AddItem(item);
+				}
+
+			}
+
+		}
 		void HandleActivated (object sender, EventArgs e)
 		{
 			NSMenuItem item = (NSMenuItem)sender;
@@ -273,6 +303,8 @@ namespace Tomboy
 		#region private methods
 		private void LoadDashboardWindow ()
 		{
+			BuildDockMenuNotes();
+
 			if (controller == null)
 				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
