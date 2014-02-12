@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="EnableAutoSyncing" destination="55" id="57"/>
                 <outlet property="SyncPathTextField" destination="32" id="46"/>
+                <outlet property="statusField" destination="y0D-vD-Amm" id="B5U-zX-Rp4"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>
@@ -61,7 +62,7 @@
                                             </connections>
                                         </button>
                                         <button id="55">
-                                            <rect key="frame" x="15" y="187" width="156" height="18"/>
+                                            <rect key="frame" x="15" y="171" width="156" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Enable Autosyncing" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="56">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -71,6 +72,15 @@
                                                 <action selector="EnableAutoSyncingAction:" target="-2" id="58"/>
                                             </connections>
                                         </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="y0D-vD-Amm">
+                                            <rect key="frame" x="14" y="198" width="417" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="xR1-0a-1vi">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>
