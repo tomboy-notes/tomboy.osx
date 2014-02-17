@@ -76,14 +76,14 @@
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="28ED769D-1E83-4DD3-9841-9FE6BD884B4E" label="Notes" paletteLabel="Notes" image="ToolbarNotesTemplate" id="27">
+                    <toolbarItem implicitItemIdentifier="28ED769D-1E83-4DD3-9841-9FE6BD884B4E" label="Notes" paletteLabel="Notes" image="ToolbarBinTemplate" id="27">
                         <nil key="toolTip"/>
                         <size key="minSize" width="39" height="25"/>
                         <size key="maxSize" width="55" height="38"/>
                         <button key="view" verticalHuggingPriority="750" id="25">
                             <rect key="frame" x="0.0" y="14" width="39" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarNotesTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarBinTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -116,7 +116,7 @@
                         <button key="view" verticalHuggingPriority="750" id="71">
                             <rect key="frame" x="1" y="14" width="39" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarBinTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="72">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarBinTemplate" imagePosition="overlaps" alignment="center" alternateImage="NSRemoveTemplate" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="72">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <string key="keyEquivalent">d</string>
@@ -160,7 +160,7 @@
         <image name="NSGoLeftTemplate" width="9" height="9"/>
         <image name="NSGoRightTemplate" width="9" height="9"/>
         <image name="NSQuickLookTemplate" width="21" height="16"/>
+        <image name="NSRemoveTemplate" width="8" height="8"/>
         <image name="ToolbarBinTemplate" width="128" height="128"/>
-        <image name="ToolbarNotesTemplate" width="128" height="128"/>
     </resources>
 </document>

@@ -60,6 +60,10 @@ namespace Tomboy
 
 		public AppDelegate ()
         {
+			settings = SettingsSync.Read();
+
+			getSycnedNotes();
+
 			var storage_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy");
             // TODO, set it in a generic way
 			noteStorage = new DiskStorage ();
@@ -91,7 +95,31 @@ namespace Tomboy
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
 		
-			settings = SettingsSync.Read();
+
+		}
+
+		public void getSycnedNotes(){
+			var dest_manifest_path = Path.Combine(settings.syncURL, "manifest.xml");
+			SyncManifest manifest = SyncManifest.Read(dest_manifest_path);
+			var dest_storage = new DiskStorage();
+			dest_storage.SetPath(settings.syncURL);
+			var dest_engine = new Engine(dest_storage);
+
+			var server = new FilesystemSyncServer (dest_engine, manifest);
+
+			IList<Note> notesFromServer = server.GetAllNotes(true);
+
+			var notes = notesFromServer.ToArray<Note>();
+
+			int len = notes.Count();
+			Console.WriteLine(len);
+
+			for (int i = 0; i < len; i++)
+			{
+				Note note = notes.ElementAt(i);
+				if (note != null)
+					Console.WriteLine(note.Title);
+			}
 
 		}
 
@@ -115,8 +143,9 @@ namespace Tomboy
 			var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
 			var server = new FilesystemSyncServer (dest_engine, dest_manifest);
 			var sync_manager = new SyncManager(client, server);
+			getSycnedNotes();
 			sync_manager.DoSync ();
-
+			RefreshNotesWindowController();
 			// write back the dest manifest
 			SyncManifest.Write (dest_manifest_path, dest_manifest);
 
@@ -223,6 +252,8 @@ namespace Tomboy
                     dockMenu.RemoveItem(item);
 				dockMenuNoteCounter -= 1;
             }
+
+			RefreshNotesWindowController();
 		}
 
 		void HandleNoteUpdated (Note note)
@@ -252,6 +283,7 @@ namespace Tomboy
 			}
 
 			ArrangeDateWise();
+			RefreshNotesWindowController();
 		}
 
 		public static string BaseUrlPath {
@@ -282,9 +314,21 @@ namespace Tomboy
 				item.Activated += HandleActivated;
 				dockMenu.AddItem (item);
 				dockMenuNoteCounter += 1;
+				RefreshNotesWindowController();
 			} catch (Exception e) {
 				Logger.Error ("Failed to add item from Dock Menu {0}", e);
 			}
+		}
+
+		private void RefreshNotesWindowController(){
+			if (controller == null)
+				controller = new NotesWindowController();
+			else
+			{
+				controller.Close();
+				controller = new NotesWindowController();
+			}
+			controller.Window.MakeMainWindow();
 		}
 
 		partial void OpenDashboard (NSObject sender)
