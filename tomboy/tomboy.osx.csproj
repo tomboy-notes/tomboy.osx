@@ -253,5 +253,8 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <BundleResource Include="IBAlignTextRight.png" />
     <BundleResource Include="note.png" />
     <BundleResource Include="Resources\tomboy.icns" />
+    <BundleResource Include="Resources\.DS_Store" />
+    <BundleResource Include="ToolbarBinTemplate_1.png" />
+    <BundleResource Include="ToolbarNotesTemplate_1.png" />
   </ItemGroup>
 </Project>
