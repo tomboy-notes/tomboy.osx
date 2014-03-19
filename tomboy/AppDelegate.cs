@@ -47,8 +47,7 @@ namespace Tomboy
 
 		NotesWindowController controller;
 		AboutUsController aboutUs;
-		private int _maxNotesInMenu = 10;
-
+        private int _maxNotesInMenu = 10;
 		//Maintains the current count of Notes added to Dock
 		private int dockMenuNoteCounter = 0;
 		//Maximum Notes which can be added to the Dock is 10.
@@ -60,10 +59,6 @@ namespace Tomboy
 
 		public AppDelegate ()
         {
-			settings = SettingsSync.Read();
-
-			getSycnedNotes();
-
 			var storage_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy");
             // TODO, set it in a generic way
 			noteStorage = new DiskStorage ();
@@ -89,38 +84,49 @@ namespace Tomboy
 			// Currently lazy load because otherwise the Dock Menu throws an error about there being no notes.
 			if (Notes == null)
 				Notes = NoteEngine.GetNotes ();
-
+			
 			NoteEngine.NoteAdded += HandleNoteAdded;
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
-		
+			settings = SettingsSync.Read();
+
+            getSycnedNotes();
+
+            //SyncNotes(null);
+         
 
 		}
 
-		public void getSycnedNotes(){
-			var dest_manifest_path = Path.Combine(settings.syncURL, "manifest.xml");
-			SyncManifest manifest = SyncManifest.Read(dest_manifest_path);
-			var dest_storage = new DiskStorage();
-			dest_storage.SetPath(settings.syncURL);
-			var dest_engine = new Engine(dest_storage);
+        private void getSycnedNotes(){
+            var sync_storage = new DiskStorage();
+            sync_storage.SetPath(settings.syncURL);
 
-			var server = new FilesystemSyncServer (dest_engine, manifest);
+            var sync_engine = new Engine(sync_storage);
 
-			IList<Note> notesFromServer = server.GetAllNotes(true);
+            Dictionary<String,Note> synced_notes = sync_engine.GetNotes ();
 
-			var notes = notesFromServer.ToArray<Note>();
+            for (int i = 0; i < synced_notes.Count; i++)
+            {
+                String title = synced_notes.Keys.ElementAt(i);
+                Note note = synced_notes[title];
 
-			int len = notes.Count();
-			Console.WriteLine(len);
+                if (!Notes.ContainsKey(title))
+                {
+                    Notes.Add(title, note);
+                }
+                else
+                {
+                    DateTime last_change_date = note.ChangeDate;
+                    String date = last_change_date.ToString();
+                    title = title + "_" + date;
 
-			for (int i = 0; i < len; i++)
-			{
-				Note note = notes.ElementAt(i);
-				if (note != null)
-					Console.WriteLine(note.Title);
-			}
+                    Console.WriteLine(title);
+                    Notes.Add(title, note);
 
+                }
+
+            }
 		}
 
         public static bool EnableAutoSync
@@ -143,7 +149,6 @@ namespace Tomboy
 			var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
 			var server = new FilesystemSyncServer (dest_engine, dest_manifest);
 			var sync_manager = new SyncManager(client, server);
-			getSycnedNotes();
 			sync_manager.DoSync ();
 			RefreshNotesWindowController();
 			// write back the dest manifest
@@ -190,7 +195,8 @@ namespace Tomboy
 				for (int i = 0; i < count; i++)
 				{
 					Note temp = Notes.Values.ElementAt(i);
-					dateDict.Add(temp.ChangeDate, temp);
+					if(!dateDict.ContainsKey(temp.ChangeDate))
+						dateDict.Add(temp.ChangeDate, temp);
 				}
 
 				var dateList = dateDict.Keys.ToList();
@@ -283,7 +289,7 @@ namespace Tomboy
 			}
 
 			ArrangeDateWise();
-			RefreshNotesWindowController();
+			RefreshNotesWindowController(true);
 		}
 
 		public static string BaseUrlPath {
@@ -320,15 +326,18 @@ namespace Tomboy
 			}
 		}
 
-		private void RefreshNotesWindowController(){
-			if (controller == null)
-				controller = new NotesWindowController();
-			else
+		private void RefreshNotesWindowController(bool noteUpdated=false){
+			if (!noteUpdated)
 			{
-				controller.Close();
-				controller = new NotesWindowController();
+				if (controller == null)
+					controller = new NotesWindowController();
+				else
+				{
+					controller.Close();
+					controller = new NotesWindowController();
+				}
+				controller.Window.MakeMainWindow();
 			}
-			controller.Window.MakeMainWindow();
 		}
 
 		partial void OpenDashboard (NSObject sender)
