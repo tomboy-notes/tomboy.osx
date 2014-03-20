@@ -9,6 +9,7 @@
                 <outlet property="EnableAutoSyncing" destination="55" id="57"/>
                 <outlet property="ExportNotesPath" destination="VN1-Nl-6Fx" id="oDe-Il-WZ7"/>
                 <outlet property="ExportPathTextField" destination="VN1-Nl-6Fx" id="mhX-vo-K5M"/>
+                <outlet property="ExportStatusField" destination="8km-Bt-R9Y" id="2XK-O1-vTZ"/>
                 <outlet property="SyncPathTextField" destination="32" id="46"/>
                 <outlet property="exportNotesButton" destination="vEP-gW-xvJ" id="HcE-M3-JO1"/>
                 <outlet property="exportPathField" destination="VN1-Nl-6Fx" id="x4E-BM-BGI"/>
@@ -95,7 +96,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Export Notes" identifier="2" id="XSs-AG-MdG">
+                            <tabViewItem label="Export Notes" identifier="3" id="XSs-AG-MdG">
                                 <view key="view" id="guA-Yi-1ba">
                                     <rect key="frame" x="10" y="33" width="446" height="292"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,7 +131,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="setExportNotesPath:" target="-2" id="3XA-Tq-Qin"/>
+                                                <action selector="SetExportNotesPath:" target="-2" id="ow3-UT-gqK"/>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" id="vEP-gW-xvJ">
@@ -140,7 +141,19 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="ExportNotesAction:" target="-2" id="FPR-am-ixP"/>
+                                            </connections>
                                         </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="8km-Bt-R9Y">
+                                            <rect key="frame" x="15" y="22" width="403" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="hTs-uN-ccL">
+                                                <font key="font" metaFont="system" size="15"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>

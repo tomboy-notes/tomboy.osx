@@ -19,6 +19,9 @@ namespace Tomboy
 		MonoMac.AppKit.NSTextField ExportPathTextField { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSTextField ExportStatusField { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField statusField { get; set; }
 
 		[Outlet]
@@ -33,8 +36,14 @@ namespace Tomboy
 		[Action ("exportNotes:")]
 		partial void exportNotes (MonoMac.Foundation.NSObject sender);
 
+		[Action ("ExportNotesAction:")]
+		partial void ExportNotesAction (MonoMac.Foundation.NSObject sender);
+
 		[Action ("setExportNotesPath:")]
 		partial void setExportNotesPath (MonoMac.Foundation.NSObject sender);
+
+		[Action ("SetExportNotesPath:")]
+		partial void SetExportNotesPath (MonoMac.AppKit.NSButton sender);
 
 		[Action ("SetSyncPath:")]
 		partial void SetSyncPath (MonoMac.Foundation.NSObject sender);
@@ -47,6 +56,11 @@ namespace Tomboy
 			if (EnableAutoSyncing != null) {
 				EnableAutoSyncing.Dispose ();
 				EnableAutoSyncing = null;
+			}
+
+			if (ExportPathTextField != null) {
+				ExportPathTextField.Dispose ();
+				ExportPathTextField = null;
 			}
 
 			if (statusField != null) {
@@ -64,9 +78,9 @@ namespace Tomboy
 				syncProgressIndicator = null;
 			}
 
-			if (ExportPathTextField != null) {
-				ExportPathTextField.Dispose ();
-				ExportPathTextField = null;
+			if (ExportStatusField != null) {
+				ExportStatusField.Dispose ();
+				ExportStatusField = null;
 			}
 		}
 	}

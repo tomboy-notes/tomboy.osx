@@ -1,6 +1,7 @@
 using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using System.IO;
 
 using Tomboy.Sync;
 
@@ -56,7 +57,7 @@ namespace Tomboy
 
         }
 
-        partial void setExportNotesPath(NSObject sender)
+        partial void SetExportNotesPath(NSButton sender)
         {
             var openPanel = new NSOpenPanel();
             openPanel.ReleasedWhenClosed = true;
@@ -68,11 +69,21 @@ namespace Tomboy
             var result = openPanel.RunModal();
             if (result == 1)
             {
-                ExportPathTextField.StringValue = openPanel.DirectoryUrl.Path;
+                ExportPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
             }
 
         }
 
+        partial void ExportNotesAction(NSObject sender)
+        {
+            if (ExportPathTextField.StringValue != null){
+                string rootDirectory = ExportPathTextField.StringValue;
+                ExportNotes.Export(rootDirectory);
+
+                ExportStatusField.StringValue = "The notes have been exported to local storage.";
+            }
+        }
+           
         // This method will be called automatically when the main window "wakes up".
         [Export ("awakeFromNib:")]
         public override void AwakeFromNib()

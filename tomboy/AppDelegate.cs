@@ -91,7 +91,7 @@ namespace Tomboy
 
 			settings = SettingsSync.Read();
 
-            getSycnedNotes();
+            //getSycnedNotes();
 
             //SyncNotes(null);
          
