@@ -56,6 +56,23 @@ namespace Tomboy
 
         }
 
+        partial void setExportNotesPath(NSObject sender)
+        {
+            var openPanel = new NSOpenPanel();
+            openPanel.ReleasedWhenClosed = true;
+            openPanel.CanChooseDirectories = true;
+            openPanel.CanChooseFiles = false;
+            openPanel.CanCreateDirectories = false;
+            openPanel.Prompt = "Select Existing Notes Directory";
+
+            var result = openPanel.RunModal();
+            if (result == 1)
+            {
+                ExportPathTextField.StringValue = openPanel.DirectoryUrl.Path;
+            }
+
+        }
+
         // This method will be called automatically when the main window "wakes up".
         [Export ("awakeFromNib:")]
         public override void AwakeFromNib()

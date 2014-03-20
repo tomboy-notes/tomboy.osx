@@ -7,7 +7,12 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SyncPrefDialogController">
             <connections>
                 <outlet property="EnableAutoSyncing" destination="55" id="57"/>
+                <outlet property="ExportNotesPath" destination="VN1-Nl-6Fx" id="oDe-Il-WZ7"/>
+                <outlet property="ExportPathTextField" destination="VN1-Nl-6Fx" id="mhX-vo-K5M"/>
                 <outlet property="SyncPathTextField" destination="32" id="46"/>
+                <outlet property="exportNotesButton" destination="vEP-gW-xvJ" id="HcE-M3-JO1"/>
+                <outlet property="exportPathField" destination="VN1-Nl-6Fx" id="x4E-BM-BGI"/>
+                <outlet property="setExportPath" destination="6Ms-vs-R4b" id="mHn-jR-vDC"/>
                 <outlet property="statusField" destination="y0D-vD-Amm" id="B5U-zX-Rp4"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
@@ -88,6 +93,55 @@
                                 <view key="view" id="16">
                                     <rect key="frame" x="10" y="33" width="446" height="292"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Export Notes" identifier="2" id="XSs-AG-MdG">
+                                <view key="view" id="guA-Yi-1ba">
+                                    <rect key="frame" x="10" y="33" width="446" height="292"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="WnL-83-yLF">
+                                            <rect key="frame" x="15" y="195" width="403" height="74"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="ACy-AS-MUy">
+                                                <font key="font" metaFont="system"/>
+                                                <string key="title">Export Notes must be used to export notes from previous versions of Tomboy (Macboy). Set the Path to the root directory of the old notes, and Press Export Notes. All the notes would be exported to current Storage Directory</string>
+                                                <color key="textColor" red="0.18087672028448543" green="0.16965103161611517" blue="0.18253226902173914" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="exportNotes:" target="-2" id="RvA-Yz-dlQ"/>
+                                            </connections>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="VN1-Nl-6Fx">
+                                            <rect key="frame" x="17" y="144" width="338" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VGB-rK-i2n">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" id="6Ms-vs-R4b">
+                                            <rect key="frame" x="367" y="138" width="68" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Path" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bcO-g7-RYi">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="setExportNotesPath:" target="-2" id="3XA-Tq-Qin"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" id="vEP-gW-xvJ">
+                                            <rect key="frame" x="156" y="66" width="121" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Export Notes" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yPC-qs-AJj">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                    </subviews>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>

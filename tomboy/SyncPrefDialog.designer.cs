@@ -16,6 +16,9 @@ namespace Tomboy
 		MonoMac.AppKit.NSButton EnableAutoSyncing { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSTextField ExportPathTextField { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField statusField { get; set; }
 
 		[Outlet]
@@ -26,6 +29,12 @@ namespace Tomboy
 
 		[Action ("EnableAutoSyncingAction:")]
 		partial void EnableAutoSyncingAction (MonoMac.Foundation.NSObject sender);
+
+		[Action ("exportNotes:")]
+		partial void exportNotes (MonoMac.Foundation.NSObject sender);
+
+		[Action ("setExportNotesPath:")]
+		partial void setExportNotesPath (MonoMac.Foundation.NSObject sender);
 
 		[Action ("SetSyncPath:")]
 		partial void SetSyncPath (MonoMac.Foundation.NSObject sender);
@@ -40,6 +49,11 @@ namespace Tomboy
 				EnableAutoSyncing = null;
 			}
 
+			if (statusField != null) {
+				statusField.Dispose ();
+				statusField = null;
+			}
+
 			if (SyncPathTextField != null) {
 				SyncPathTextField.Dispose ();
 				SyncPathTextField = null;
@@ -50,9 +64,9 @@ namespace Tomboy
 				syncProgressIndicator = null;
 			}
 
-			if (statusField != null) {
-				statusField.Dispose ();
-				statusField = null;
+			if (ExportPathTextField != null) {
+				ExportPathTextField.Dispose ();
+				ExportPathTextField = null;
 			}
 		}
 	}
