@@ -96,7 +96,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Export Notes" identifier="3" id="XSs-AG-MdG">
+                            <tabViewItem label="Import Notes" identifier="3" id="XSs-AG-MdG">
                                 <view key="view" id="guA-Yi-1ba">
                                     <rect key="frame" x="10" y="33" width="446" height="292"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,7 +106,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="ACy-AS-MUy">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Export Notes must be used to export notes from previous versions of Tomboy (Macboy). Set the Path to the root directory of the old notes, and Press Export Notes. All the notes would be exported to current Storage Directory</string>
+                                                <string key="title">Import Notes must be used to import notes from previous versions of Tomboy (Macboy). Set the Path to the root directory of the old notes, and Press Export Notes. All the notes would be imported to current Storage Directory</string>
                                                 <color key="textColor" red="0.18087672028448543" green="0.16965103161611517" blue="0.18253226902173914" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -135,9 +135,9 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" id="vEP-gW-xvJ">
-                                            <rect key="frame" x="156" y="66" width="121" height="32"/>
+                                            <rect key="frame" x="155" y="66" width="123" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Export Notes" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yPC-qs-AJj">
+                                            <buttonCell key="cell" type="push" title="Import Notes" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yPC-qs-AJj">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
