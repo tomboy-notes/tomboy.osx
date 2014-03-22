@@ -269,6 +269,7 @@ namespace Tomboy
 			Notes.Add (note.Uri, note);
 			try {
 				UpdateDock();
+                RefreshNotesWindowController();
 			} catch (Exception e) {
 				Logger.Error ("Failed to update Dock Menu {0}", e);
 			}
@@ -289,7 +290,7 @@ namespace Tomboy
 			}
 
 			ArrangeDateWise();
-			RefreshNotesWindowController(true);
+			RefreshNotesWindowController();
 		}
 
 		public static string BaseUrlPath {
@@ -326,18 +327,11 @@ namespace Tomboy
 			}
 		}
 
-		private void RefreshNotesWindowController(bool noteUpdated=false){
-			if (!noteUpdated)
-			{
-				if (controller == null)
-					controller = new NotesWindowController();
-				else
-				{
-					controller.Close();
-					controller = new NotesWindowController();
-				}
-				controller.Window.MakeMainWindow();
-			}
+        public void RefreshNotesWindowController()
+        {
+		    if (controller == null)
+				controller = new NotesWindowController();
+            controller.UpdateNotesTable();
 		}
 
 		partial void OpenDashboard (NSObject sender)
