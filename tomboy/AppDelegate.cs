@@ -45,7 +45,7 @@ namespace Tomboy
 
 		public static SettingsSync settings;
 
-		NotesWindowController controller;
+        public static NotesWindowController controller;
 		AboutUsController aboutUs;
         private int _maxNotesInMenu = 10;
 		//Maintains the current count of Notes added to Dock
