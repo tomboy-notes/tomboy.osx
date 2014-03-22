@@ -97,7 +97,7 @@ namespace Tomboy
          
 
 		}
-
+            
         private void getSycnedNotes(){
             var sync_storage = new DiskStorage();
             sync_storage.SetPath(settings.syncURL);
@@ -327,7 +327,7 @@ namespace Tomboy
 			}
 		}
 
-        public void RefreshNotesWindowController()
+        public static void RefreshNotesWindowController()
         {
 		    if (controller == null)
 				controller = new NotesWindowController();
