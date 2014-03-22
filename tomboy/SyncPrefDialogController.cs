@@ -80,7 +80,16 @@ namespace Tomboy
                 string rootDirectory = ExportPathTextField.StringValue;
                 ExportNotes.Export(rootDirectory);
 
-                ExportStatusField.StringValue = "The notes have been exported to local storage.";
+                NSAlert alert = new NSAlert () {
+                    MessageText = "Note Imported",
+                    InformativeText = "All the notes have been imported to local storage. Please restart the Tomboy to see your old notes",
+                    AlertStyle = NSAlertStyle.Warning
+                };
+                alert.AddButton ("OK");
+                alert.BeginSheet (this.Window,
+                    this,
+                    null,
+                    IntPtr.Zero);
             }
         }
            
