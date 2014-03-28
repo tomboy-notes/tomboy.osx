@@ -90,45 +90,8 @@ namespace Tomboy
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
 			settings = SettingsSync.Read();
-
-            //getSycnedNotes();
-
-            //SyncNotes(null);
-         
-
 		}
-            
-        private void getSycnedNotes(){
-            var sync_storage = new DiskStorage();
-            sync_storage.SetPath(settings.syncURL);
-
-            var sync_engine = new Engine(sync_storage);
-
-            Dictionary<String,Note> synced_notes = sync_engine.GetNotes ();
-
-            for (int i = 0; i < synced_notes.Count; i++)
-            {
-                String title = synced_notes.Keys.ElementAt(i);
-                Note note = synced_notes[title];
-
-                if (!Notes.ContainsKey(title))
-                {
-                    Notes.Add(title, note);
-                }
-                else
-                {
-                    DateTime last_change_date = note.ChangeDate;
-                    String date = last_change_date.ToString();
-                    title = title + "_" + date;
-
-                    Console.WriteLine(title);
-                    Notes.Add(title, note);
-
-                }
-
-            }
-		}
-
+    
         public static bool EnableAutoSync
         {
             get;
@@ -327,6 +290,11 @@ namespace Tomboy
 			}
 		}
 
+        /// <summary>
+        /// Refreshs the notes window controller.
+        /// Method refreshes the table in Notes Window, to update each time
+        /// some notes are updated, deleted or added.
+        /// </summary>
         public static void RefreshNotesWindowController()
         {
 		    if (controller == null)
