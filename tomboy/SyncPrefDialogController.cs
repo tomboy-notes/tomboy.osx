@@ -52,7 +52,16 @@ namespace Tomboy
 				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
 				SettingsSync.Write(AppDelegate.settings);
 
-				statusField.StringValue = "Sync path set at "+AppDelegate.settings.syncURL;
+                NSAlert alert = new NSAlert () {
+                    MessageText = "File System Sync",
+                    InformativeText = "File System Sync path has been set at:\n"+AppDelegate.settings.syncURL,
+                    AlertStyle = NSAlertStyle.Warning
+                };
+                alert.AddButton ("OK");
+                alert.BeginSheet (this.Window,
+                    this,
+                    null,
+                    IntPtr.Zero);
 			}
 
         }
