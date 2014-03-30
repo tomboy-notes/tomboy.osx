@@ -45,10 +45,9 @@ namespace Tomboy
 
 		public static SettingsSync settings;
 
-		NotesWindowController controller;
+        public static NotesWindowController controller;
 		AboutUsController aboutUs;
-		private int _maxNotesInMenu = 10;
-
+        private int _maxNotesInMenu = 10;
 		//Maintains the current count of Notes added to Dock
 		private int dockMenuNoteCounter = 0;
 		//Maximum Notes which can be added to the Dock is 10.
@@ -85,16 +84,14 @@ namespace Tomboy
 			// Currently lazy load because otherwise the Dock Menu throws an error about there being no notes.
 			if (Notes == null)
 				Notes = NoteEngine.GetNotes ();
-
+			
 			NoteEngine.NoteAdded += HandleNoteAdded;
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
-		
 			settings = SettingsSync.Read();
-
 		}
-
+    
         public static bool EnableAutoSync
         {
             get;
@@ -116,7 +113,7 @@ namespace Tomboy
 			var server = new FilesystemSyncServer (dest_engine, dest_manifest);
 			var sync_manager = new SyncManager(client, server);
 			sync_manager.DoSync ();
-
+			RefreshNotesWindowController();
 			// write back the dest manifest
 			SyncManifest.Write (dest_manifest_path, dest_manifest);
 
@@ -161,7 +158,8 @@ namespace Tomboy
 				for (int i = 0; i < count; i++)
 				{
 					Note temp = Notes.Values.ElementAt(i);
-					dateDict.Add(temp.ChangeDate, temp);
+					if(!dateDict.ContainsKey(temp.ChangeDate))
+						dateDict.Add(temp.ChangeDate, temp);
 				}
 
 				var dateList = dateDict.Keys.ToList();
@@ -223,6 +221,8 @@ namespace Tomboy
                     dockMenu.RemoveItem(item);
 				dockMenuNoteCounter -= 1;
             }
+
+			RefreshNotesWindowController();
 		}
 
 		void HandleNoteUpdated (Note note)
@@ -232,6 +232,7 @@ namespace Tomboy
 			Notes.Add (note.Uri, note);
 			try {
 				UpdateDock();
+                RefreshNotesWindowController();
 			} catch (Exception e) {
 				Logger.Error ("Failed to update Dock Menu {0}", e);
 			}
@@ -252,6 +253,7 @@ namespace Tomboy
 			}
 
 			ArrangeDateWise();
+			RefreshNotesWindowController();
 		}
 
 		public static string BaseUrlPath {
@@ -282,9 +284,22 @@ namespace Tomboy
 				item.Activated += HandleActivated;
 				dockMenu.AddItem (item);
 				dockMenuNoteCounter += 1;
+				RefreshNotesWindowController();
 			} catch (Exception e) {
 				Logger.Error ("Failed to add item from Dock Menu {0}", e);
 			}
+		}
+
+        /// <summary>
+        /// Refreshs the notes window controller.
+        /// Method refreshes the table in Notes Window, to update each time
+        /// some notes are updated, deleted or added.
+        /// </summary>
+        public static void RefreshNotesWindowController()
+        {
+		    if (controller == null)
+				controller = new NotesWindowController();
+            controller.UpdateNotesTable();
 		}
 
 		partial void OpenDashboard (NSObject sender)

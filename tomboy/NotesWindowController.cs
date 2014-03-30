@@ -103,6 +103,11 @@ namespace Tomboy
 			return notes.ElementAt (elementAt).Value;
 		}
 
+        public void UpdateNotesTable()
+        {
+            SortNotesIntoOrder(AppDelegate.Notes);
+        }
+
 		#endregion
 
 		#region private methods
@@ -173,7 +178,7 @@ namespace Tomboy
 			//FIXME: Should insert data into tableview maybe instead or reloading the whole view?
 			_notesTableView.ReloadData ();
 		}
-
+            
 		/// <summary>
 		/// Sorts the notes into order.
 		/// </summary>

@@ -1,6 +1,7 @@
 using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using System.IO;
 
 using Tomboy.Sync;
 
@@ -51,11 +52,56 @@ namespace Tomboy
 				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
 				SettingsSync.Write(AppDelegate.settings);
 
-				statusField.StringValue = "Sync path set at "+AppDelegate.settings.syncURL;
+                NSAlert alert = new NSAlert () {
+                    MessageText = "File System Sync",
+                    InformativeText = "File System Sync path has been set at:\n"+AppDelegate.settings.syncURL,
+                    AlertStyle = NSAlertStyle.Warning
+                };
+                alert.AddButton ("OK");
+                alert.BeginSheet (this.Window,
+                    this,
+                    null,
+                    IntPtr.Zero);
 			}
 
         }
 
+        partial void SetExportNotesPath(NSButton sender)
+        {
+            var openPanel = new NSOpenPanel();
+            openPanel.ReleasedWhenClosed = true;
+            openPanel.CanChooseDirectories = true;
+            openPanel.CanChooseFiles = false;
+            openPanel.CanCreateDirectories = false;
+            openPanel.Prompt = "Select Existing Notes Directory";
+
+            var result = openPanel.RunModal();
+            if (result == 1)
+            {
+                ExportPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
+            }
+
+        }
+
+        partial void ExportNotesAction(NSObject sender)
+        {
+            if (ExportPathTextField.StringValue != null){
+                string rootDirectory = ExportPathTextField.StringValue;
+                ExportNotes.Export(rootDirectory);
+
+                NSAlert alert = new NSAlert () {
+                    MessageText = "Note Imported",
+                    InformativeText = "All the notes have been imported to local storage. Please restart the Tomboy to see your old notes",
+                    AlertStyle = NSAlertStyle.Warning
+                };
+                alert.AddButton ("OK");
+                alert.BeginSheet (this.Window,
+                    this,
+                    null,
+                    IntPtr.Zero);
+            }
+        }
+           
         // This method will be called automatically when the main window "wakes up".
         [Export ("awakeFromNib:")]
         public override void AwakeFromNib()
