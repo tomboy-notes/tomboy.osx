@@ -155,7 +155,7 @@ namespace Tomboy
                 Logger.Error("NoteTitle cannot be null");
 
             if (title != null) {
-                //WindowForSheet.Title = title;
+                WindowForSheet.Title = title;
                 SetDisplayName (title);
                 noteTitleField.TextColor = NSColor.Black;
                 noteTitleField.Title = title;
