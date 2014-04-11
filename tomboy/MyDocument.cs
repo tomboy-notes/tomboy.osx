@@ -240,6 +240,9 @@ namespace Tomboy
             Logger.Debug("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
+        /// <summary>
+        /// Updates the links on the text taking area.
+        /// </summary>
         private void UpdateLinks()
         {
             _loadingFromString = true;
@@ -251,7 +254,6 @@ namespace Tomboy
                 var len = currentNote.Title.Length;
                 content = content.Remove(beginIndx, (len + 1));
             }
-            content = content.Replace("\n", "<br>");
 
             noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
             _loadingFromString = false;
@@ -387,8 +389,14 @@ namespace Tomboy
 
 		}
 
+        /// <summary>
+        /// Adds the bullet point. Before adding the bullet point, the note is saved.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
         partial void AddBulletPoint (NSObject sender)
         {
+            SaveData();
+
             _loadingFromString = true;
             var content = translator.From(currentNote);
             Console.WriteLine(content.Length);
