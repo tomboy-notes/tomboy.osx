@@ -154,7 +154,7 @@ namespace Tomboy
                 Logger.Error("NoteTitle cannot be null");
 
             if (title != null) {
-                WindowForSheet.Title = title;
+                //WindowForSheet.Title = title;
                 SetDisplayName (title);
                 noteTitleField.TextColor = NSColor.Black;
                 noteTitleField.Title = title;
@@ -239,6 +239,23 @@ namespace Tomboy
             Logger.Debug("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
+        private void UpdateLinks()
+        {
+            _loadingFromString = true;
+            var content = translator.From(currentNote);
+            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+
+            if (beginIndx != -1)
+            {
+                var len = currentNote.Title.Length;
+                content = content.Remove(beginIndx, (len + 1));
+            }
+            content = content.Replace("\n", "<br>");
+
+            noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
+            _loadingFromString = false;
+        }
+
 		/// <summary>
 		/// Should the Note be editable
 		/// </summary>
@@ -272,12 +289,13 @@ namespace Tomboy
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);
 
+                UpdateLinks();
 				/*
 				 * Very important piece of code.(UpdateChangeCount)
 				 * This allows us to trick NSDOcument into believing that we have saved the document
 				 */
 				UpdateChangeCount (NSDocumentChangeType.Cleared);
-
+                //LoadNote();
 			} catch (Exception e) {
 				Logger.Error ("Failed to Save Note {0}", e);
 			}
@@ -367,6 +385,24 @@ namespace Tomboy
 			popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
 
 		}
+
+        partial void AddBulletPoint (NSObject sender)
+        {
+            _loadingFromString = true;
+            var content = translator.From(currentNote);
+            Console.WriteLine(content.Length);
+            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+
+            if (beginIndx != -1)
+            {
+                var len = currentNote.Title.Length;
+                content = content.Remove(beginIndx, (len + 1));
+            }
+
+            string con = content.Insert(content.Length,"<ul><li>");
+            noteWebView.MainFrame.LoadHtmlString(con,null);
+            _loadingFromString = false;
+        }
 
 		partial void DeleteNote (NSObject sender)
 		{

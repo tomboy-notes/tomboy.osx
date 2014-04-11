@@ -143,10 +143,27 @@
                             </connections>
                         </button>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="47E76EBD-D5D8-4D65-8F89-1F218124B457" label="Bullets" paletteLabel="Bullets" image="NSListViewTemplate" id="Haa-lE-01J">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="33" height="25"/>
+                        <size key="maxSize" width="50" height="32"/>
+                        <button key="view" verticalHuggingPriority="750" id="aFU-ss-znG">
+                            <rect key="frame" x="3" y="14" width="36" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSListViewTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mi8-xQ-QHn">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="AddBulletPoint:" target="-2" id="9Vj-dA-oUq"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="90"/>
                     <toolbarItem reference="11"/>
+                    <toolbarItem reference="Haa-lE-01J"/>
                     <toolbarItem reference="73"/>
                     <toolbarItem reference="27"/>
                 </defaultToolbarItems>
@@ -159,6 +176,7 @@
     <resources>
         <image name="NSGoLeftTemplate" width="9" height="9"/>
         <image name="NSGoRightTemplate" width="9" height="9"/>
+        <image name="NSListViewTemplate" width="11" height="10"/>
         <image name="NSQuickLookTemplate" width="21" height="16"/>
         <image name="ToolbarBinTemplate" width="771" height="774"/>
         <image name="ToolbarBinTemplate_1" width="771" height="774"/>
