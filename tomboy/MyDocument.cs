@@ -47,6 +47,7 @@ namespace Tomboy
 
 		// Used as a marker. Are we loading a Note or something else that the Policy Handler should act on
 		private bool _loadingFromString;
+       
 
 		NSPopover popover;
 		readonly NoteLegacyTranslator translator= new NoteLegacyTranslator ();
@@ -393,7 +394,7 @@ namespace Tomboy
             Console.WriteLine(content.Length);
             var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
-            if (beginIndx != -1)
+            if (beginIndx != -1 && content.Length > currentNote.Title.Length)
             {
                 var len = currentNote.Title.Length;
                 content = content.Remove(beginIndx, (len + 1));

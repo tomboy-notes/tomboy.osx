@@ -36,6 +36,9 @@ namespace Tomboy
 		[Action ("AddBulletPoint:")]
 		partial void AddBulletPoint (MonoMac.Foundation.NSObject sender);
 
+		[Action ("AddNumberedList:")]
+		partial void AddNumberedList (MonoMac.Foundation.NSObject sender);
+
 		[Action ("AllNotes:")]
 		partial void AllNotes (MonoMac.Foundation.NSObject sender);
 
