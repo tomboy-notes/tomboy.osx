@@ -33,6 +33,12 @@ namespace Tomboy
 		[Action ("_dockNewNote:")]
 		partial void _dockNewNote (MonoMac.Foundation.NSObject sender);
 
+		[Action ("AddBulletPoint:")]
+		partial void AddBulletPoint (MonoMac.Foundation.NSObject sender);
+
+		[Action ("AddNumberedList:")]
+		partial void AddNumberedList (MonoMac.Foundation.NSObject sender);
+
 		[Action ("AllNotes:")]
 		partial void AllNotes (MonoMac.Foundation.NSObject sender);
 
@@ -68,6 +74,11 @@ namespace Tomboy
 				myNoteWindow = null;
 			}
 
+			if (noteTitleField != null) {
+				noteTitleField.Dispose ();
+				noteTitleField = null;
+			}
+
 			if (noteWebView != null) {
 				noteWebView.Dispose ();
 				noteWebView = null;
@@ -76,11 +87,6 @@ namespace Tomboy
 			if (searchField != null) {
 				searchField.Dispose ();
 				searchField = null;
-			}
-
-			if (noteTitleField != null) {
-				noteTitleField.Dispose ();
-				noteTitleField = null;
 			}
 		}
 	}

@@ -47,6 +47,7 @@ namespace Tomboy
 
 		// Used as a marker. Are we loading a Note or something else that the Policy Handler should act on
 		private bool _loadingFromString;
+       
 
 		NSPopover popover;
 		readonly NoteLegacyTranslator translator= new NoteLegacyTranslator ();
@@ -239,6 +240,25 @@ namespace Tomboy
             Logger.Debug("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
+        /// <summary>
+        /// Updates the links on the text taking area.
+        /// </summary>
+        private void UpdateLinks()
+        {
+            _loadingFromString = true;
+            var content = translator.From(currentNote);
+            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+
+            if (beginIndx != -1)
+            {
+                var len = currentNote.Title.Length;
+                content = content.Remove(beginIndx, (len + 1));
+            }
+
+            noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
+            _loadingFromString = false;
+        }
+
 		/// <summary>
 		/// Should the Note be editable
 		/// </summary>
@@ -272,12 +292,13 @@ namespace Tomboy
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);
 
+                UpdateLinks();
 				/*
 				 * Very important piece of code.(UpdateChangeCount)
 				 * This allows us to trick NSDOcument into believing that we have saved the document
 				 */
 				UpdateChangeCount (NSDocumentChangeType.Cleared);
-
+                //LoadNote();
 			} catch (Exception e) {
 				Logger.Error ("Failed to Save Note {0}", e);
 			}
@@ -367,6 +388,30 @@ namespace Tomboy
 			popover.Show (RectangleF.Empty, sender as NSView, NSRectEdge.MaxYEdge);
 
 		}
+
+        /// <summary>
+        /// Adds the bullet point. Before adding the bullet point, the note is saved.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        partial void AddBulletPoint (NSObject sender)
+        {
+            SaveData();
+
+            _loadingFromString = true;
+            var content = translator.From(currentNote);
+            Console.WriteLine(content.Length);
+            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+
+            if (beginIndx != -1 && content.Length > currentNote.Title.Length)
+            {
+                var len = currentNote.Title.Length;
+                content = content.Remove(beginIndx, (len + 1));
+            }
+
+            string con = content.Insert(content.Length,"<ul><li>");
+            noteWebView.MainFrame.LoadHtmlString(con,null);
+            _loadingFromString = false;
+        }
 
 		partial void DeleteNote (NSObject sender)
 		{
