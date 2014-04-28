@@ -10,6 +10,7 @@
     <RootNamespace>MacboyUnitTests</RootNamespace>
     <AssemblyName>Macboy-UnitTests</AssemblyName>
     <ReleaseVersion>0.3.2</ReleaseVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>

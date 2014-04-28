@@ -2,9 +2,9 @@
 // NoteSync.cs
 //
 // Author:
-//       td <>
+//       Timo Dörr <timo@latecrew.de>
 //
-// Copyright (c) 2013 td
+// Copyright (c) 2013 Timo Dörr
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,15 +42,18 @@ namespace Tomboy
 
 			if (!File.Exists (path)) {
 				Manifest = new SyncManifest ();
-				SyncManifest.Write (path, Manifest);
-
+				using (var output = new FileStream (path, FileMode.Create)) {
+					SyncManifest.Write (Manifest, output);
+				}
 				foreach (Note note in engine.GetNotes ().Values) {
 					Manifest.NoteRevisions [note.Guid] = Manifest.LastSyncRevision + 1;
 				}
 				Flush ();
 			}
 
-			this.Manifest = SyncManifest.Read (path);
+			using (var input = new FileStream (path, FileMode.Open)) {
+				this.Manifest = SyncManifest.Read (input);
+			}
 			engine.NoteAdded += (Note note) => {
 				Console.WriteLine ("Note added");
 				Manifest.NoteRevisions [note.Guid] = Manifest.LastSyncRevision + 1;
@@ -70,7 +73,9 @@ namespace Tomboy
 		private void Flush ()
 		{
 			// write out the manifest to our xml file
-			SyncManifest.Write (path, Manifest);
+			using (var output = new FileStream (path, FileMode.Create)) {
+				SyncManifest.Write (Manifest, output);
+			}
 		}
 
 		public void Dispose ()

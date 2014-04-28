@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macboy-UnitTests", "Macboy-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomboy-library", "tomboy-library\Tomboy-library\Tomboy-library.csproj", "{040AA912-9738-438A-A7FD-5BB02C40C30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevDefined.OAuth", "tomboy-library\DevDefined.OAuth\src\DevDefined.OAuth\DevDefined.OAuth.csproj", "{61B700B6-3911-4CEF-8751-7F42CA765068}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tomboy.osx", "tomboy\tomboy.osx.csproj", "{CBEFA338-7B6F-432C-A7B4-32F80F36D672}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Packages", "Packages.mdproj", "{589A7B13-E47A-4FCE-9916-F2B332AEC485}"
@@ -18,21 +16,15 @@ Global
 		AppStore|x86 = AppStore|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.AppStore|x86.ActiveCfg = Debug|x86
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.AppStore|x86.Build.0 = Debug|x86
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.ActiveCfg = Debug|x86
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.Build.0 = Debug|x86
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.ActiveCfg = Release|x86
-		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.Build.0 = Release|x86
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.AppStore|x86.Build.0 = Release|Any CPU
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Debug|x86.Build.0 = Debug|Any CPU
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.ActiveCfg = Release|Any CPU
+		{040AA912-9738-438A-A7FD-5BB02C40C30A}.Release|x86.Build.0 = Release|Any CPU
 		{589A7B13-E47A-4FCE-9916-F2B332AEC485}.AppStore|x86.ActiveCfg = AppStore|Any CPU
 		{589A7B13-E47A-4FCE-9916-F2B332AEC485}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{589A7B13-E47A-4FCE-9916-F2B332AEC485}.Release|x86.ActiveCfg = Release|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.AppStore|x86.ActiveCfg = Debug|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.AppStore|x86.Build.0 = Debug|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.Debug|x86.Build.0 = Debug|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|x86.ActiveCfg = Release|Any CPU
-		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|x86.Build.0 = Release|Any CPU
 		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.AppStore|x86.ActiveCfg = Debug|x86
 		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.AppStore|x86.Build.0 = Debug|x86
 		{B24015FC-88D9-4D7B-A7A3-7C46319D1D21}.Debug|x86.ActiveCfg = Debug|x86
