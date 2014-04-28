@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using Tomboy;
 using NUnit.Framework;
 
 namespace Tomboy
