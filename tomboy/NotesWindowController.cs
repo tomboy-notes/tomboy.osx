@@ -119,7 +119,7 @@ namespace Tomboy
 		
 		void HandleNoteAdded (Note note)
 		{
-			_notesTableView.ReloadData ();
+            //_notesTableView.ReloadData ();
 		}
 		
 		void HandleNoteRemoved (Note note)
