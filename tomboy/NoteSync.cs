@@ -53,6 +53,7 @@ namespace Tomboy
 
 			using (var input = new FileStream (path, FileMode.Open)) {
 				this.Manifest = SyncManifest.Read (input);
+                input.Close();
 			}
 			engine.NoteAdded += (Note note) => {
 				Console.WriteLine ("Note added");
