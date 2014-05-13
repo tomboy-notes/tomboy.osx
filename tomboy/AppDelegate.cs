@@ -89,6 +89,8 @@ namespace Tomboy
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
 			settings = SettingsSync.Read();
+
+            Notebooks = new List<string>();
 		}
     
         public static bool EnableAutoSync
@@ -279,6 +281,13 @@ namespace Tomboy
 			get;
 			set;
 		}
+
+        public static List<string> Notebooks
+        {
+            get;
+            set;
+        }
+
 		void HandleNoteAdded (Note note)
 		{
 			Logger.Debug ("AppDelegate Handling Note Added {0}", note.Title);
@@ -305,6 +314,7 @@ namespace Tomboy
 		    if (controller == null)
 				controller = new NotesWindowController();
             controller.UpdateNotesTable();
+            controller.UpdateNotebooksTable();
 		}
 
 		partial void OpenDashboard (NSObject sender)

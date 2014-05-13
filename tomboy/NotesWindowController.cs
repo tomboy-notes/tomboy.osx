@@ -37,6 +37,7 @@ namespace Tomboy
 		List<KeyValuePair<string, Note>> notes;
 		List <Tags.Tag> tags;
 		NSDocumentController _sharedDocumentController;
+        NotebookNamePromptController notebookNamePrompt;
 
 		#region Constructors
 		
@@ -67,6 +68,10 @@ namespace Tomboy
 			this.tags = AppDelegate.NoteEngine.GetTags ();
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
 			this.tags.Add (systemTag);
+
+            if(!AppDelegate.Notebooks.Contains("All Notebooks"))
+                AppDelegate.Notebooks.Add("All Notebooks");
+
 			_sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
 			AppDelegate.NoteEngine.NoteRemoved += HandleNoteRemoved;
 			AppDelegate.NoteEngine.NoteAdded += HandleNoteAdded;
@@ -83,8 +88,10 @@ namespace Tomboy
 		public override void AwakeFromNib()
 		{
 			_notesTableView.DataSource = new NotesWindowNotesDatasource (this);
-			_notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (this.tags);
+            _notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (AppDelegate.Notebooks);
 			
+            HandleNotebookAdded();
+
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
 		}
@@ -108,6 +115,11 @@ namespace Tomboy
             SortNotesIntoOrder(AppDelegate.Notes);
         }
 
+        public void UpdateNotebooksTable()
+        {
+            HandleNotebookAdded();
+        }
+
 		#endregion
 
 		#region private methods
@@ -116,6 +128,11 @@ namespace Tomboy
 		{
 			_notesTableView.ReloadData ();
 		}
+
+        void HandleNotebookAdded()
+        {
+            _notebooksTableView.ReloadData();
+        }
 		
 		void HandleNoteAdded (Note note)
 		{
@@ -181,6 +198,9 @@ namespace Tomboy
 
         partial void newNotebookButton (NSObject sender)
         {
+
+            notebookNamePrompt = new NotebookNamePromptController();
+            notebookNamePrompt.Window.MakeKeyAndOrderFront(this);
 
         }
             
