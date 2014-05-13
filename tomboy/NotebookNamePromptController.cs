@@ -33,6 +33,32 @@ namespace Tomboy
 
         partial void AddNotebook (NSObject sender)
         {
+            string notebook = NotebookName.StringValue;
+
+            if (AppDelegate.Notebooks.Contains(notebook, StringComparer.OrdinalIgnoreCase))
+            {
+                //The notebook already exists, hence should not be added again
+                NSAlert alert = new NSAlert () {
+                    MessageText = "Notebook Already Exists",
+                    InformativeText = "The Notebook " + notebook + " already exists.",
+                    AlertStyle = NSAlertStyle.Warning
+                };
+                alert.AddButton ("OK");
+                alert.BeginSheet (this.Window,
+                    this,
+                    null,
+                    IntPtr.Zero);
+
+                NotebookName.SelectText(this);
+            }
+            else
+            {
+                AppDelegate.Notebooks.Add (notebook);
+                Window.PerformClose (this);
+                AppDelegate.RefreshNotesWindowController ();
+            }
+
+            //this.Window.Close();
         }
 
         #endregion
