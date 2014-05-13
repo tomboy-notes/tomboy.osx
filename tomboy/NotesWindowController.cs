@@ -178,6 +178,11 @@ namespace Tomboy
 			//FIXME: Should insert data into tableview maybe instead or reloading the whole view?
 			_notesTableView.ReloadData ();
 		}
+
+        partial void newNotebookButton (NSObject sender)
+        {
+
+        }
             
 		/// <summary>
 		/// Sorts the notes into order.

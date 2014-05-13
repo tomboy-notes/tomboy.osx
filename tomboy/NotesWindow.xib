@@ -224,9 +224,26 @@
                             </connections>
                         </searchField>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="9A8690F1-2232-4BC0-B80E-F15272A28471" label="New Notebook" paletteLabel="New Notebook" image="NSAddTemplate" id="Mo6-zT-zKj">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="34" height="32"/>
+                        <size key="maxSize" width="45" height="41"/>
+                        <button key="view" id="jeE-bP-GPQ">
+                            <rect key="frame" x="21" y="14" width="45" height="41"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z9g-CL-bT0">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="10"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="newNotebookButton:" target="-2" id="SQu-UB-wEy"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="52"/>
+                    <toolbarItem reference="Mo6-zT-zKj"/>
                     <toolbarItem reference="11"/>
                     <toolbarItem reference="49"/>
                 </defaultToolbarItems>
@@ -234,6 +251,7 @@
         </window>
     </objects>
     <resources>
+        <image name="NSAddTemplate" width="8" height="8"/>
         <image name="tomboy" width="512" height="512"/>
     </resources>
 </document>

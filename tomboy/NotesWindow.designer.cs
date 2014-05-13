@@ -9,17 +9,6 @@ using System.CodeDom.Compiler;
 
 namespace Tomboy
 {
-	[Register ("NotesWindow")]
-	partial class NotesWindow
-	{
-		[Action ("RefreshButton:")]
-		partial void RefreshButton (MonoMac.Foundation.NSObject sender);
-		
-		void ReleaseDesignerOutlets ()
-		{
-		}
-	}
-
 	[Register ("NotesWindowController")]
 	partial class NotesWindowController
 	{
@@ -35,16 +24,14 @@ namespace Tomboy
 		[Action ("searchFieldFindNotes:")]
 		partial void FindNotes (MonoMac.AppKit.NSSearchField sender);
 
+		[Action ("newNotebookButton:")]
+		partial void newNotebookButton (MonoMac.Foundation.NSObject sender);
+
 		[Action ("_newNoteButton:")]
 		partial void NewNoteClicked (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (_notesTableView != null) {
-				_notesTableView.Dispose ();
-				_notesTableView = null;
-			}
-
 			if (_notebooksTableView != null) {
 				_notebooksTableView.Dispose ();
 				_notebooksTableView = null;
@@ -54,6 +41,22 @@ namespace Tomboy
 				_notesImage.Dispose ();
 				_notesImage = null;
 			}
+
+			if (_notesTableView != null) {
+				_notesTableView.Dispose ();
+				_notesTableView = null;
+			}
+		}
+	}
+
+	[Register ("NotesWindow")]
+	partial class NotesWindow
+	{
+		[Action ("RefreshButton:")]
+		partial void RefreshButton (MonoMac.Foundation.NSObject sender);
+		
+		void ReleaseDesignerOutlets ()
+		{
 		}
 	}
 }
