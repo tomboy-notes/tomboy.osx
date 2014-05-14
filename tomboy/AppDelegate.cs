@@ -94,6 +94,7 @@ namespace Tomboy
 
             Notebooks = new List<string>();
             currentNotebook = "All Notebooks";
+            PopulateNotebookList();
 		}
     
         public static bool EnableAutoSync
@@ -199,6 +200,16 @@ namespace Tomboy
 			}
 
 		}
+
+        void PopulateNotebookList ()
+        {
+            Notebooks.Add("All Notebooks");
+            foreach (KeyValuePair<string, Note> note in Notes)
+            {
+                if (note.Value.Notebook != null)
+                    Notebooks.Add(note.Value.Notebook);
+            }
+        }
 
 		void HandleActivated (object sender, EventArgs e)
 		{

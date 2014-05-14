@@ -69,9 +69,6 @@ namespace Tomboy
 			Tags.Tag systemTag = new Tags.Tag ("All Notebooks");
 			this.tags.Add (systemTag);
 
-            if(!AppDelegate.Notebooks.Contains("All Notebooks"))
-                AppDelegate.Notebooks.Add("All Notebooks");
-
 			_sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
 			AppDelegate.NoteEngine.NoteRemoved += HandleNoteRemoved;
 			AppDelegate.NoteEngine.NoteAdded += HandleNoteAdded;
