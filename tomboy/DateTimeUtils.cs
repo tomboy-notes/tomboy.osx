@@ -30,8 +30,7 @@ namespace Tomboy
 {
 	public class DateTimeUtils
 	{
-		public static NSString GetPrettyDate (DateTime date)
-		{
+		public static NSString GetPrettyDate (DateTime date) {
 			DateTime now = DateTime.Now;
 			DateTime localDate = DateTime.SpecifyKind(date, DateTimeKind.Utc).ToLocalTime ();
 			// span of days since the note was last modified

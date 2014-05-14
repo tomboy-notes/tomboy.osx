@@ -36,8 +36,7 @@ namespace Tomboy
 		public SyncManifest Manifest;
 		private string path;
 
-		public ManifestTracker (Engine engine, string path)
-		{
+		public ManifestTracker (Engine engine, string path) {
 			this.path = path;
 
 			if (!File.Exists (path)) {
@@ -53,7 +52,7 @@ namespace Tomboy
 
 			using (var input = new FileStream (path, FileMode.Open)) {
 				this.Manifest = SyncManifest.Read (input);
-                input.Close();
+                		input.Close();
 			}
 			engine.NoteAdded += (Note note) => {
 				Console.WriteLine ("Note added");
@@ -71,18 +70,15 @@ namespace Tomboy
 			};
 		}
 
-		private void Flush ()
-		{
+		private void Flush () {
 			// write out the manifest to our xml file
 			using (var output = new FileStream (path, FileMode.Create)) {
 				SyncManifest.Write (Manifest, output);
 			}
 		}
 
-		public void Dispose ()
-		{
+		public void Dispose () {
 			Flush ();
 		}
 	}
 }
-

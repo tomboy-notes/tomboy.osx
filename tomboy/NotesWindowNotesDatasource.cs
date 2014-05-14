@@ -41,8 +41,7 @@ namespace Tomboy
 			set;
 		}
 
-		public NotesWindowNotesDatasource (NotesWindowController controller)
-		{
+		public NotesWindowNotesDatasource (NotesWindowController controller) {
 			if (controller == null)
 				throw new ArgumentNullException ("controller");
 			MyNotesWindowController = controller;
@@ -50,15 +49,13 @@ namespace Tomboy
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
-		public int NumberOfRowsInTableView(NSTableView table)
-		{
+		public int NumberOfRowsInTableView(NSTableView table) {
 			return MyNotesWindowController == null ? 0 : MyNotesWindowController.GetNoteCount ();
 		}
 
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
-		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row)
-		{
+		public NSObject ObjectValueForTableColumn(NSTableView table, NSTableColumn col, int row) {
 			// Get the current row index
 			var colKey = (NSString)col.Identifier.ToString ();
 			var note_at = MyNotesWindowController.GetNoteAt (row);

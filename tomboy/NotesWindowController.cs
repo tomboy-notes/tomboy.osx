@@ -37,32 +37,28 @@ namespace Tomboy
 		List<KeyValuePair<string, Note>> notes;
 		List <Tags.Tag> tags;
 		NSDocumentController _sharedDocumentController;
-        NotebookNamePromptController notebookNamePrompt;
+        	NotebookNamePromptController notebookNamePrompt;
 
 		#region Constructors
 		
 		// Called when created from unmanaged code
-		public NotesWindowController (IntPtr handle) : base (handle)
-		{
+		public NotesWindowController (IntPtr handle) : base (handle) {
 			Initialize ();
 		}
 		
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public NotesWindowController (NSCoder coder) : base (coder)
-		{
+		public NotesWindowController (NSCoder coder) : base (coder) {
 			Initialize ();
 		}
 		
 		// Call to load from the XIB/NIB file
-		public NotesWindowController () : base ("NotesWindow")
-		{
+		public NotesWindowController () : base ("NotesWindow") {
 			Initialize ();
 		}
 		
 		// Shared initialization code
-		void Initialize ()
-		{
+		void Initialize () {
 			SortNotesIntoOrder (AppDelegate.Notes);
 			//TODO: Tags are not working properly
 			this.tags = AppDelegate.NoteEngine.GetTags ();
@@ -75,23 +71,21 @@ namespace Tomboy
 			AppDelegate.NoteEngine.NoteUpdated += HandleNoteUpdated;
 		}
 
-		public int GetNoteCount ()
-		{
+		public int GetNoteCount () {
 			return notes.Count;
 		}
 
 		// This method will be called automatically when the main window "wakes up".
 		[Export ("awakeFromNib:")]
-		public override void AwakeFromNib()
-		{
+		public override void AwakeFromNib () {
 			_notesTableView.DataSource = new NotesWindowNotesDatasource (this);
-            _notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (AppDelegate.Notebooks);
+            		_notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (AppDelegate.Notebooks);
 			
-            HandleNotebookAdded();
+            		HandleNotebookAdded();
 
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
-            _notebooksTableView.DoubleClick += HandleNotebookDoubleClick;
+            		_notebooksTableView.DoubleClick += HandleNotebookDoubleClick;
 		}
 
 		/// <summary>
@@ -103,50 +97,42 @@ namespace Tomboy
 		/// <param name='elementAt'>
 		/// Element at.
 		/// </param>
-		public Note GetNoteAt (int elementAt)
-		{
+		public Note GetNoteAt (int elementAt) {
 			return notes.ElementAt (elementAt).Value;
 		}
 
-        public void UpdateNotesTable()
-        {
-            Dictionary<string, Note> results = new Dictionary<string, Note>();
-            results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
-            SortNotesIntoOrder(results);
-        }
+		public void UpdateNotesTable() {
+            		Dictionary<string, Note> results = new Dictionary<string, Note>();
+            		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
+            		SortNotesIntoOrder(results);
+        	}
 
-        public void UpdateNotebooksTable()
-        {
-            HandleNotebookAdded();
-        }
+		public void UpdateNotebooksTable() {
+            		HandleNotebookAdded();
+        	}
 
 		#endregion
 
 		#region private methods
 		
-		void HandleNoteUpdated (Note note)
-		{
+		void HandleNoteUpdated (Note note) {
 			_notesTableView.ReloadData ();
 		}
 
-        void HandleNotebookAdded()
-        {
-            _notebooksTableView.ReloadData();
-        }
+		void HandleNotebookAdded() {
+            		_notebooksTableView.ReloadData();
+        	}
 		
-		void HandleNoteAdded (Note note)
-		{
-            //_notesTableView.ReloadData ();
+		void HandleNoteAdded (Note note) {
+            		//_notesTableView.ReloadData ();
 		}
 		
-		void HandleNoteRemoved (Note note)
-		{
-            int index = notes.FindIndex(f => f.Key == note.Uri);
-            if (index != -1)
-            {
-                notes.RemoveAt(index);
-                _notesTableView.ReloadData();
-            }
+		void HandleNoteRemoved (Note note) {
+            		int index = notes.FindIndex(f => f.Key == note.Uri);
+			if (index != -1) {
+                		notes.RemoveAt(index);
+                	_notesTableView.ReloadData();
+            		}
 		}
 
 		/// <summary>
@@ -155,8 +141,7 @@ namespace Tomboy
 		/// <param name='sender'>
 		/// Sender.
 		/// </param>
-		partial void FindNotes (MonoMac.AppKit.NSSearchField sender)
-		{
+		partial void FindNotes (MonoMac.AppKit.NSSearchField sender) {
 			SortNotesIntoOrder (AppDelegate.NoteEngine.GetNotes (sender.StringValue, true));
 			_notesTableView.ReloadData ();
 		}
@@ -170,8 +155,7 @@ namespace Tomboy
 		/// <param name='e'>
 		/// E.
 		/// </param>
-		void HandleNoteDoubleClick (object sender, EventArgs e)
-		{
+		void HandleNoteDoubleClick (object sender, EventArgs e) {
 			if (e == null)
 				throw new ArgumentNullException ("e");
 			if (sender == null)
@@ -189,41 +173,35 @@ namespace Tomboy
 			myDoc.ShowWindows ();
 		}
 
-        void HandleNotebookDoubleClick (object sender, EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException("e");
-            if (sender == null)
-                throw new ArgumentNullException("sender");
+		void HandleNotebookDoubleClick (object sender, EventArgs e) {
+            		if (e == null)
+                		throw new ArgumentNullException("e");
+            		if (sender == null)
+                		throw new ArgumentNullException("sender");
 
-            int selectedRow = _notebooksTableView.SelectedRow;
-            Console.WriteLine("The selected row number is " + selectedRow + " and value is " + AppDelegate.Notebooks.ElementAt(selectedRow));
+            		int selectedRow = _notebooksTableView.SelectedRow;
+            		AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt(selectedRow);
 
-            AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt(selectedRow);
-            Console.WriteLine("The notebook name is " + AppDelegate.currentNotebook);
-            Dictionary<string, Note> results = new Dictionary<string, Note>();
+			Dictionary<string, Note> results = new Dictionary<string, Note> ();
+            		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
+            		
+			SortNotesIntoOrder(results);
+            		_notesTableView.ReloadData ();
 
-            results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
-            SortNotesIntoOrder(results);
+        	}
 
-            _notesTableView.ReloadData ();
-
-        }
-
-		partial void NewNoteClicked (NSObject sender)
-		{
+		partial void NewNoteClicked (NSObject sender) {
 			_sharedDocumentController.NewDocument (null);
 			//FIXME: Should insert data into tableview maybe instead or reloading the whole view?
 			_notesTableView.ReloadData ();
 		}
 
-        partial void newNotebookButton (NSObject sender)
-        {
+		partial void newNotebookButton (NSObject sender) {
 
-            notebookNamePrompt = new NotebookNamePromptController();
-            notebookNamePrompt.Window.MakeKeyAndOrderFront(this);
+            		notebookNamePrompt = new NotebookNamePromptController();
+            		notebookNamePrompt.Window.MakeKeyAndOrderFront(this);
 
-        }
+  		}
             
 		/// <summary>
 		/// Sorts the notes into order.
@@ -233,8 +211,7 @@ namespace Tomboy
 		/// <param name='notes'>
 		/// Notes.
 		/// </param>
-		void SortNotesIntoOrder (Dictionary <string, Note> notes)
-		{
+		void SortNotesIntoOrder (Dictionary <string, Note> notes) {
 			this.notes = notes.ToList ().OrderByDescending(x => x.Value.ChangeDate).ToList();
 		}
 
@@ -248,4 +225,3 @@ namespace Tomboy
 		}
 	}
 }
-

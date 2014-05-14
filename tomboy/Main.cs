@@ -27,8 +27,7 @@ namespace Tomboy
 {
 	class MainClass
 	{
-		static void Main (string[] args)
-		{
+		static void Main (string[] args) {
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

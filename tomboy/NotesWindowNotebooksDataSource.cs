@@ -34,31 +34,27 @@ namespace Tomboy
 	[Register ("NotesWindowNotebooksDataSource")]
 	public class NotesWindowNotebooksDataSource : NSTableViewDataSource
 	{
-        private List<string> notebooks;
+        	private List<string> notebooks;
 
-		public NotesWindowNotebooksDataSource ()
-		{
+		public NotesWindowNotebooksDataSource () {
 		}
 
-        public NotesWindowNotebooksDataSource (List<string> notebooks)
-		{
-            this.notebooks = notebooks;
+		public NotesWindowNotebooksDataSource (List<string> notebooks) {
+            		this.notebooks = notebooks;
 		}
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
-		public int NumberOfRowsInTableView(NSTableView table)
-		{
-            return this.notebooks.Count;
+		public int NumberOfRowsInTableView(NSTableView table) {
+            		return this.notebooks.Count;
 		}
 
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
-		public NSObject ObjectValueForTableColumn (NSTableView table, NSTableColumn col, int row)
-		{
+		public NSObject ObjectValueForTableColumn (NSTableView table, NSTableColumn col, int row) {
 			// Get the current row index
-            var tag_at = notebooks.ElementAt (row);
-            return (NSString)tag_at;
+            		var tag_at = notebooks.ElementAt (row);
+            		return (NSString)tag_at;
 		}
 	}
 }

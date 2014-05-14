@@ -29,14 +29,12 @@ using MonoMac.Foundation;
 
 namespace Tomboy
 {
-	interface ICocoaNoteAdapter
-	{
+	interface ICocoaNoteAdapter {
 		NSString Title { get; }
 		NSString HtmlContent { get; }
 	}
 
-	public class CocoaNoteAdapter : NSObject, ICocoaNoteAdapter
-	{
+	public class CocoaNoteAdapter : NSObject, ICocoaNoteAdapter {
 		public Note Note {
 			get;
 			set;

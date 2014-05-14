@@ -33,15 +33,14 @@ namespace Tomboy
 {
 	public enum Level { DEBUG, INFO, WARN, ERROR, FATAL };
 
-	public interface ILogger
-	{
+	public interface ILogger {
 		void Log (Level lvl, string msg, params object[] args);
 	}
 
 	class NullLogger : ILogger
 	{
-		public void Log (Level lvl, string msg, params object[] args)
-		{
+		public void Log (Level lvl, string msg, params object[] args) {
+		
 		}
 	}
 
@@ -65,8 +64,7 @@ namespace Tomboy
 		}
 #endif
 
-		public void Log (Level lvl, string msg, params object[] args)
-		{
+		public void Log (Level lvl, string msg, params object[] args) {
 			Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:000}]",
 			               Enum.GetName (typeof (Level), lvl),
 			               DateTime.Now.Hour,
@@ -86,8 +84,7 @@ namespace Tomboy
 		StreamWriter log;
 		ConsoleLogger console;
 
-		public FileLogger ()
-		{
+		public FileLogger () {
 			console = new ConsoleLogger ();
 
 			string logDir = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Logs", "Tomboy");
@@ -111,16 +108,14 @@ namespace Tomboy
 			}
 		}
 
-		~FileLogger ()
-		{
+		~FileLogger () {
 			if (log != null)
 				try {
 					log.Flush ();
 				} catch { }
 		}
 
-		public void Log (Level lvl, string msg, params object[] args)
-		{
+		public void Log (Level lvl, string msg, params object[] args) {
 			console.Log (lvl, msg, args);
 
 			if (log != null) {
@@ -148,8 +143,7 @@ namespace Tomboy
 
 		static bool muted = false;
 
-		public static Level LogLevel
-		{
+		public static Level LogLevel {
 			get {
 				return log_level;
 			}
@@ -158,8 +152,7 @@ namespace Tomboy
 			}
 		}
 
-		public static ILogger LogDevice
-		{
+		public static ILogger LogDevice {
 			get {
 				return log_dev;
 			}
@@ -168,33 +161,27 @@ namespace Tomboy
 			}
 		}
 
-		public static void Debug (string msg, params object[] args)
-		{
+		public static void Debug (string msg, params object[] args) {
 			Log (Level.DEBUG, msg, args);
 		}
 
-		public static void Info (string msg, params object[] args)
-		{
+		public static void Info (string msg, params object[] args) {
 			Log (Level.INFO, msg, args);
 		}
 
-		public static void Warn (string msg, params object[] args)
-		{
+		public static void Warn (string msg, params object[] args) {
 			Log (Level.WARN, msg, args);
 		}
 
-		public static void Error (string msg, params object[] args)
-		{
+		public static void Error (string msg, params object[] args) {
 			Log (Level.ERROR, msg, args);
 		}
 
-		public static void Fatal (string msg, params object[] args)
-		{
+		public static void Fatal (string msg, params object[] args) {
 			Log (Level.FATAL, msg, args);
 		}
 
-		public static void Log (Level lvl, string msg, params object[] args)
-		{
+		public static void Log (Level lvl, string msg, params object[] args) {
 			if (!muted && lvl >= log_level)
 				log_dev.Log (lvl, msg, args);
 		}
@@ -204,18 +191,15 @@ namespace Tomboy
 		// call one of the level specific log methods.
 		[Obsolete("Loger.Log is deprecated and should be replaced " +
 			"with calls to the level specific log methods")]
-		public static void Log (string msg, params object[] args)
-		{
+		public static void Log (string msg, params object[] args) {
 			Log (Level.DEBUG, msg, args);
 		}
 
-		public static void Mute ()
-		{
+		public static void Mute () {
 			muted = true;
 		}
 
-		public static void Unmute ()
-		{
+		public static void Unmute () {
 			muted = false;
 		}
 	}

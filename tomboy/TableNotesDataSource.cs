@@ -37,8 +37,7 @@ namespace Tomboy
 		private NSSearchField searchField;
 		private WebView webView;
 		
-		public TableNotesDataSource (NSTableView table, NSSearchField searchField, WebView webView)
-		{
+		public TableNotesDataSource (NSTableView table, NSSearchField searchField, WebView webView) {
 			this.table = table;
 			this.searchField = searchField;
 			this.webView = webView;
@@ -61,8 +60,7 @@ namespace Tomboy
 		#endregion Events
 
 		#region Private Methods
-		private Note GetActiveNoteObj ()
-		{
+		private Note GetActiveNoteObj () {
 			int rowID = table.SelectedRow;
 			if (rowID == -1)
 				return null;
@@ -72,18 +70,15 @@ namespace Tomboy
 			return note;
 		}
 
-		private void HandleNoteContentClosing ()
-		{
+		private void HandleNoteContentClosing () {
 			UpdateNote ();
 		}
 
-		private void HandleContentUpdate ()
-		{
+		private void HandleContentUpdate () {
 			UpdateNote ();
 		}
 
-		private void UpdateNote ()
-		{
+		private void UpdateNote () {
 			DomDocument document = webView.MainFrameDocument;
 			DomElement paraBlock = document.GetElementById("main_content");
 			GetActiveNoteObj ().Text = paraBlock.InnerText;
@@ -99,8 +94,7 @@ namespace Tomboy
 		/// <param name='e'>
 		/// E.
 		/// </param>
-		private void SearchFieldChanged (object sender, EventArgs e)
-		{
+		private void SearchFieldChanged (object sender, EventArgs e) {
 			Console.WriteLine ("Searching for {0}", this.searchField.StringValue);
 			LoadNotes (AppDelegate.NoteEngine.GetNotes (this.searchField.StringValue, true));
 		}
@@ -108,21 +102,18 @@ namespace Tomboy
 		/// <summary>
 		/// Loads the notes from the engine
 		/// </summary>
-		private void LoadNotes ()
-		{
+		private void LoadNotes () {
 			LoadNotes (AppDelegate.NoteEngine.GetNotes ());
 		}
 
-		private void LoadNotes (Dictionary<string, Tomboy.Note> notes)
-		{
+		private void LoadNotes (Dictionary<string, Tomboy.Note> notes) {
 			this.notes = notes;
 			notesList = new ArrayList (notes.Keys);
 			Console.WriteLine ("Count in Notes {0}, Count in notesList {1}", this.notes.Count, notesList.Count);
 			table.ReloadData ();
 		}
 
-		private void HandleNewNoteAdded (Note note)
-		{
+		private void HandleNewNoteAdded (Note note) {
 			/* insert into the first element of the array */
 			//TODO: Make sure the arraylist is initiated and not a zero value
 			this.notesList.Insert (0, note.Title);
@@ -136,8 +127,7 @@ namespace Tomboy
 
 		// This method will be called by the NSTableView control to learn the number of rows to display.
 		[Export ("numberOfRowsInTableView:")]
-		public int NumberOfRowsInTableView (NSTableView table)
-		{
+		public int NumberOfRowsInTableView (NSTableView table) {
 			return notesList.Count;
 		}
 		
@@ -181,8 +171,7 @@ namespace Tomboy
 		
 		// This method will be called by the control for each column and each row.
 		[Export ("tableView:objectValueForTableColumn:row:")]
-		public NSObject ObjectValueForTableColumn (NSTableView table, NSTableColumn col, int row)
-		{
+		public NSObject ObjectValueForTableColumn (NSTableView table, NSTableColumn col, int row) {
 			
 			switch (row) {
 			case 0:
@@ -204,8 +193,7 @@ namespace Tomboy
 		/// <param name='notification'>
 		/// Notification.
 		/// </param>
-		public override void SelectionDidChange (NSNotification notification)
-		{
+		public override void SelectionDidChange (NSNotification notification) {
 			if (SelectedNoteChanged != null && GetActiveNoteObj () != null)
 				SelectedNoteChanged (GetActiveNoteObj ());
 		}
