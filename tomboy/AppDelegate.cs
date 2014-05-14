@@ -53,6 +53,8 @@ namespace Tomboy
 		//Maximum Notes which can be added to the Dock is 10.
 		private const int MAXNOTES = 10;
 
+        public static string currentNotebook;
+
 		// if tomboy is being launched for the first time on a machine that had a previous version (tomboy)
 		// make sure we get a copy as we are still in a development release.
 		private string backupPathUri = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
@@ -91,6 +93,7 @@ namespace Tomboy
 			settings = SettingsSync.Read();
 
             Notebooks = new List<string>();
+            currentNotebook = "All Notebooks";
 		}
     
         public static bool EnableAutoSync

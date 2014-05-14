@@ -167,6 +167,7 @@ namespace Tomboy
 			_loadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
+            currentNote.Notebook = AppDelegate.currentNotebook;
             NoteTitle(currentNote.Title);
 			InvalidateRestorableState ();
 			_loadingFromString = false;

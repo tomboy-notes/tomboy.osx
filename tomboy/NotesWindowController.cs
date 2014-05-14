@@ -94,6 +94,7 @@ namespace Tomboy
 
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
+            _notebooksTableView.DoubleClick += HandleNotebookDoubleClick;
 		}
 
 		/// <summary>
@@ -112,7 +113,9 @@ namespace Tomboy
 
         public void UpdateNotesTable()
         {
-            SortNotesIntoOrder(AppDelegate.Notes);
+            Dictionary<string, Note> results = new Dictionary<string, Note>();
+            results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
+            SortNotesIntoOrder(results);
         }
 
         public void UpdateNotebooksTable()
@@ -188,6 +191,27 @@ namespace Tomboy
 			myDoc.MakeWindowControllers ();
 			myDoc.ShowWindows ();
 		}
+
+        void HandleNotebookDoubleClick (object sender, EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+            if (sender == null)
+                throw new ArgumentNullException("sender");
+
+            int selectedRow = _notebooksTableView.SelectedRow;
+            Console.WriteLine("The selected row number is " + selectedRow + " and value is " + AppDelegate.Notebooks.ElementAt(selectedRow));
+
+            AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt(selectedRow);
+            Console.WriteLine("The notebook name is " + AppDelegate.currentNotebook);
+            Dictionary<string, Note> results = new Dictionary<string, Note>();
+
+            results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
+            SortNotesIntoOrder(results);
+
+            _notesTableView.ReloadData ();
+
+        }
 
 		partial void NewNoteClicked (NSObject sender)
 		{
