@@ -158,6 +158,11 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <Compile Include="NotebookNamePrompt.designer.cs">
       <DependentUpon>NotebookNamePrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotebookEditPrompt.cs" />
+    <Compile Include="NotebookEditPromptController.cs" />
+    <Compile Include="NotebookEditPrompt.designer.cs">
+      <DependentUpon>NotebookEditPrompt.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
@@ -171,6 +176,7 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <InterfaceDefinition Include="SyncPrefDialog.xib" />
     <InterfaceDefinition Include="Resources\AboutUs.xib" />
     <InterfaceDefinition Include="NotebookNamePrompt.xib" />
+    <InterfaceDefinition Include="NotebookEditPrompt.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist">

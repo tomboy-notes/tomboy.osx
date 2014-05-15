@@ -38,6 +38,7 @@ namespace Tomboy
 		List <Tags.Tag> tags;
 		NSDocumentController _sharedDocumentController;
         	NotebookNamePromptController notebookNamePrompt;
+		NotebookEditPromptController notebookEditPrompt;
 
 		#region Constructors
 		
@@ -273,7 +274,8 @@ namespace Tomboy
 		}
 
 		partial void EditNotebook (NSObject sender) {
-		
+			notebookEditPrompt = new NotebookEditPromptController ();
+			notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
 		}
             
 		/// <summary>
