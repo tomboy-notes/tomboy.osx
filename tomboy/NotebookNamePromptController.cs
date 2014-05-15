@@ -72,6 +72,7 @@ namespace Tomboy
             		}
 			else {
                 		AppDelegate.Notebooks.Add (notebook);
+				AppDelegate.currentNotebook = notebook;
                 		Window.PerformClose (this);
                 		AppDelegate.RefreshNotesWindowController ();
             		}

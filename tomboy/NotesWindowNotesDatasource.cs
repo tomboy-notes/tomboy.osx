@@ -59,16 +59,19 @@ namespace Tomboy
 			// Get the current row index
 			var colKey = (NSString)col.Identifier.ToString ();
 			var note_at = MyNotesWindowController.GetNoteAt (row);
-			switch (colKey) {
-			case "_notesImageColumn":
-				return image; //FIXME: This is not working. An image is not being returned.
-			case "modifiedDate":
-				return DateTimeUtils.GetPrettyDate (note_at.ChangeDate);
-			case "title":
-				return (NSString)note_at.Title;
-			default:
+			if (note_at != null)
+				switch (colKey) {
+				case "_notesImageColumn":
+					return image; //FIXME: This is not working. An image is not being returned.
+				case "modifiedDate":
+					return DateTimeUtils.GetPrettyDate (note_at.ChangeDate);
+				case "title":	
+					return (NSString)note_at.Title;
+				default:
+					return null;
+				}
+			else
 				return null;
-			}
 		}
 	}
 }

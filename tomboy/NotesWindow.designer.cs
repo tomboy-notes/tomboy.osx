@@ -21,14 +21,23 @@ namespace Tomboy
 		[Outlet]
 		MonoMac.AppKit.NSTableView _notesTableView { get; set; }
 
+		[Action ("EditNotebook:")]
+		partial void EditNotebook (MonoMac.Foundation.NSObject sender);
+
 		[Action ("searchFieldFindNotes:")]
 		partial void FindNotes (MonoMac.AppKit.NSSearchField sender);
+
+		[Action ("NewNotebook:")]
+		partial void NewNotebook (MonoMac.Foundation.NSObject sender);
 
 		[Action ("newNotebookButton:")]
 		partial void newNotebookButton (MonoMac.Foundation.NSObject sender);
 
 		[Action ("_newNoteButton:")]
 		partial void NewNoteClicked (MonoMac.Foundation.NSObject sender);
+
+		[Action ("RemoveNotebook:")]
+		partial void RemoveNotebook (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

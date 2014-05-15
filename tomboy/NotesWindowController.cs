@@ -80,13 +80,14 @@ namespace Tomboy
 		public override void AwakeFromNib () {
 			_notesTableView.DataSource = new NotesWindowNotesDatasource (this);
             		_notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (AppDelegate.Notebooks);
-			
+			_notebooksTableView.SelectRow (0, false);
             		HandleNotebookAdded();
 
 			// handle users doubleClicking on a note in the list of notes
 			_notesTableView.DoubleClick += HandleNoteDoubleClick;
             		_notebooksTableView.DoubleClick += HandleNotebookDoubleClick;
 		}
+			
 
 		/// <summary>
 		/// Gets the note at elementAt.
@@ -98,7 +99,12 @@ namespace Tomboy
 		/// Element at.
 		/// </param>
 		public Note GetNoteAt (int elementAt) {
-			return notes.ElementAt (elementAt).Value;
+
+			if (elementAt < notes.Count)
+				return notes.ElementAt (elementAt).Value;
+			else
+				return null;
+
 		}
 
 		public void UpdateNotesTable() {
@@ -108,7 +114,9 @@ namespace Tomboy
         	}
 
 		public void UpdateNotebooksTable() {
-            		HandleNotebookAdded();
+			Console.WriteLine("Current notebook index is "+AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook));
+			_notebooksTableView.SelectRow (AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook), false);
+			HandleNotebookAdded ();
         	}
 
 		#endregion
@@ -180,14 +188,16 @@ namespace Tomboy
                 		throw new ArgumentNullException("sender");
 
             		int selectedRow = _notebooksTableView.SelectedRow;
-            		AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt(selectedRow);
+			if (selectedRow != -1) {
+				AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (selectedRow);
 
-			Dictionary<string, Note> results = new Dictionary<string, Note> ();
-            		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
+				Dictionary<string, Note> results = new Dictionary<string, Note> ();
+				results = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
             		
-			SortNotesIntoOrder(results);
-            		_notesTableView.ReloadData ();
-
+				SortNotesIntoOrder (results);
+				_notesTableView.ReloadData ();
+				_notebooksTableView.SelectRow (selectedRow, false);
+			}
         	}
 
 		partial void NewNoteClicked (NSObject sender) {
@@ -202,6 +212,69 @@ namespace Tomboy
             		notebookNamePrompt.Window.MakeKeyAndOrderFront(this);
 
   		}
+
+		partial void RemoveNotebook (NSObject sender) {
+			int selectedRow = _notebooksTableView.SelectedRow;
+			if(selectedRow == 0) {
+				//Cannot delete the All Notebooks Row
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Cannot Be Deleted",
+					InformativeText = "You cannot delete 'All Notebooks' selection.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+			} else if(selectedRow != -1) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Really delete notebook?",
+					InformativeText = "You are about to delete Notebook"
+						+ AppDelegate.Notebooks.ElementAt(selectedRow) 
+						+ ". This operation could not be un-done.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.AddButton ("Cancel");
+				alert.BeginSheet (this.Window,
+					this,
+					new MonoMac.ObjCRuntime.Selector ("alertDidEnd:returnCode:contextInfo:"),
+					IntPtr.Zero);
+			}
+		}
+
+		[Export ("alertDidEnd:returnCode:contextInfo:")]
+		void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo) {
+			if (alert == null)
+				throw new ArgumentNullException("alert");
+			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
+				int selectedRow = _notebooksTableView.SelectedRow;
+
+				//Deleting selected notebook should move all the notes to All Notebooks tab
+				Dictionary <string, Note> result = new Dictionary<string, Note>();
+				result = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.Notebooks.ElementAt(selectedRow));
+
+				foreach(KeyValuePair<string,Note> note in result) {
+					note.Value.RemoveNotebook ();
+					AppDelegate.NoteEngine.SaveNote(note.Value);
+				}
+					
+				AppDelegate.Notebooks.Remove (AppDelegate.currentNotebook);
+				AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (0);
+				Dictionary<string, Note> allNotes = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
+				_notebooksTableView.SelectRow (0, false);
+				SortNotesIntoOrder (allNotes);
+				_notesTableView.ReloadData ();
+				_notebooksTableView.ReloadData ();
+
+
+			}
+		}
+
+		partial void EditNotebook (NSObject sender) {
+		
+		}
             
 		/// <summary>
 		/// Sorts the notes into order.

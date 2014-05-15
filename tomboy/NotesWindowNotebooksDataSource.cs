@@ -56,6 +56,10 @@ namespace Tomboy
             		var tag_at = notebooks.ElementAt (row);
             		return (NSString)tag_at;
 		}
+
+		public override void SetObjectValue (NSTableView tableView, NSObject theObject, NSTableColumn tableColumn,int row) {
+			System.Console.WriteLine("Changed at " + row);
+		}
 	}
 }
 
