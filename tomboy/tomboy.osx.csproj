@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CBEFA338-7B6F-432C-A7B4-32F80F36D672}</ProjectGuid>
     <ProjectTypeGuids>{948B3504-5B70-4649-8FE4-BDE1FB46EC69};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -27,7 +27,7 @@ This project will be merged into the main Tomboy project at git.gnome.org at som
 
 Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or Windows.
 ----</Description>
-    <ReleaseVersion>0.3.2</ReleaseVersion>
+    <ReleaseVersion>0.3.3</ReleaseVersion>
     <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
     <newfilesearch>OnLoad</newfilesearch>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
