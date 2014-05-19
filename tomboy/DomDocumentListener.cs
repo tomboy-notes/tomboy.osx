@@ -30,8 +30,7 @@ namespace Tomboy
 {
 	public class DomDocumentListener : MonoMac.WebKit.DomEventListener
 	{
-		public DomDocumentListener ()
-		{
+		public DomDocumentListener () {
 			timeoutvalue = DateTime.Now.AddSeconds(_time_out_value);
 		}
 
@@ -56,8 +55,7 @@ namespace Tomboy
 		public static event NoteContentChangedEventHandler NoteContentChanged;
 		#endregion Events
 
-		public override void HandleEvent (MonoMac.WebKit.DomEvent evt)
-		{
+		public override void HandleEvent (MonoMac.WebKit.DomEvent evt) {
 			if (DateTime.Now > timeoutvalue) {
 				// set new timeout
 				timeoutvalue = DateTime.Now.AddSeconds (_time_out_value);

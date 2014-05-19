@@ -29,23 +29,19 @@ namespace Tomboy
 {
 	public partial class ShowNotesPopup : MonoMac.AppKit.NSView
 	{
-		public ShowNotesPopup (IntPtr handle) : base (handle)
-		{
+		public ShowNotesPopup (IntPtr handle) : base (handle) {
 			Initialize ();
 		}
 		
 		[Export ("initWithCoder:")]
-		public ShowNotesPopup (NSCoder coder) : base (coder)
-		{
+		public ShowNotesPopup (NSCoder coder) : base (coder) {
 			Initialize ();
 		}
 		
-		void Initialize ()
-		{
+		void Initialize () {
 		}
 
-		partial void ColumnNumberSliderChange (MonoMac.AppKit.NSSlider sender)
-		{
+		partial void ColumnNumberSliderChange (MonoMac.AppKit.NSSlider sender) {
 			Console.WriteLine ("SliderChange {0}", sender.IntValue);
 			((NoteCollectionView)CollectionView).UpdateColumnCountBasedOnNumber (sender.IntValue);
 		}

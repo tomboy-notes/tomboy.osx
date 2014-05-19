@@ -31,24 +31,20 @@ namespace Tomboy
 {
 	public partial class NoteCollectionViewItemController : NSCollectionViewItem
 	{
-		public NoteCollectionViewItemController (IntPtr handle) : base (handle)
-		{
+		public NoteCollectionViewItemController (IntPtr handle) : base (handle) {
 			Initialize ();
 		}
 
 		[Export ("initWithCoder:")]
-		public NoteCollectionViewItemController (NSCoder coder) : base (coder)
-		{
+		public NoteCollectionViewItemController (NSCoder coder) : base (coder) {
 			Initialize ();
 		}
 
-		public NoteCollectionViewItemController () : base ("NoteCollectionViewItem", NSBundle.MainBundle)
-		{
+		public NoteCollectionViewItemController () : base ("NoteCollectionViewItem", NSBundle.MainBundle) {
 			Initialize ();
 		}
 
-		void Initialize ()
-		{
+		void Initialize () {
 			TextField = View.TextField;
 			ContentTextView = View.ContentTextView;
 			View.ContentTextView.NextResponder = View; 

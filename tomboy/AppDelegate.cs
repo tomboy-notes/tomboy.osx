@@ -2,7 +2,8 @@
 // LicenseHeader.cs
 //
 // Author:
-//       Jared Jennings <jjennings@gnome.org>
+//      Jared Jennings <jjennings@gnome.org>
+//	Rashid Khan <rashood.khan@gmail.com>
 //
 // Copyright (c) 2012 Jared Jennings 2012
 //
@@ -45,27 +46,32 @@ namespace Tomboy
 
 		public static SettingsSync settings;
 
-        public static NotesWindowController controller;
+        	public static NotesWindowController controller;
 		AboutUsController aboutUs;
-        private int _maxNotesInMenu = 10;
+        	private int _maxNotesInMenu = 10;
 		//Maintains the current count of Notes added to Dock
 		private int dockMenuNoteCounter = 0;
 		//Maximum Notes which can be added to the Dock is 10.
 		private const int MAXNOTES = 10;
 
+		//Stores the current Notebook selected
+        	public static string currentNotebook;
+
 		// if tomboy is being launched for the first time on a machine that had a previous version (tomboy)
 		// make sure we get a copy as we are still in a development release.
 		private string backupPathUri = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy", "v1");
 
-		public AppDelegate ()
-        {
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Tomboy.AppDelegate"/> class.
+		/// </summary>
+		public AppDelegate () {
 			var storage_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", "Tomboy");
-            // TODO, set it in a generic way
-            noteStorage = new DiskStorage (storage_path);
-            noteStorage.SetBackupPath(backupPathUri);
+            		// TODO, set it in a generic way
+            		noteStorage = new DiskStorage (storage_path);
+            		noteStorage.SetBackupPath(backupPathUri);
 
-            if (!Directory.Exists(backupPathUri))
-                noteStorage.Backup(); //FIXME: Need to better handle status messages.
+            		if (!Directory.Exists(backupPathUri))
+                		noteStorage.Backup(); //FIXME: Need to better handle status messages.
 
 			Logger.Debug ("Backup Path set to {0}", backupPathUri);
 
@@ -89,16 +95,17 @@ namespace Tomboy
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
 			settings = SettingsSync.Read();
-		}
-    
-        public static bool EnableAutoSync
-        {
-            get;
-            set;
-        }
 
-        partial void SyncNotes(NSObject sender)
-        {
+            		Notebooks = new List<string>();
+            		currentNotebook = "All Notebooks";
+            		PopulateNotebookList();
+		}
+
+		/// <summary>
+		/// Syncs the notes.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void SyncNotes(NSObject sender) {
 			var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
 			SyncManifest dest_manifest;
 			if (!File.Exists (dest_manifest_path)) {
@@ -122,9 +129,13 @@ namespace Tomboy
 				SyncManifest.Write (dest_manifest, output);
 			}
 
-        }
-		public override void FinishedLaunching (NSObject notification)
-		{
+        	}
+
+		/// <summary>
+		/// It is called when the application has finished launching
+		/// </summary>
+		/// <param name="notification">Notification.</param>
+		public override void FinishedLaunching (NSObject notification) {
 			//moving from nibFinishedLoading may address a few issues with crashes.
 			BuildDockMenuNotes ();
 
@@ -133,17 +144,19 @@ namespace Tomboy
 			controller.Window.MakeMainWindow();
 		}
 
-        partial void Preferences(NSObject sender)
-        {
-            var prefC = new SyncPrefDialogController ();
-            prefC.Window.MakeKeyAndOrderFront (this);
-        }
+		/// <summary>
+		/// Generates the preference window
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void Preferences(NSObject sender) {
+            		var prefC = new SyncPrefDialogController ();
+            		prefC.Window.MakeKeyAndOrderFront (this);
+        	}
 
 		/// <summary>
 		/// Builds the dock menu notes, currently populating the Menu with Notes. ALL NOTES
 		/// </summary>
-		void BuildDockMenuNotes ()
-		{
+		void BuildDockMenuNotes () {
 			if (dockMenu == null || Notes.Count == 0)
 				return;
 
@@ -154,14 +167,12 @@ namespace Tomboy
 		/// Arranges the Dock Menu with lastest change date.
 		/// Last 10 modified Notes are shown up in the Dock Menu.
 		/// </summary>
-		void ArrangeDateWise(){
-			if (Notes != null || Notes.Count > 0)
-			{
+		void ArrangeDateWise () {
+			if (Notes != null || Notes.Count > 0) {
 				int count = Notes.Count;
 				Dictionary<DateTime,Note> dateDict = new Dictionary<DateTime, Note>();
 
-				for (int i = 0; i < count; i++)
-				{
+				for (int i = 0; i < count; i++) {
 					Note temp = Notes.Values.ElementAt(i);
 					if(!dateDict.ContainsKey(temp.ChangeDate))
 						dateDict.Add(temp.ChangeDate, temp);
@@ -171,8 +182,7 @@ namespace Tomboy
 				dateList.Sort();
 
 				if (dateDict.Count >= MAXNOTES)
-					for (int i = 0; i < MAXNOTES && dockMenuNoteCounter <= MAXNOTES; i++)
-					{
+					for (int i = 0; i < MAXNOTES && dockMenuNoteCounter <= MAXNOTES; i++) {
 						var item = new NSMenuItem();
 						DateTime date = dateList.ElementAt(dateDict.Count - i - 1);
 						item.Title = dateDict[date].Title;
@@ -181,8 +191,7 @@ namespace Tomboy
 						dockMenuNoteCounter += 1;
 					}
 				else
-					for (int i = 0; i < dateDict.Count; i++)
-					{
+					for (int i = 0; i < dateDict.Count; i++) {
 						var item = new NSMenuItem();
 						DateTime date = dateList.ElementAt(dateDict.Count - i - 1);
 						item.Title = dateDict[date].Title;
@@ -195,8 +204,23 @@ namespace Tomboy
 
 		}
 
-		void HandleActivated (object sender, EventArgs e)
-		{
+		/// <summary>
+		/// Populates the notebook list with existing notebooks
+		/// </summary>
+		void PopulateNotebookList () {
+            		Notebooks.Add("All Notebooks");
+			foreach (KeyValuePair<string, Note> note in Notes) {
+                		if (note.Value.Notebook != null)
+                    			Notebooks.Add(note.Value.Notebook);
+            		}
+        	}
+
+		/// <summary>
+		/// Handles the activated.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		void HandleActivated (object sender, EventArgs e) {
 			NSMenuItem item = (NSMenuItem)sender;
 			OpenNote (item.Title);
 		}
@@ -207,8 +231,7 @@ namespace Tomboy
 		/// <param name='title'>
 		/// Title.
 		/// </param>
-		void OpenNote (string title)
-		{
+		void OpenNote (string title) {
 			var note = NoteEngine.GetNote (title);
 			MyDocument myDoc = new MyDocument (note);
 			var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
@@ -217,70 +240,43 @@ namespace Tomboy
 			myDoc.ShowWindows ();
 		}
 
-		void HandleNoteRemoved (Note note)
-		{
+		/// <summary>
+		/// Handles the note removed.
+		/// </summary>
+		/// <param name="note">Note.</param>
+		void HandleNoteRemoved (Note note) {
 			Logger.Debug ("AppDelegate Handling Note {0} removed", note.Title);
 			Notes.Remove (note.Uri);
-            using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title)) {
-                if (item != null)
-                    dockMenu.RemoveItem(item);
+            		using (NSMenuItem item = dockMenu.ItemWithTitle(note.Title)) {
+                		if (item != null)
+                    		dockMenu.RemoveItem(item);
 				dockMenuNoteCounter -= 1;
-            }
+            		}
 
 			RefreshNotesWindowController();
 		}
 
-		void HandleNoteUpdated (Note note)
-		{
+		/// <summary>
+		/// Handles the note updated.
+		/// </summary>
+		/// <param name="note">Note.</param>
+		void HandleNoteUpdated (Note note) {
 			Logger.Debug ("AppDelegate Handling Note {0} updated", note.Title);
 			Notes.Remove (note.Uri); //FIXME: Why is this being removed and then added again?
 			Notes.Add (note.Uri, note);
 			try {
 				UpdateDock();
-                RefreshNotesWindowController();
+                		RefreshNotesWindowController();
 			} catch (Exception e) {
 				Logger.Error ("Failed to update Dock Menu {0}", e);
 			}
 		}
 
 		/// <summary>
-		/// Updates the Dock Menu when the Notes are modified
+		/// Handles the note added.
 		/// </summary>
-		private void UpdateDock(){
-			int count = dockMenuNoteCounter;
-			while (count > 0)
-			{
-				/*Using the Index 4, becase 0 to 3 are reserved for About Us,
-				 * Search Notes, New Note and horizontal bar*/
-				dockMenu.RemoveItemAt(4);
-				dockMenuNoteCounter -= 1;
-				count--;
-			}
-
-			ArrangeDateWise();
-			RefreshNotesWindowController();
-		}
-
-		public static string BaseUrlPath {
-			get {
-				String SpecialFolderCache = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
-				                     "Library", "Cache", "Tomboy");
-				Logger.Debug ("cache directory set to {0}", SpecialFolderCache);
-				return SpecialFolderCache;
-			}
-		}
-
-		public static Engine NoteEngine {
-			get;
-			set;
-		}
-
-		public static Dictionary<string, Note> Notes {
-			get;
-			set;
-		}
-		void HandleNoteAdded (Note note)
-		{
+		/// <param name="note">Note.</param>
+		void HandleNoteAdded (Note note) {
 			Logger.Debug ("AppDelegate Handling Note Added {0}", note.Title);
 
 			try {
@@ -295,61 +291,154 @@ namespace Tomboy
 			}
 		}
 
-        /// <summary>
-        /// Refreshs the notes window controller.
-        /// Method refreshes the table in Notes Window, to update each time
-        /// some notes are updated, deleted or added.
-        /// </summary>
-        public static void RefreshNotesWindowController()
-        {
-		    if (controller == null)
-				controller = new NotesWindowController();
-            controller.UpdateNotesTable();
+		/// <summary>
+		/// Updates the Dock Menu when the Notes are modified
+		/// </summary>
+		private void UpdateDock () {
+			int count = dockMenuNoteCounter;
+			while (count > 0) {
+				/*Using the Index 4, becase 0 to 3 are reserved for About Us,
+				 * Search Notes, New Note and horizontal bar*/
+				dockMenu.RemoveItemAt (4);
+				dockMenuNoteCounter -= 1;
+				count--;
+			}
+
+			ArrangeDateWise ();
+			RefreshNotesWindowController ();
 		}
 
-		partial void OpenDashboard (NSObject sender)
-		{
+		/// <summary>
+		/// Gets the base URL path.
+		/// </summary>
+		/// <value>The base URL path.</value>
+		public static string BaseUrlPath {
+			get {
+				String SpecialFolderCache = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
+				                     "Library", "Cache", "Tomboy");
+				Logger.Debug ("cache directory set to {0}", SpecialFolderCache);
+				return SpecialFolderCache;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the note engine.
+		/// </summary>
+		/// <value>The note engine.</value>
+		public static Engine NoteEngine {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Maintains the notes to be shown in the Table.
+		/// </summary>
+		/// <value>The notes.</value>
+		public static Dictionary<string, Note> Notes {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Maintains the list of Notebooks created
+		/// </summary>
+		/// <value>The notebooks.</value>
+		public static List<string> Notebooks {
+			get;
+			set;
+        	}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="Tomboy.AppDelegate"/> enable auto sync.
+		/// </summary>
+		/// <value><c>true</c> if enable auto sync; otherwise, <c>false</c>.</value>
+		public static bool EnableAutoSync {
+			get;
+			set;
+		}
+			
+        	/// <summary>
+        	/// Refreshs the notes window controller.
+        	/// Method refreshes the table in Notes Window, to update each time
+		/// some notes are updated, deleted or added.
+		/// </summary>
+		public static void RefreshNotesWindowController () {
+		    if (controller == null)
+				controller = new NotesWindowController();
+            		controller.UpdateNotesTable();
+            		controller.UpdateNotebooksTable();
+		}
+
+		/// <summary>
+		/// Opens the dashboard.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void OpenDashboard (NSObject sender) {
 			if (controller == null)
 				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
 		}
 
-		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows)
-		{
+		/// <summary>
+		/// Applications the should handle reopen.
+		/// </summary>
+		/// <returns><c>true</c>, if should handle reopen was applicationed, <c>false</c> otherwise.</returns>
+		/// <param name="sender">Sender.</param>
+		/// <param name="hasVisibleWindows">If set to <c>true</c> has visible windows.</param>
+		public override bool ApplicationShouldHandleReopen (NSApplication sender, bool hasVisibleWindows) {
 			return true;
 		}
 
-		public override bool ApplicationShouldOpenUntitledFile (NSApplication sender)
-		{
+		/// <summary>
+		/// Applications the should open untitled file.
+		/// </summary>
+		/// <returns><c>true</c>, if should open untitled file was applicationed, <c>false</c> otherwise.</returns>
+		/// <param name="sender">Sender.</param>
+		public override bool ApplicationShouldOpenUntitledFile (NSApplication sender) {
 			return true;
 		}
 
-		public override bool ApplicationOpenUntitledFile (NSApplication sender)
-		{
+		/// <summary>
+		/// Applications the open untitled file.
+		/// </summary>
+		/// <returns><c>true</c>, if open untitled file was applicationed, <c>false</c> otherwise.</returns>
+		/// <param name="sender">Sender.</param>
+		public override bool ApplicationOpenUntitledFile (NSApplication sender) {
 			return true;
 		}
 
-		partial void MenuClickedAboutTomboy (NSObject sender)
-		{
+		/// <summary>
+		/// Menus the clicked about tomboy.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void MenuClickedAboutTomboy (NSObject sender) {
 			if(aboutUs == null)
 				aboutUs = new AboutUsController();
 			aboutUs.Window.MakeKeyAndOrderFront(this);
 		}
 
-		partial void MenuClickedNewNote (NSObject sender)
-		{
+		/// <summary>
+		/// Menus the clicked new note.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void MenuClickedNewNote (NSObject sender) {
 			var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
 			_sharedDocumentController.NewDocument (null);
 		}
 
-		partial void MenuClickedSearchNotes (NSObject sender)
-		{
+		/// <summary>
+		/// Menus the clicked search notes.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		partial void MenuClickedSearchNotes (NSObject sender) {
 			OpenDashboard (sender);
 		}
 
 		#region private methods
-		private void LoadDashboardWindow ()
-		{
+		/// <summary>
+		/// Loads the dashboard window.
+		/// </summary>
+		private void LoadDashboardWindow () {
 			if (controller == null)
 				controller = new NotesWindowController ();
 			controller.Window.MakeKeyAndOrderFront (this);
@@ -357,8 +446,14 @@ namespace Tomboy
 
 		#endregion private methods
 
-		public new void Dispose ()
-		{
+		/// <summary>
+		/// Releases all resource used by the <see cref="Tomboy.AppDelegate"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Tomboy.AppDelegate"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Tomboy.AppDelegate"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Tomboy.AppDelegate"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Tomboy.AppDelegate"/> was occupying.</remarks>
+		public new void Dispose () {
 			base.Dispose ();
 			manifestTracker.Dispose ();
 		}

@@ -7,19 +7,16 @@ namespace Tomboy
 {
 	public partial class NoteCollectionItem : NSCollectionViewItem
 	{
-		public NoteCollectionItem (IntPtr handle) : base (handle)
-		{
+		public NoteCollectionItem (IntPtr handle) : base (handle) {
 			Initialize ();
 		}
 		
 		[Export ("initWithCoder:")]
-		public NoteCollectionItem (NSCoder coder) : base (coder)
-		{
+		public NoteCollectionItem (NSCoder coder) : base (coder) {
 			Initialize ();
 		}
 
-		void Initialize ()
-		{
+		void Initialize () {
 		}
 	}
 }

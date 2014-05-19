@@ -74,13 +74,11 @@ namespace Tomboy
 			}
 		}
 
-        public string CurrentNoteID
-        {
-            get
-            {
-                return currentNoteID;
-            }
-        }
+		public string CurrentNoteID {
+			get {
+                		return currentNoteID;
+            		}
+        	}
 
 		public override void WindowControllerDidLoadNib (NSWindowController windowController)
 		{
@@ -104,16 +102,16 @@ namespace Tomboy
 		/// </param>
 		/// <param name='e'>
 		/// E.
-        /// </param>//WebNavigationPolicyEventArgs
+        	/// </param>//WebNavigationPolicyEventArgs
 		void HandleWebViewDecidePolicyForNavigation (object sender, WebNavigationPolicyEventArgs e)
 		{
 			// Reference for examples of this method in use
 			// https://github.com/mono/monomac/commit/efc6e28fc03005638ce2cd217dc6c9281ad9c1c5
 
-            var linked_note = e.Request.Url.AbsoluteString;
+            		var linked_note = e.Request.Url.AbsoluteString;
                         
-            if (linked_note != null && linked_note.StartsWith("note:", StringComparison.CurrentCulture))
-                OpenNote(e.Request.Url.AbsoluteString);
+            		if (linked_note != null && linked_note.StartsWith("note:", StringComparison.CurrentCulture))
+                		OpenNote(e.Request.Url.AbsoluteString);
 
 			if (_loadingFromString){
 				WebView.DecideUse (e.DecisionToken);
@@ -123,57 +121,52 @@ namespace Tomboy
 			WebView.DecideIgnore (e.DecisionToken);
 		}
 
-        private void OpenNote (string title)
-        {
-            Note note;
-            var notes = AppDelegate.NoteEngine.GetNotes();
-            notes.TryGetValue(title, out note);
-            MyDocument myDoc = new MyDocument (note);
-            var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
-            _sharedDocumentController.AddDocument (myDoc);
-            myDoc.MakeWindowControllers ();
-            myDoc.ShowWindows ();
-        }
+		private void OpenNote (string title) {
+            		Note note;
+            		var notes = AppDelegate.NoteEngine.GetNotes();
+            		notes.TryGetValue(title, out note);
+            		MyDocument myDoc = new MyDocument (note);
+            		var _sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+            		_sharedDocumentController.AddDocument (myDoc);
+            		myDoc.MakeWindowControllers ();
+            		myDoc.ShowWindows ();
+        	}
 
-		private void HandleFinishedLoad (object sender, WebFrameEventArgs e)
-		{
-            NoteTitle(currentNote.Title); // this needs to be here once the Window has loaded, otherwise the default window settings will override
-        }
+		private void HandleFinishedLoad (object sender, WebFrameEventArgs e) {
+            		NoteTitle(currentNote.Title); // this needs to be here once the Window has loaded, otherwise the default window settings will override
+        	}
 
-        partial void NoteTitleFieldSelector(NSObject sender)
-        {
-            if (!currentNote.Title.Equals (noteTitleField.Title, StringComparison.CurrentCulture)) {
-                Logger.Debug ("Note Title Changing " + noteTitleField.Title);
-                NoteTitle (noteTitleField.Title);
-            }
-        }
+		partial void NoteTitleFieldSelector(NSObject sender) {
+            		if (!currentNote.Title.Equals (noteTitleField.Title, StringComparison.CurrentCulture)) {
+                		Logger.Debug ("Note Title Changing " + noteTitleField.Title);
+                		NoteTitle (noteTitleField.Title);
+            		}
+        	}
 
-        private void NoteTitle (string title)
-        {
-            Logger.Debug("Setting Note Title to {0}", title);
-            if (title == null)
-                Logger.Error("NoteTitle cannot be null");
+		private void NoteTitle (string title) {
+            		Logger.Debug("Setting Note Title to {0}", title);
+            		if (title == null)
+                		Logger.Error("NoteTitle cannot be null");
 
-            if (title != null) {
-                WindowForSheet.Title = title;
-                SetDisplayName (title);
-                noteTitleField.TextColor = NSColor.Black;
-                noteTitleField.Title = title;
-            }
-        }
+            		if (title != null) {
+                		//WindowForSheet.Title = title;
+                		SetDisplayName (title);
+                		noteTitleField.TextColor = NSColor.Black;
+                		noteTitleField.Title = title;
+            		}
+        	}
 
-		void LoadNewNote ()
-		{
+		void LoadNewNote () {
 			_loadingFromString = true;
 			currentNote = AppDelegate.NoteEngine.NewNote ();
 			currentNoteID = currentNote.Uri;
-            NoteTitle(currentNote.Title);
+            		currentNote.Notebook = AppDelegate.currentNotebook;
+            		NoteTitle(currentNote.Title);
 			InvalidateRestorableState ();
 			_loadingFromString = false;
 		}
 
-		void LoadNote (string newNoteId, bool withHistory = true)
-		{			
+		void LoadNote (string newNoteId, bool withHistory = true) {			
 			try {
 				// on a crash, the document restore may try to load a key that doesn't exist any more.
 				currentNote = AppDelegate.Notes[newNoteId];
@@ -185,41 +178,38 @@ namespace Tomboy
 			}
 		}
 
-        string WikiLinks (string body)
-        {
-            var finished_results = body;
-            foreach (var item in AppDelegate.NoteEngine.GetNotes())
-            {
-                if (item.Value.Uri.Equals (currentNoteID)) // do not want to highlight our own note
-                    continue;
-                finished_results = finished_results.Replace(item.Value.Title, "<a href='" + item.Value.Uri + "'>" + item.Value.Title + "</a>");
-            }
-            return finished_results;
-        }
+		string WikiLinks (string body) {
+            		var finished_results = body;
+			foreach (var item in AppDelegate.NoteEngine.GetNotes()) {
+                		if (item.Value.Uri.Equals (currentNoteID)) // do not want to highlight our own note
+                    			continue;
+                		finished_results = finished_results.Replace(item.Value.Title, "<a href='" + item.Value.Uri + "'>" + item.Value.Title + "</a>");
+            		}
+            		return finished_results;
+		}
 
-		void LoadNote (bool withHistory = true)
-        {
-            if (HasUnautosavedChanges)
-                SaveData();
+		void LoadNote (bool withHistory = true) {
+            		if (HasUnautosavedChanges)
+                		SaveData();
 
-            _loadingFromString = true;
+            		_loadingFromString = true;
 
-            if (currentNote == null)
-                return;
+            		if (currentNote == null)
+                		return;
 
-            InvalidateRestorableState();
-            Logger.Debug("Translating Note:{0} \n Note text before Translator {1}", currentNoteID, currentNote.Text);
-            var content = translator.From(currentNote);
-            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+            		InvalidateRestorableState();
+            		Logger.Debug("Translating Note:{0} \n Note text before Translator {1}", currentNoteID, currentNote.Text);
+            		var content = translator.From(currentNote);
+            		var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
-            if (beginIndx != -1) // it's possible that some notes do not have any content
-            {
-                var len = currentNote.Title.Length;
-                content = content.Remove(beginIndx, (len + 1)); // +1 to remove the NewLine char after the title
-            }
+			// it's possible that some notes do not have any content
+			if (beginIndx != -1) {
+                		var len = currentNote.Title.Length;
+                		content = content.Remove(beginIndx, (len + 1)); // +1 to remove the NewLine char after the title
+            		}
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
-            noteWebView.MainFrame.LoadHtmlString (WikiLinks(content), new NSUrl (AppDelegate.BaseUrlPath));
+            		noteWebView.MainFrame.LoadHtmlString (WikiLinks(content), new NSUrl (AppDelegate.BaseUrlPath));
 
 			if (withHistory) {
 				if (currentHistoryPosition < history.Count - 1)
@@ -237,27 +227,25 @@ namespace Tomboy
 			if (popover != null)
 				popover.Close ();
 
-            Logger.Debug("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
+            		Logger.Debug("Finished loading Note ID {0} \n Note Body '{1}'", currentNoteID, content);
 		}
 
-        /// <summary>
-        /// Updates the links on the text taking area.
-        /// </summary>
-        private void UpdateLinks()
-        {
-            _loadingFromString = true;
-            var content = translator.From(currentNote);
-            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+        	/// <summary>
+        	/// Updates the links on the text taking area.
+        	/// </summary>
+		private void UpdateLinks() {
+            		_loadingFromString = true;
+            		var content = translator.From(currentNote);
+            		var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
-            if (beginIndx != -1)
-            {
-                var len = currentNote.Title.Length;
-                content = content.Remove(beginIndx, (len + 1));
-            }
+			if (beginIndx != -1) {
+                		var len = currentNote.Title.Length;
+                		content = content.Remove(beginIndx, (len + 1));
+            		}
 
-            noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
-            _loadingFromString = false;
-        }
+            		noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
+            		_loadingFromString = false;
+        	}
 
 		/// <summary>
 		/// Should the Note be editable
@@ -265,13 +253,11 @@ namespace Tomboy
 		/// <param name='editable'>
 		/// Editable.
 		/// </param>
-		private void Editable (bool editable)
-		{
+		private void Editable (bool editable) {
 			noteWebView.Editable = editable; // So that Notes can be Edited
 		}
 
-		private void SaveData ()
-		{
+		private void SaveData () {
 			if (noteWebView == null)
 				return;
 
@@ -279,26 +265,26 @@ namespace Tomboy
 
 			try {
 				string results = translator.To (noteWebView.MainFrame.DomDocument);
-                if (string.IsNullOrEmpty(results) || currentNote.Title == null) {
+                		if (string.IsNullOrEmpty(results) || currentNote.Title == null) {
 					Logger.Debug("note content empty or null. Nothing to save for {0}", currentNoteID);
 					return;
 				}
-                currentNote.Title = noteTitleField.Title;
-                currentNote.Text = noteTitleField.Title;//FIXME Need to see if we should actually add the title to the contents.
-                currentNote.Text += Environment.NewLine; 
+                		currentNote.Title = noteTitleField.Title;
+                		currentNote.Text = noteTitleField.Title;//FIXME Need to see if we should actually add the title to the contents.
+                		currentNote.Text += Environment.NewLine; 
 				currentNote.Text += results;
-                AppDelegate.NoteEngine.SaveNote (currentNote);
+                		AppDelegate.NoteEngine.SaveNote (currentNote);
 
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);
 
-                UpdateLinks();
+                		UpdateLinks();
 				/*
 				 * Very important piece of code.(UpdateChangeCount)
 				 * This allows us to trick NSDOcument into believing that we have saved the document
 				 */
 				UpdateChangeCount (NSDocumentChangeType.Cleared);
-                //LoadNote();
+                		//LoadNote();
 			} catch (Exception e) {
 				Logger.Error ("Failed to Save Note {0}", e);
 			}
@@ -316,8 +302,7 @@ namespace Tomboy
 			}
 		}*/
 
-		partial void BackForwardAction (NSSegmentedControl sender)
-		{
+		partial void BackForwardAction (NSSegmentedControl sender) {
 			var selected = sender.SelectedSegment;
 
 			if (selected == 0)
@@ -330,16 +315,14 @@ namespace Tomboy
 			UpdateBackForwardSensitivity ();
 		}
 
-		void UpdateBackForwardSensitivity ()
-		{
+		void UpdateBackForwardSensitivity () {
 			bool canGoBack = history.Count > 0 && currentHistoryPosition > 0;
 			bool canGoForward = history.Count > 0 && currentHistoryPosition < history.Count - 1;
 			backForwardControl.SetEnabled (canGoBack, 0);
 			backForwardControl.SetEnabled (canGoForward, 1);
 		}
 
-		partial void StartSearch (NSSearchField sender)
-		{
+		partial void StartSearch (NSSearchField sender) {
 			var noteResults = AppDelegate.NoteEngine.GetNotes (sender.StringValue, true);
 			NSMenu noteSearchMenu = new NSMenu ("Search Results");
 			var action = new MonoMac.ObjCRuntime.Selector ("searchResultSelected");
@@ -360,26 +343,23 @@ namespace Tomboy
 		}
 
 		[Export ("searchResultSelected")]
-		void SearchResultSelected (NSObject sender)
-		{
+		void SearchResultSelected (NSObject sender) {
 			NSMenuItem item = (NSMenuItem)sender;
 			LoadNote(AppDelegate.NoteEngine.GetNote(item.Title).Uri);
 		}
 
-        /// <summary>
-        /// Opens the ALL Notes Window
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        partial void AllNotes (NSObject sender)
-        {
-            if (AppDelegate.controller == null)
-                AppDelegate.controller = new NotesWindowController ();
+        	/// <summary>
+        	/// Opens the ALL Notes Window
+        	/// </summary>
+        	/// <param name="sender">Sender.</param>
+		partial void AllNotes (NSObject sender) {
+            		if (AppDelegate.controller == null)
+                		AppDelegate.controller = new NotesWindowController ();
 
-            AppDelegate.controller.Window.MakeKeyAndOrderFront (this);
-        }
+	            	AppDelegate.controller.Window.MakeKeyAndOrderFront (this);
+        	}
 
-		partial void ShowNotes (NSObject sender)
-		{
+		partial void ShowNotes (NSObject sender) {
 			popover = new NSPopover ();
 			ShowNotesPopupController controller = new ShowNotesPopupController ();
 			controller.NoteNodeClicked += (s, e) => LoadNote(e.NoteId);
@@ -389,32 +369,29 @@ namespace Tomboy
 
 		}
 
-        /// <summary>
-        /// Adds the bullet point. Before adding the bullet point, the note is saved.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        partial void AddBulletPoint (NSObject sender)
-        {
-            SaveData();
+        	/// <summary>
+        	/// Adds the bullet point. Before adding the bullet point, the note is saved.
+        	/// </summary>
+        	/// <param name="sender">Sender.</param>
+		partial void AddBulletPoint (NSObject sender) {
+            		SaveData();
 
-            _loadingFromString = true;
-            var content = translator.From(currentNote);
-            Console.WriteLine(content.Length);
-            var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+            		_loadingFromString = true;
+            		var content = translator.From(currentNote);
+            		Console.WriteLine(content.Length);
+            		var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
-            if (beginIndx != -1 && content.Length > currentNote.Title.Length)
-            {
-                var len = currentNote.Title.Length;
-                content = content.Remove(beginIndx, (len + 1));
-            }
+			if (beginIndx != -1 && content.Length > currentNote.Title.Length) {
+                		var len = currentNote.Title.Length;
+                		content = content.Remove(beginIndx, (len + 1));
+            		}
 
-            string con = content.Insert(content.Length,"<ul><li>");
-            noteWebView.MainFrame.LoadHtmlString(con,null);
-            _loadingFromString = false;
-        }
+            		string con = content.Insert(content.Length,"<ul><li>");
+            		noteWebView.MainFrame.LoadHtmlString(con,null);
+            		_loadingFromString = false;
+        	}
 
-		partial void DeleteNote (NSObject sender)
-		{
+		partial void DeleteNote (NSObject sender) {
 			NSAlert alert = new NSAlert () {
 				MessageText = "Really delete this note?",
 				InformativeText = "You are about to delete this note, this operation cannot be undone",
@@ -429,11 +406,10 @@ namespace Tomboy
 		}
 
 		[Export ("alertDidEnd:returnCode:contextInfo:")]
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-        void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo)
-		{
-            if (alert == null)
-                throw new ArgumentNullException("alert");
+        	[SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+		void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo) {
+            		if (alert == null)
+                		throw new ArgumentNullException("alert");
 			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
 				AppDelegate.NoteEngine.DeleteNote (currentNote);
 				currentNote = null;
@@ -442,15 +418,13 @@ namespace Tomboy
 			}
 		}
 
-		public override void EncodeRestorableState (NSCoder coder)
-		{
+		public override void EncodeRestorableState (NSCoder coder) {
 			base.EncodeRestorableState (coder);
 			if (!string.IsNullOrEmpty (currentNoteID))
 				coder.Encode (new NSString (currentNoteID), "savedNoteId");
 		}
 
-		public override void RestoreState (NSCoder coder)
-		{
+		public override void RestoreState (NSCoder coder) {
 			base.RestoreState (coder);
 
 			if (!coder.ContainsKey ("savedNoteId"))
@@ -462,15 +436,13 @@ namespace Tomboy
 				LoadNote (id);
 		}
 
-		public override NSData GetAsData (string typeName, out NSError outError)
-		{
+		public override NSData GetAsData (string typeName, out NSError outError) {
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
 			Logger.Debug ("ReadFromData {0}", outError);
 			return null;
 		}
 
-		public override void SaveDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector didSaveSelector, IntPtr contextInfo)
-		{
+		public override void SaveDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector didSaveSelector, IntPtr contextInfo) {
 			Logger.Debug ("Not sure what this is doing yet SaveDocument {0}", delegateObject.GetType ());
 			SaveData ();
 		}
@@ -489,25 +461,21 @@ namespace Tomboy
 			}
 		}*/
 
-		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
-		{
+		public override bool ReadFromData (NSData data, string typeName, out NSError outError) {
 			outError = NSError.FromDomain (NSError.OsStatusErrorDomain, -4);
 			Logger.Debug ("ReadFromData error:{0}", outError);
 			return false;
 		}
 
-		public override void SaveDocument (NSObject sender)
-		{
+		public override void SaveDocument (NSObject sender) {
 			SaveData ();
 			// this appears to be working when ctrl + s is hit.
 		}
-		public override void SaveDocumentAs (NSObject sender)
-		{
+		public override void SaveDocumentAs (NSObject sender) {
 			SaveData ();
 		}
 
-		public override void CanCloseDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector shouldCloseSelector, IntPtr contextInfo)
-		{
+		public override void CanCloseDocument (NSObject delegateObject, MonoMac.ObjCRuntime.Selector shouldCloseSelector, IntPtr contextInfo) {
 			SaveData ();
 			// we must call the base class again otherwise the Window will not close.
 			base.CanCloseDocument (delegateObject, shouldCloseSelector, contextInfo);

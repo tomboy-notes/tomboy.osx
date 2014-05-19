@@ -46,8 +46,7 @@ namespace Tomboy
 		/// </summary>
 		public string WholeHREF;
 
-		public override string ToString()
-		{
+		public override string ToString() {
 			return Href + "\n\t" + Text;
 		}
 	}

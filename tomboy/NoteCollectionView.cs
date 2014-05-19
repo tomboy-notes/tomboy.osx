@@ -40,25 +40,21 @@ namespace Tomboy
 		NoteCollectionViewItem previousSelection;
 		public event EventHandler<NoteEventArgs> NoteSelected;
 
-		public NoteCollectionView () : base ()
-		{
+		public NoteCollectionView () : base () {
 			Initialize ();
 		}
 
-		public NoteCollectionView (IntPtr ptr) : base (ptr)
-		{
+		public NoteCollectionView (IntPtr ptr) : base (ptr) {
 			Initialize ();
 		}
 
-		void Initialize ()
-		{
+		void Initialize () {
 			Selectable = true;
 
 			//UpdateColumnCountBasedOnNumber (3);
 		}
 
-		public override NSCollectionViewItem NewItemForRepresentedObject (NSObject obj)
-		{
+		public override NSCollectionViewItem NewItemForRepresentedObject (NSObject obj) {
 			var item = base.NewItemForRepresentedObject (obj) as NoteCollectionViewItemController;
 			item.RepresentedObject = obj;
 
@@ -73,11 +69,9 @@ namespace Tomboy
 			return item;
 		}
 
-		public void UpdateColumnCountBasedOnNumber (int number)
-		{
+		public void UpdateColumnCountBasedOnNumber (int number) {
 
-			switch (number)
-			{
+			switch (number) {
 				case 1:
 					MaxNumberOfColumns = 5;
 					break;
@@ -120,4 +114,3 @@ namespace Tomboy
 		}
 	}
 }
-

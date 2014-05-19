@@ -5,8 +5,7 @@ namespace Tomboy
 {
 	public class KeyboardListener : MonoMac.WebKit.DomEventListener
 	{
-		public KeyboardListener ()
-		{
+		public KeyboardListener () {
 			timeoutvalue = DateTime.Now.AddSeconds(_time_out_value);
 		}
 
@@ -31,8 +30,7 @@ namespace Tomboy
 		public static event NoteContentChangedEventHandler NoteContentChanged;
 		#endregion Events
 
-		public override void HandleEvent (MonoMac.WebKit.DomEvent evt)
-		{
+		public override void HandleEvent (MonoMac.WebKit.DomEvent evt) {
 			if (DateTime.Now > timeoutvalue) {
 				// set new timeout
 				timeoutvalue = DateTime.Now.AddSeconds (_time_out_value);
