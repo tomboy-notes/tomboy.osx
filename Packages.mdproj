@@ -5,15 +5,6 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{589A7B13-E47A-4FCE-9916-F2B332AEC485}</ProjectGuid>
-    <Packages>
-      <Packages>
-        <Package name="Tarball">
-          <Builder TargetDirectory="Builds" DefaultConfiguration="Release|x86" ctype="TarballDeployTarget">
-            <RootEntry path="tomboy\tomboy.csproj" />
-          </Builder>
-        </Package>
-      </Packages>
-    </Packages>
     <ReleaseVersion>0.3.4</ReleaseVersion>
   </PropertyGroup>
 </Project>
