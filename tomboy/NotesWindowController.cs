@@ -198,16 +198,20 @@ namespace Tomboy
             		if (sender == null)
                 		throw new ArgumentNullException("sender");
 
-            		int selectedRow = _notebooksTableView.SelectedRow;
-			if (selectedRow != -1) {
-				AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (selectedRow);
-
-				Dictionary<string, Note> results = new Dictionary<string, Note> ();
-				results = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
-            		
-				SortNotesIntoOrder (results);
-				_notesTableView.ReloadData ();
-				_notebooksTableView.SelectRow (selectedRow, false);
+			if (_notebooksTableView.SelectedRow == 0) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Cannot Be Edited",
+					InformativeText = "You cannot edit 'All Notebooks' selection.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);	
+			} else {
+				notebookEditPrompt = new NotebookEditPromptController ();
+				notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
 			}
         	}
 
