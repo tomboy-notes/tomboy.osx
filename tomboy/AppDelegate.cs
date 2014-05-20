@@ -369,6 +369,10 @@ namespace Tomboy
             		controller.UpdateNotebooksTable();
 		}
 
+		public static void NotebookSingleClick () {
+			controller.UpdateTableSingleClick ();
+		}
+
 		/// <summary>
 		/// Opens the dashboard.
 		/// </summary>

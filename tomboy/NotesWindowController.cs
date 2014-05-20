@@ -82,6 +82,7 @@ namespace Tomboy
 			_notesTableView.DataSource = new NotesWindowNotesDatasource (this);
             		_notebooksTableView.DataSource = new NotesWindowNotebooksDataSource (AppDelegate.Notebooks);
 			_notebooksTableView.SelectRow (0, false);
+			_notebooksTableView.Delegate = new NotesWindowNotebooksViewDelegate (_notebooksTableView);
             		HandleNotebookAdded();
 
 			// handle users doubleClicking on a note in the list of notes
@@ -119,6 +120,15 @@ namespace Tomboy
 			_notebooksTableView.SelectRow (AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook), false);
 			HandleNotebookAdded ();
         	}
+
+		public void UpdateTableSingleClick () {
+			Dictionary<string, Note> results = new Dictionary<string, Note> ();
+			results = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
+
+			SortNotesIntoOrder (results);
+			_notesTableView.ReloadData ();
+		}
+
 
 		#endregion
 
@@ -231,7 +241,7 @@ namespace Tomboy
 			} else if(selectedRow != -1) {
 				NSAlert alert = new NSAlert () {
 					MessageText = "Really delete notebook?",
-					InformativeText = "You are about to delete Notebook"
+					InformativeText = "You are about to delete Notebook "
 						+ AppDelegate.Notebooks.ElementAt(selectedRow) 
 						+ ". This operation could not be un-done.",
 					AlertStyle = NSAlertStyle.Warning
