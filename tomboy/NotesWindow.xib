@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NotesWindowController">
@@ -124,21 +124,21 @@
                                     <rect key="frame" x="0.0" y="0.0" width="171" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="30">
-                                            <rect key="frame" x="0.0" y="26" width="171" height="328"/>
+                                        <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="belowContent" id="30">
+                                            <rect key="frame" x="0.0" y="0.0" width="156" height="354"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                                            <clipView key="contentView" id="AOl-en-Ehd">
-                                                <rect key="frame" x="1" y="17" width="169" height="310"/>
+                                            <clipView key="contentView" copiesOnScroll="NO" id="AOl-en-Ehd">
+                                                <rect key="frame" x="0.0" y="17" width="156" height="337"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="_notebooksTableView" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="33" id="31">
-                                                        <rect key="frame" x="0.0" y="0.0" width="169" height="310"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="156" height="337"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="_notebookName" editable="NO" width="166" minWidth="40" maxWidth="1000" id="35">
+                                                            <tableColumn identifier="_notebookName" editable="NO" width="153" minWidth="40" maxWidth="1000" id="35">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Notebooks">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -160,15 +160,48 @@
                                                 <rect key="frame" x="1" y="337" width="169" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="34">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="34">
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <tableHeaderView key="headerView" id="33">
-                                                <rect key="frame" x="0.0" y="0.0" width="169" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="156" height="17"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
+                                        <button identifier="AddNotebook" id="o1e-an-4hD">
+                                            <rect key="frame" x="28" y="2" width="29" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="justified" toolTip="Remove Selected Notebook" identifier="RemoveButton" imageScaling="proportionallyDown" inset="2" id="YWL-97-Zkc">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" size="19" name="LucidaGrande"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="RemoveNotebook:" target="-2" id="DME-07-av6"/>
+                                            </connections>
+                                        </button>
+                                        <button identifier="AddNotebook" id="wdz-SK-ucz">
+                                            <rect key="frame" x="122" y="2" width="29" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="square" title="-" bezelStyle="shadowlessSquare" image="NSSmartBadgeTemplate" imagePosition="overlaps" alignment="center" toolTip="Edit Selected Notebook" identifier="EditNotebook" imageScaling="proportionallyDown" inset="2" id="3zi-Vr-0Vu">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" size="19" name="LucidaGrande"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="EditNotebook:" target="-2" id="poP-vR-mnX"/>
+                                            </connections>
+                                        </button>
+                                        <button identifier="AddNotebook" toolTip="Add Notebook" id="FYF-Yd-7GA">
+                                            <rect key="frame" x="3" y="2" width="29" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="OcW-1r-fPe">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" size="19" name="LucidaGrande"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="newNotebookButton:" target="-2" id="jgf-Pw-Wsn"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </subviews>
@@ -182,39 +215,6 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <button identifier="AddNotebook" toolTip="Add Notebook" id="FYF-Yd-7GA">
-                        <rect key="frame" x="0.0" y="0.0" width="29" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OcW-1r-fPe">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="19" name="LucidaGrande"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="newNotebookButton:" target="-2" id="jgf-Pw-Wsn"/>
-                        </connections>
-                    </button>
-                    <button identifier="AddNotebook" id="o1e-an-4hD">
-                        <rect key="frame" x="29" y="0.0" width="29" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="below" alignment="center" borderStyle="border" toolTip="Remove Selected Notebook" identifier="RemoveButton" imageScaling="proportionallyDown" inset="2" id="YWL-97-Zkc">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="19" name="LucidaGrande"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="RemoveNotebook:" target="-2" id="DME-07-av6"/>
-                        </connections>
-                    </button>
-                    <button identifier="AddNotebook" id="wdz-SK-ucz">
-                        <rect key="frame" x="143" y="0.0" width="29" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" title="-" bezelStyle="shadowlessSquare" image="NSSmartBadgeTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" toolTip="Edit Selected Notebook" identifier="EditNotebook" imageScaling="proportionallyDown" inset="2" id="3zi-Vr-0Vu">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="19" name="LucidaGrande"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="EditNotebook:" target="-2" id="poP-vR-mnX"/>
-                        </connections>
-                    </button>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="9C37A4E7-93F9-4F60-B91B-868AE5800E2C" displayMode="iconAndLabel" sizeMode="regular" id="7">

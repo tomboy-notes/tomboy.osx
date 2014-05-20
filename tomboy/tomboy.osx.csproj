@@ -175,13 +175,8 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <InterfaceDefinition Include="ShowNotesPopup.xib" />
     <InterfaceDefinition Include="SyncPrefDialog.xib" />
     <InterfaceDefinition Include="Resources\AboutUs.xib" />
-    <InterfaceDefinition Include="NotebookNamePrompt.xib" />
-    <InterfaceDefinition Include="NotebookEditPrompt.xib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Info.plist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="LICENSE.txt" />
     <None Include="AppDelegate.designer.cs">
       <Visible>False</Visible>
@@ -225,9 +220,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <None Include="tomboy.in">
       <Visible>False</Visible>
     </None>
-    <None Include="Entitlements.plist">
-      <Visible>False</Visible>
-    </None>
     <None Include="Default.css" />
     <None Include="MacBoy.icns" />
     <None Include="ToolbarBinTemplate.pdf" />
@@ -266,15 +258,6 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="IBAlignTextCenter.png" />
-    <BundleResource Include="IBAlignTextLeft.png" />
-    <BundleResource Include="IBAlignTextRight.png" />
-    <BundleResource Include="note.png" />
-    <BundleResource Include="Resources\tomboy.icns" />
-    <BundleResource Include="ToolbarBinTemplate_1.png" />
-    <BundleResource Include="ToolbarNotesTemplate_1.png" />
-    <BundleResource Include="numbered_list_clipped_rev_1.png" />
-    <BundleResource Include="ToolbarNotesTemplate_1_clipped_rev_1.png" />
-    <BundleResource Include="ToolbarBinTemplate_1_clipped_rev_1.png" />
+    <BundleResource Include="Info.plist" />
   </ItemGroup>
 </Project>

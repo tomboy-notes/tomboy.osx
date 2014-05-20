@@ -61,5 +61,19 @@ namespace Tomboy
 			System.Console.WriteLine("Changed at " + row);
 		}
 	}
+
+	public class NotesWindowNotebooksViewDelegate : NSTableViewDelegate
+	{
+		private NSTableView notebookTableView;
+
+		public NotesWindowNotebooksViewDelegate (NSTableView tableView) {
+			notebookTableView = tableView;
+		}
+
+		public override void SelectionDidChange (NSNotification notification) {
+			AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (notebookTableView.SelectedRow);
+			AppDelegate.NotebookSingleClick ();
+		}
+	}
 }
 
