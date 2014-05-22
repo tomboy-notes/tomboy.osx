@@ -71,6 +71,11 @@ namespace Tomboy
 		}
 
 		public override void SelectionDidChange (NSNotification notification) {
+
+			//This is to check if the click in the empty region
+			if (notebookTableView.SelectedRow == -1)
+				return;
+
 			AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (notebookTableView.SelectedRow);
 			AppDelegate.NotebookSingleClick ();
 		}

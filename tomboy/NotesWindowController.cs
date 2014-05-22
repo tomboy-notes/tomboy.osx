@@ -210,6 +210,9 @@ namespace Tomboy
 					this,
 					null,
 					IntPtr.Zero);	
+			} else if (_notebooksTableView.SelectedRow == -1) {
+				//The empty region is double clicked, hence do nothing
+				return;
 			} else {
 				notebookEditPrompt = new NotebookEditPromptController ();
 				notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
@@ -289,8 +292,21 @@ namespace Tomboy
 		}
 
 		partial void EditNotebook (NSObject sender) {
-			notebookEditPrompt = new NotebookEditPromptController ();
-			notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
+			if (_notebooksTableView.SelectedRow == 0) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Cannot Be Edited",
+					InformativeText = "You cannot edit 'All Notebooks' selection.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);	
+			} else {
+				notebookEditPrompt = new NotebookEditPromptController ();
+				notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
+			}
 		}
             
 		/// <summary>
