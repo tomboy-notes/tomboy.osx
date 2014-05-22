@@ -66,9 +66,21 @@ namespace Tomboy
 
 		partial void UpdateNotebook ( NSObject sender) {
 			string updatedName = NotebookNameTextField.StringValue;
-			if(updatedName.Equals ("All Notebooks", StringComparison.Ordinal))
-				this.Window.Close ();
-			else {
+
+			if (string.IsNullOrEmpty (updatedName) || string.IsNullOrWhiteSpace (updatedName)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Empty",
+					InformativeText = "The Notebook name cannot be empty.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+
+				NotebookNameTextField.SelectText(this);
+			} else {
 				if (AppDelegate.Notebooks.Contains(updatedName)) {
 					NSAlert alert = new NSAlert () {
 						MessageText = "Notebook Already Exists",

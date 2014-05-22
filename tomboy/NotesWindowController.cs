@@ -118,7 +118,6 @@ namespace Tomboy
 
 		public void UpdateNotebooksTable() {
 			Console.WriteLine("Current notebook index is "+AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook));
-			_notebooksTableView.SelectRow (AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook), false);
 			HandleNotebookAdded ();
         	}
 
@@ -141,10 +140,11 @@ namespace Tomboy
 
 		void HandleNotebookAdded() {
             		_notebooksTableView.ReloadData();
+			_notebooksTableView.SelectRow( AppDelegate.Notebooks.IndexOf (AppDelegate.currentNotebook), false);
         	}
 		
 		void HandleNoteAdded (Note note) {
-            		//_notesTableView.ReloadData ();
+            		_notesTableView.ReloadData ();
 		}
 		
 		void HandleNoteRemoved (Note note) {

@@ -69,8 +69,20 @@ namespace Tomboy
                     			IntPtr.Zero);
 
                 		NotebookName.SelectText(this);
-            		}
-			else {
+			} else if (string.IsNullOrEmpty (notebook) || string.IsNullOrWhiteSpace (notebook)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Empty",
+					InformativeText = "The Notebook name cannot be empty.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+
+				NotebookName.SelectText(this);
+			} else {
                 		AppDelegate.Notebooks.Add (notebook);
 				AppDelegate.currentNotebook = notebook;
                 		Window.PerformClose (this);
