@@ -210,8 +210,9 @@ namespace Tomboy
 		void PopulateNotebookList () {
             		Notebooks.Add("All Notebooks");
 			foreach (KeyValuePair<string, Note> note in Notes) {
-                		if (note.Value.Notebook != null)
-                    			Notebooks.Add(note.Value.Notebook);
+				if (note.Value.Notebook != null && !note.Value.Notebook.Equals ("All Notebooks",StringComparison.OrdinalIgnoreCase))
+					if (!Notebooks.Contains (note.Value.Notebook))
+						Notebooks.Add (note.Value.Notebook);
             		}
         	}
 

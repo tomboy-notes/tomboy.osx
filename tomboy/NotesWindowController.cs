@@ -110,6 +110,7 @@ namespace Tomboy
 		}
 
 		public void UpdateNotesTable() {
+			_notesTableView.ReloadData ();
             		Dictionary<string, Note> results = new Dictionary<string, Note>();
             		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
             		SortNotesIntoOrder(results);
