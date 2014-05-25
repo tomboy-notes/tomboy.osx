@@ -104,7 +104,7 @@ namespace Tomboy
 		partial void ExportNotesAction(NSObject sender) {
             		if (ExportPathTextField.StringValue != null){
                 		string rootDirectory = ExportPathTextField.StringValue;
-                		ExportNotes.Export(rootDirectory);
+				ExportNotes.Export(rootDirectory, AppDelegate.NoteEngine);
 
                 	NSAlert alert = new NSAlert () {
                     		MessageText = "Note Imported",
@@ -117,6 +117,7 @@ namespace Tomboy
                     		null,
                     		IntPtr.Zero);
             		}
+
         	}
            
         	// This method will be called automatically when the main window "wakes up".

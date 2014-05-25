@@ -149,7 +149,8 @@ namespace Tomboy
                 		Logger.Error("NoteTitle cannot be null");
 
             		if (title != null) {
-                		//WindowForSheet.Title = title;
+				if (WindowForSheet != null)
+					WindowForSheet.Title = title;
                 		SetDisplayName (title);
                 		noteTitleField.TextColor = NSColor.Black;
                 		noteTitleField.Title = title;
@@ -205,7 +206,10 @@ namespace Tomboy
 			// it's possible that some notes do not have any content
 			if (beginIndx != -1) {
                 		var len = currentNote.Title.Length;
-                		content = content.Remove(beginIndx, (len + 1)); // +1 to remove the NewLine char after the title
+				if (content.Length == len)
+					content = content.Remove (beginIndx, len); // Empty Content Note is being loaded
+				else
+					content = content.Remove (beginIndx, (len + 1)); //+1 to remove the newline
             		}
 			// replace the system newlines with HTML new lines
 			content = content.Replace ("\n", "<br>"); // strip NewLine LR types.May cause problems. Needs more testing
@@ -234,17 +238,21 @@ namespace Tomboy
         	/// Updates the links on the text taking area.
         	/// </summary>
 		private void UpdateLinks() {
-            		_loadingFromString = true;
+			_loadingFromString = true;
             		var content = translator.From(currentNote);
-            		var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+			var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
 			if (beginIndx != -1) {
-                		var len = currentNote.Title.Length;
-                		content = content.Remove(beginIndx, (len + 1));
-            		}
+				var len = currentNote.Title.Length;
+				if (content.Length == len)
+					content = content.Remove (beginIndx, len); // Empty Content Note is being loaded
+				else
+					content = content.Remove (beginIndx, (len + 1)); //+1 to remove the newline
+			}
 
+			content = content.Replace ("\n", "<br>");
             		noteWebView.MainFrame.LoadHtmlString(WikiLinks(content), null);
-            		_loadingFromString = false;
+			_loadingFromString = false;
         	}
 
 		/// <summary>
@@ -265,20 +273,40 @@ namespace Tomboy
 
 			try {
 				string results = translator.To (noteWebView.MainFrame.DomDocument);
-                		if (string.IsNullOrEmpty(results) || currentNote.Title == null) {
+				if (string.IsNullOrEmpty(noteTitleField.Title)) {
+					/* 
+					 *	We save the Empty Content as pointed out by David
+					 *	in the discussion -> https://github.com/tomboy-notes/tomboy.osx/issues/21#issuecomment-43675874
+					 *	
+					 *	The note must only be discarded when requested by the user.
+					 *
+					 *	Hence giving out an Alert when the Title is Empty for the user to
+					 *	enter Title.
+					 *	-Rashid May,2014
+					 */
+					NSAlert alert = new NSAlert () {
+						MessageText = "Note Title Cannot be Empty",
+						InformativeText = "Note title is empty and this operation is not permitted.",
+						AlertStyle = NSAlertStyle.Warning
+					};
+					alert.AddButton ("OK");
+					alert.BeginSheet (WindowForSheet,
+						this,
+						null,
+						IntPtr.Zero);
 					Logger.Debug("note content empty or null. Nothing to save for {0}", currentNoteID);
 					return;
 				}
                 		currentNote.Title = noteTitleField.Title;
-                		currentNote.Text = noteTitleField.Title;//FIXME Need to see if we should actually add the title to the contents.
-                		currentNote.Text += Environment.NewLine; 
+				currentNote.Text = noteTitleField.Title;//FIXME Need to see if we should actually add the title to the contents.
+				currentNote.Text += Environment.NewLine; 
 				currentNote.Text += results;
                 		AppDelegate.NoteEngine.SaveNote (currentNote);
 
 				if (!currentNote.Title.Equals (DisplayName))
 					SetDisplayName (currentNote.Title);
 
-                		UpdateLinks();
+				UpdateLinks();
 				/*
 				 * Very important piece of code.(UpdateChangeCount)
 				 * This allows us to trick NSDOcument into believing that we have saved the document
@@ -374,18 +402,22 @@ namespace Tomboy
         	/// </summary>
         	/// <param name="sender">Sender.</param>
 		partial void AddBulletPoint (NSObject sender) {
-            		SaveData();
+			SaveData();
 
             		_loadingFromString = true;
             		var content = translator.From(currentNote);
             		Console.WriteLine(content.Length);
-            		var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
+			var beginIndx = content.IndexOf(currentNote.Title, StringComparison.CurrentCulture);
 
-			if (beginIndx != -1 && content.Length > currentNote.Title.Length) {
-                		var len = currentNote.Title.Length;
-                		content = content.Remove(beginIndx, (len + 1));
-            		}
+			if (beginIndx != -1) {
+				var len = currentNote.Title.Length;
+				if (content.Length == len)
+					content = content.Remove (beginIndx, len); // Empty Content Note is being loaded
+				else
+					content = content.Remove (beginIndx, (len + 1)); //+1 to remove the newline
+			}
 
+			content = content.Replace ("\n", "<br>");
             		string con = content.Insert(content.Length,"<ul><li>");
             		noteWebView.MainFrame.LoadHtmlString(con,null);
             		_loadingFromString = false;

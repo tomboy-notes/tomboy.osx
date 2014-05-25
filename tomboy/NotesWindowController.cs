@@ -110,6 +110,7 @@ namespace Tomboy
 		}
 
 		public void UpdateNotesTable() {
+			_notesTableView.ReloadData ();
             		Dictionary<string, Note> results = new Dictionary<string, Note>();
             		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
             		SortNotesIntoOrder(results);
@@ -117,7 +118,6 @@ namespace Tomboy
 
 		public void UpdateNotebooksTable() {
 			Console.WriteLine("Current notebook index is "+AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook));
-			_notebooksTableView.SelectRow (AppDelegate.Notebooks.IndexOf(AppDelegate.currentNotebook), false);
 			HandleNotebookAdded ();
         	}
 
@@ -140,10 +140,11 @@ namespace Tomboy
 
 		void HandleNotebookAdded() {
             		_notebooksTableView.ReloadData();
+			_notebooksTableView.SelectRow( AppDelegate.Notebooks.IndexOf (AppDelegate.currentNotebook), false);
         	}
 		
 		void HandleNoteAdded (Note note) {
-            		//_notesTableView.ReloadData ();
+            		_notesTableView.ReloadData ();
 		}
 		
 		void HandleNoteRemoved (Note note) {
@@ -198,16 +199,23 @@ namespace Tomboy
             		if (sender == null)
                 		throw new ArgumentNullException("sender");
 
-            		int selectedRow = _notebooksTableView.SelectedRow;
-			if (selectedRow != -1) {
-				AppDelegate.currentNotebook = AppDelegate.Notebooks.ElementAt (selectedRow);
-
-				Dictionary<string, Note> results = new Dictionary<string, Note> ();
-				results = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
-            		
-				SortNotesIntoOrder (results);
-				_notesTableView.ReloadData ();
-				_notebooksTableView.SelectRow (selectedRow, false);
+			if (_notebooksTableView.SelectedRow == 0) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Cannot Be Edited",
+					InformativeText = "You cannot edit 'All Notebooks' selection.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);	
+			} else if (_notebooksTableView.SelectedRow == -1) {
+				//The empty region is double clicked, hence do nothing
+				return;
+			} else {
+				notebookEditPrompt = new NotebookEditPromptController ();
+				notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
 			}
         	}
 
@@ -284,8 +292,21 @@ namespace Tomboy
 		}
 
 		partial void EditNotebook (NSObject sender) {
-			notebookEditPrompt = new NotebookEditPromptController ();
-			notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
+			if (_notebooksTableView.SelectedRow == 0) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Notebook Cannot Be Edited",
+					InformativeText = "You cannot edit 'All Notebooks' selection.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);	
+			} else {
+				notebookEditPrompt = new NotebookEditPromptController ();
+				notebookEditPrompt.Window.MakeKeyAndOrderFront (this);
+			}
 		}
             
 		/// <summary>
