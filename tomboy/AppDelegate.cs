@@ -316,7 +316,7 @@ namespace Tomboy
 		public static string BaseUrlPath {
 			get {
 				String SpecialFolderCache = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal),
-				                     "Library", "Cache", "Tomboy");
+				                     "Library", "Caches", "Tomboy");
 				Logger.Debug ("cache directory set to {0}", SpecialFolderCache);
 				return SpecialFolderCache;
 			}
