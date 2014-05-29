@@ -23,12 +23,23 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
-using System.IO;
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+
+using Tomboy;
+using Tomboy.OAuth;
 using Tomboy.Sync;
+using Tomboy.Sync.Filesystem;
+using Tomboy.Sync.Web;
+
+using System.Security.Cryptography.X509Certificates;
 
 namespace Tomboy
 {
@@ -145,6 +156,119 @@ namespace Tomboy
             		Console.WriteLine ("FAKE SYNC");
         	}
 
+		partial void Authenticate (NSObject sender) {
+
+			string serverURL = SyncURL.StringValue;
+
+			if (String.IsNullOrEmpty (serverURL) || String.IsNullOrWhiteSpace (serverURL)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Incorrect URL",
+					InformativeText = "The Sync URL cannot be empty",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+
+				SyncURL.StringValue = "";
+				return ;
+					
+			}
+
+			HttpListener listener = new HttpListener ();
+			string callbackURL = "http://localhost:9001/";
+			listener.Prefixes.Add (callbackURL);
+			listener.Start ();
+
+			var callback_delegate = new OAuthAuthorizationCallback ( url => {
+				Process.Start (url);
+
+				// wait (block) until the HttpListener has received a request 
+				var context = listener.GetContext ();
+
+				// if we reach here the authentication has most likely been successfull and we have the
+				// oauth_identifier in the request url query as a query parameter
+				var request_url = context.Request.Url;
+				string oauth_verifier = System.Web.HttpUtility.ParseQueryString (request_url.Query).Get("oauth_verifier");
+
+				if (string.IsNullOrEmpty (oauth_verifier)) {
+					// authentication failed or error
+					context.Response.StatusCode = 500;
+					context.Response.StatusDescription = "Error";
+					context.Response.Close();
+					throw new ArgumentException ("oauth_verifier");
+				} else {
+					// authentication successfull
+					context.Response.StatusCode = 200;
+					using (var writer = new StreamWriter (context.Response.OutputStream)) {
+						writer.WriteLine("<h1>Authorization successfull!</h1>Go back to the Tomboy application window.");
+					}
+					context.Response.Close();
+					return oauth_verifier;
+				}
+			});
+			
+			try{
+				//FIXME: see http://mono-project.com/UsingTrustedRootsRespectfully for SSL warning
+				ServicePointManager.CertificatePolicy = new DummyCertificateManager ();
+
+				IOAuthToken access_token = WebSyncServer.PerformTokenExchange (serverURL, callbackURL, callback_delegate);
+
+				AppDelegate.settings.webSyncURL = serverURL;
+				AppDelegate.settings.token = access_token.Token;
+				AppDelegate.settings.secret = access_token.Secret;
+
+				SettingsSync.Write (AppDelegate.settings);
+
+				Console.WriteLine ("Received token {0} with secret key {1}",access_token.Token, access_token.Secret);
+
+				OAuthToken reused_access_token = new OAuthToken { Token = access_token.Token, Secret = access_token.Secret };
+
+				//var developerService = new Tomboy.Sync.Web.Developer.DeveloperServiceClient (serverUrl, reused_access_token);
+				//developerService.ClearAllNotes ("testuser");
+				listener.Stop ();
+
+				NSAlert success = new NSAlert () {
+					MessageText = "Authentication Successful",
+					InformativeText = "The authentication with the server has been successful. You can sync with the web server now.",
+					AlertStyle = NSAlertStyle.Informational
+				};
+				success.AddButton ("OK");
+				success.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+
+				return;
+
+
+			} catch (Exception ex) {
+
+				if (ex is WebException || ex is System.Runtime.Serialization.SerializationException) {
+
+					NSAlert alert = new NSAlert () {
+						MessageText = "Incorrect URL",
+						InformativeText = "The URL entered "+ SyncURL.StringValue +" is not valid for syncing",
+						AlertStyle = NSAlertStyle.Warning
+					};
+					alert.AddButton ("OK");
+					alert.BeginSheet (this.Window,
+					this,
+					null,
+					IntPtr.Zero);
+
+					listener.Abort ();
+
+					return;
+				}
+			}
+
+
+
+		}
+
         	//strongly typed window accessor
 		public new SyncPrefDialog Window {
 			get {
@@ -152,5 +276,12 @@ namespace Tomboy
             		}
         	}
     	}
+
+	public class DummyCertificateManager : ICertificatePolicy
+	{
+		public bool CheckValidationResult (ServicePoint sp, X509Certificate certificate, WebRequest request, int error) {
+			return true;
+		}
+	}
 }
 
