@@ -26,13 +26,22 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 using Tomboy.Sync;
 using Tomboy.Sync.Filesystem;
+
+using Tomboy;
+using Tomboy.OAuth;
+using Tomboy.Sync;
+using Tomboy.Sync.Filesystem;
+using Tomboy.Sync.Web;
+
 
 namespace Tomboy
 {
@@ -98,7 +107,7 @@ namespace Tomboy
 
             		Notebooks = new List<string>();
             		currentNotebook = "All Notebooks";
-            		PopulateNotebookList();
+			PopulateNotebookList();
 		}
 
 		/// <summary>
@@ -106,27 +115,51 @@ namespace Tomboy
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		partial void SyncNotes(NSObject sender) {
-			var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
-			SyncManifest dest_manifest;
-			if (!File.Exists (dest_manifest_path)) {
-				using (var output = new FileStream (dest_manifest_path, FileMode.Create)) {
-					SyncManifest.Write (new SyncManifest (), output);
+			if (!String.IsNullOrEmpty (settings.syncURL) || !String.IsNullOrWhiteSpace (settings.syncURL)) {
+
+				var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
+				SyncManifest dest_manifest;
+				if (!File.Exists (dest_manifest_path)) {
+					using (var output = new FileStream (dest_manifest_path, FileMode.Create)) {
+						SyncManifest.Write (new SyncManifest (), output);
+					}
+				}
+				using (var input = new FileStream (dest_manifest_path, FileMode.Open)) {
+					dest_manifest = SyncManifest.Read (input);
+				}
+				var dest_storage = new DiskStorage (settings.syncURL);
+				var dest_engine = new Engine (dest_storage);
+
+				var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
+				var server = new FilesystemSyncServer (dest_engine, dest_manifest);
+				new SyncManager(client, server).DoSync ();
+
+				// write back the dest manifest
+		        	using (var output = new FileStream (dest_manifest_path, FileMode.Create)) {
+					SyncManifest.Write (dest_manifest, output);
 				}
 			}
-			using (var input = new FileStream (dest_manifest_path, FileMode.Open)) {
-				dest_manifest = SyncManifest.Read (input);
-			}
-			var dest_storage = new DiskStorage (settings.syncURL);
-			var dest_engine = new Engine (dest_storage);
 
-			var client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
-			var server = new FilesystemSyncServer (dest_engine, dest_manifest);
-			var sync_manager = new SyncManager(client, server);
-			sync_manager.DoSync ();
-			RefreshNotesWindowController();
-			// write back the dest manifest
-		        using (var output = new FileStream (dest_manifest_path, FileMode.Create)) {
-				SyncManifest.Write (dest_manifest, output);
+			if (!String.IsNullOrEmpty (settings.webSyncURL) ||!String.IsNullOrWhiteSpace (settings.webSyncURL)) {
+				HttpListener listener = new HttpListener ();
+				listener.Prefixes.Add ("http://localhost:9001/");
+				listener.Start ();
+
+				ServicePointManager.CertificatePolicy = new DummyCertificateManager();
+
+				OAuthToken reused_token = new OAuthToken { Token = settings.token, Secret = settings.secret };
+
+
+				ISyncClient client = new FilesystemSyncClient (NoteEngine, manifestTracker.Manifest);
+				ISyncServer server = new WebSyncServer (settings.webSyncURL, reused_token);
+
+				new SyncManager (client, server).DoSync ();
+
+				listener.Stop ();
+
+				RefreshNotesWindowController ();
+
+
 			}
 
         	}
