@@ -107,7 +107,7 @@ namespace Tomboy
 
             		Notebooks = new List<string>();
             		currentNotebook = "All Notebooks";
-			PopulateNotebookList();
+			PopulateNotebookList(true);
 		}
 
 		/// <summary>
@@ -115,6 +115,7 @@ namespace Tomboy
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		partial void SyncNotes(NSObject sender) {
+
 			if (!String.IsNullOrEmpty (settings.syncURL) || !String.IsNullOrWhiteSpace (settings.syncURL)) {
 
 				var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
@@ -138,12 +139,12 @@ namespace Tomboy
 		        	using (var output = new FileStream (dest_manifest_path, FileMode.Create)) {
 					SyncManifest.Write (dest_manifest, output);
 				}
+
+				PopulateNotebookList (false);
+				RefreshNotesWindowController ();
 			}
 
 			if (!String.IsNullOrEmpty (settings.webSyncURL) ||!String.IsNullOrWhiteSpace (settings.webSyncURL)) {
-				HttpListener listener = new HttpListener ();
-				listener.Prefixes.Add ("http://localhost:9001/");
-				listener.Start ();
 
 				ServicePointManager.CertificatePolicy = new DummyCertificateManager();
 
@@ -155,11 +156,8 @@ namespace Tomboy
 
 				new SyncManager (client, server).DoSync ();
 
-				listener.Stop ();
-
+				PopulateNotebookList (false);
 				RefreshNotesWindowController ();
-
-
 			}
 
         	}
@@ -240,8 +238,11 @@ namespace Tomboy
 		/// <summary>
 		/// Populates the notebook list with existing notebooks
 		/// </summary>
-		void PopulateNotebookList () {
-            		Notebooks.Add("All Notebooks");
+		void PopulateNotebookList (bool startup) {
+			//Add the All Notebooks if the application is starting up.
+			if (startup)
+            			Notebooks.Add("All Notebooks");
+
 			foreach (KeyValuePair<string, Note> note in Notes) {
 				if (note.Value.Notebook != null && !note.Value.Notebook.Equals ("All Notebooks",StringComparison.OrdinalIgnoreCase))
 					if (!Notebooks.Contains (note.Value.Notebook))
