@@ -116,6 +116,8 @@ namespace Tomboy
 		/// <param name="sender">Sender.</param>
 		partial void SyncNotes(NSObject sender) {
 
+			bool success = false;
+
 			if (!String.IsNullOrEmpty (settings.syncURL) || !String.IsNullOrWhiteSpace (settings.syncURL)) {
 
 				var dest_manifest_path = Path.Combine (settings.syncURL, "manifest.xml");
@@ -142,9 +144,11 @@ namespace Tomboy
 
 				PopulateNotebookList (false);
 				RefreshNotesWindowController ();
+
+				success = true;
 			}
 
-			if (!String.IsNullOrEmpty (settings.webSyncURL) ||!String.IsNullOrWhiteSpace (settings.webSyncURL)) {
+			else if (!String.IsNullOrEmpty (settings.webSyncURL) ||!String.IsNullOrWhiteSpace (settings.webSyncURL)) {
 
 				ServicePointManager.CertificatePolicy = new DummyCertificateManager();
 
@@ -158,8 +162,29 @@ namespace Tomboy
 
 				PopulateNotebookList (false);
 				RefreshNotesWindowController ();
+
+				success = true;
 			}
 
+			if (success) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Sync Successful",
+					InformativeText = "The sync was successful",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (null);
+				alert.Window.Title = "Sync Successful";
+			} else {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Sync Unsuccessful",
+					InformativeText = "The sync was not successful. Please check the Sync Settings.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (null);
+				alert.Window.Title = "Sync Unsuccessful";
+			}
         	}
 
 		/// <summary>
