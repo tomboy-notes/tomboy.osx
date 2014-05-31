@@ -75,6 +75,12 @@ namespace Tomboy
             		openPanel.CanCreateDirectories = true;
             		openPanel.Prompt = "Select Directory";
 
+			bool webSync = false;
+
+			if (!String.IsNullOrEmpty (AppDelegate.settings.webSyncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.webSyncURL)) {
+				webSync = true;
+			}
+
             		var result = openPanel.RunModal();
             		if (result == 1) {
                 		SyncPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
@@ -92,9 +98,8 @@ namespace Tomboy
                 			alert.BeginSheet (this.Window,
                     			this,
                     			null,
-                    			IntPtr.Zero);
+					IntPtr.Zero);
 			}
-
         	}
 
 		partial void SetExportNotesPath (NSButton sender) {
@@ -158,7 +163,38 @@ namespace Tomboy
 
 		partial void Authenticate (NSObject sender) {
 
-			string serverURL = SyncURL.StringValue;
+			if (!String.IsNullOrEmpty (AppDelegate.settings.syncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.syncURL)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "File System Sync Found",
+					InformativeText = "The File System Sync option would be overriden with Rainy Web Sync.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("Override File System Sync");
+				alert.AddButton ("Cancel");
+				alert.BeginSheet (this.Window,
+					this,
+					new MonoMac.ObjCRuntime.Selector ("alertDidEnd:returnCode:contextInfo:"),
+					IntPtr.Zero);
+
+				AppDelegate.settings.syncURL = "";
+				SettingsSync.Write (AppDelegate.settings);
+			} else {
+				SyncPrefDialogController.AuthorizeAction (this.Window, SyncURL.StringValue);
+			}
+		}
+
+		[Export ("alertDidEnd:returnCode:contextInfo:")]
+		void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo) {
+			if (alert == null)
+				throw new ArgumentNullException("alert");
+			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
+				AppDelegate.settings.syncURL = "";
+				SettingsSync.Write (AppDelegate.settings);
+				SyncPrefDialogController.AuthorizeAction (this.Window, SyncURL.StringValue);
+			}
+		}
+
+		public static void AuthorizeAction (NSWindow window, String serverURL) {
 
 			if (String.IsNullOrEmpty (serverURL) || String.IsNullOrWhiteSpace (serverURL)) {
 				NSAlert alert = new NSAlert () {
@@ -167,14 +203,14 @@ namespace Tomboy
 					AlertStyle = NSAlertStyle.Warning
 				};
 				alert.AddButton ("OK");
-				alert.BeginSheet (this.Window,
-					this,
+				alert.BeginSheet (window,
+					null,
 					null,
 					IntPtr.Zero);
 
-				SyncURL.StringValue = "";
+				//SyncURL.StringValue = "";
 				return ;
-					
+
 			}
 
 			HttpListener listener = new HttpListener ();
@@ -209,7 +245,7 @@ namespace Tomboy
 					return oauth_verifier;
 				}
 			});
-			
+
 			try{
 				//FIXME: see http://mono-project.com/UsingTrustedRootsRespectfully for SSL warning
 				ServicePointManager.CertificatePolicy = new DummyCertificateManager ();
@@ -224,10 +260,6 @@ namespace Tomboy
 
 				Console.WriteLine ("Received token {0} with secret key {1}",access_token.Token, access_token.Secret);
 
-				OAuthToken reused_access_token = new OAuthToken { Token = access_token.Token, Secret = access_token.Secret };
-
-				//var developerService = new Tomboy.Sync.Web.Developer.DeveloperServiceClient (serverUrl, reused_access_token);
-				//developerService.ClearAllNotes ("testuser");
 				listener.Stop ();
 
 				NSAlert success = new NSAlert () {
@@ -236,37 +268,31 @@ namespace Tomboy
 					AlertStyle = NSAlertStyle.Informational
 				};
 				success.AddButton ("OK");
-				success.BeginSheet (this.Window,
-					this,
+				success.BeginSheet (window,
+					window,
 					null,
 					IntPtr.Zero);
-
 				return;
-
-
 			} catch (Exception ex) {
 
 				if (ex is WebException || ex is System.Runtime.Serialization.SerializationException) {
 
 					NSAlert alert = new NSAlert () {
 						MessageText = "Incorrect URL",
-						InformativeText = "The URL entered "+ SyncURL.StringValue +" is not valid for syncing",
+						InformativeText = "The URL entered "+ serverURL +" is not valid for syncing",
 						AlertStyle = NSAlertStyle.Warning
 					};
 					alert.AddButton ("OK");
-					alert.BeginSheet (this.Window,
-					this,
-					null,
-					IntPtr.Zero);
+					alert.BeginSheet (window,
+						null,
+						null,
+						IntPtr.Zero);
 
 					listener.Abort ();
 
 					return;
 				}
 			}
-
-
-
 		}
 
         	//strongly typed window accessor
