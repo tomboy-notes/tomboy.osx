@@ -177,13 +177,13 @@ namespace Tomboy
 				alert.Window.Title = "Sync Successful";
 			} else {
 				NSAlert alert = new NSAlert () {
-					MessageText = "Sync Unsuccessful",
+					MessageText = "Sync Failed",
 					InformativeText = "The sync was not successful. Please check the Sync Settings.",
 					AlertStyle = NSAlertStyle.Warning
 				};
 				alert.AddButton ("OK");
 				alert.BeginSheet (null);
-				alert.Window.Title = "Sync Unsuccessful";
+				alert.Window.Title = "Sync Failed";
 			}
         	}
 
