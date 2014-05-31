@@ -68,6 +68,19 @@ namespace Tomboy
         	#endregion
 
 		partial void SetSyncPath(NSObject sender) {
+			bool webSync = false;
+
+			if (!String.IsNullOrEmpty (AppDelegate.settings.webSyncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.webSyncURL)) {
+				webSync = true;
+				NSAlert syncWarning = new NSAlert() {
+					MessageText = "Web Sync Found",
+					InformativeText = "Setting the File System Sync Path will override the Web Sync Authorization",
+					AlertStyle = NSAlertStyle.Informational
+				};
+				syncWarning.AddButton ("OK");
+				syncWarning.BeginSheet (this.Window,this,null,IntPtr.Zero);
+			}
+
             		var openPanel = new NSOpenPanel();
             		openPanel.ReleasedWhenClosed = true;
             		openPanel.CanChooseDirectories = true;
@@ -75,19 +88,13 @@ namespace Tomboy
             		openPanel.CanCreateDirectories = true;
             		openPanel.Prompt = "Select Directory";
 
-			bool webSync = false;
-
-			if (!String.IsNullOrEmpty (AppDelegate.settings.webSyncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.webSyncURL)) {
-				webSync = true;
-			}
-
             		var result = openPanel.RunModal();
             		if (result == 1) {
                 		SyncPathTextField.Cell.Title = openPanel.DirectoryUrl.Path;
 				//AppDelegate.FilesystemSyncPath = openPanel.DirectoryUrl.Path;
 
 				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
-				SettingsSync.Write(AppDelegate.settings);
+
 
                 		NSAlert alert = new NSAlert () {
                     			MessageText = "File System Sync",
@@ -95,10 +102,18 @@ namespace Tomboy
                     			AlertStyle = NSAlertStyle.Warning
                 		};
                 		alert.AddButton ("OK");
-                			alert.BeginSheet (this.Window,
+                		alert.BeginSheet (this.Window,
                     			this,
                     			null,
 					IntPtr.Zero);
+
+				if (webSync) {
+					AppDelegate.settings.webSyncURL = String.Empty;
+					AppDelegate.settings.token = String.Empty;
+					AppDelegate.settings.secret = String.Empty;
+				}
+
+				SettingsSync.Write(AppDelegate.settings);
 			}
         	}
 
@@ -188,7 +203,7 @@ namespace Tomboy
 			if (alert == null)
 				throw new ArgumentNullException("alert");
 			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
-				AppDelegate.settings.syncURL = "";
+				AppDelegate.settings.syncURL = String.Empty;
 				SettingsSync.Write (AppDelegate.settings);
 				SyncPrefDialogController.AuthorizeAction (this.Window, SyncURL.StringValue);
 			}
