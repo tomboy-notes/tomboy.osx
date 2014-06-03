@@ -273,5 +273,17 @@ Macboy is based on MonoMac and will be fully compatible with Tomboy on Linux or 
     <BundleResource Include="note.png" />
     <BundleResource Include="numbered_list_clipped_rev_1.png" />
     <BundleResource Include="Resources\tomboy.icns" />
+    <BundleResource Include="bullet2.png" />
+    <BundleResource Include="document6.png" />
+    <BundleResource Include="notebook25.png" />
+    <BundleResource Include="notebook30.png" />
+    <BundleResource Include="recycle43.png" />
+    <BundleResource Include="delete23.png" />
+    <BundleResource Include="dwelling1.png" />
+    <BundleResource Include="full3.png" />
+    <BundleResource Include="slightly.png" />
+    <BundleResource Include="text73.png" />
+    <BundleResource Include="home87.png" />
+    <BundleResource Include="house45.png" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="3338"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyDocument">
@@ -17,25 +17,25 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window identifier="NoteWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" animationBehavior="default" id="1" userLabel="Window">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window identifier="NoteWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="1" userLabel="Window">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="515" y="304" width="450" height="300"/>
+            <rect key="contentRect" x="515" y="304" width="555" height="401"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="94" height="86"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="555" height="401"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <webView maintainsBackForwardList="NO" id="36">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="267"/>
+                        <rect key="frame" x="0.0" y="0.0" width="555" height="368"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
                             <nil key="identifier"/>
                         </webPreferences>
                     </webView>
                     <textField identifier="noteTitleField" verticalHuggingPriority="750" id="100">
-                        <rect key="frame" x="0.0" y="266" width="450" height="34"/>
+                        <rect key="frame" x="0.0" y="367" width="555" height="34"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" alignment="center" title="Note Title" drawsBackground="YES" usesSingleLineMode="YES" id="101">
                             <font key="font" metaFont="systemBold" size="18"/>
@@ -76,14 +76,14 @@
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="28ED769D-1E83-4DD3-9841-9FE6BD884B4E" label="Notes" paletteLabel="Notes" image="ToolbarNotesTemplate_1_clipped_rev_1" id="27">
+                    <toolbarItem implicitItemIdentifier="28ED769D-1E83-4DD3-9841-9FE6BD884B4E" label="Notes" paletteLabel="Notes" image="text73" id="27">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="39" height="25"/>
-                        <size key="maxSize" width="55" height="38"/>
+                        <size key="minSize" width="33" height="25"/>
+                        <size key="maxSize" width="52" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="25">
-                            <rect key="frame" x="0.0" y="14" width="39" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="52" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarNotesTemplate_1_clipped_rev_1" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="text73" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="26">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -109,14 +109,14 @@
                             </connections>
                         </searchField>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="1EC47C96-A8BC-4F94-A8B4-C1724EAA4C48" label="Delete" paletteLabel="Delete" image="ToolbarBinTemplate_1_clipped_rev_1" id="73">
+                    <toolbarItem implicitItemIdentifier="1EC47C96-A8BC-4F94-A8B4-C1724EAA4C48" label="Delete" paletteLabel="Delete" image="delete23" id="73">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="33" height="25"/>
+                        <size key="minSize" width="33" height="22"/>
                         <size key="maxSize" width="50" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="71">
-                            <rect key="frame" x="1" y="14" width="39" height="25"/>
+                            <rect key="frame" x="1" y="14" width="39" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ToolbarBinTemplate_1_clipped_rev_1" imagePosition="overlaps" alignment="center" alternateImage="ToolbarBinTemplate" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="72">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="delete23" imagePosition="overlaps" alignment="center" alternateImage="ToolbarBinTemplate" imageScaling="proportionallyDown" inset="2" id="72">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <string key="keyEquivalent">d</string>
@@ -127,14 +127,14 @@
                             </connections>
                         </button>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="FBDA598E-E699-49A1-B4FB-89261A1303FB" label="All Notes" paletteLabel="All Notes" image="NSQuickLookTemplate" id="90">
+                    <toolbarItem implicitItemIdentifier="FBDA598E-E699-49A1-B4FB-89261A1303FB" label="All Notes" paletteLabel="All Notes" image="home87" id="90">
                         <nil key="toolTip"/>
                         <size key="minSize" width="33" height="25"/>
                         <size key="maxSize" width="50" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="91">
                             <rect key="frame" x="8" y="14" width="39" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSQuickLookTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="92">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="home87" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="92">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -143,14 +143,14 @@
                             </connections>
                         </button>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="47E76EBD-D5D8-4D65-8F89-1F218124B457" label="Bullets" paletteLabel="Bullets" image="NSListViewTemplate" id="Haa-lE-01J">
+                    <toolbarItem implicitItemIdentifier="47E76EBD-D5D8-4D65-8F89-1F218124B457" label="Bullets" paletteLabel="Bullets" image="bullet2" id="Haa-lE-01J">
                         <nil key="toolTip"/>
                         <size key="minSize" width="33" height="25"/>
                         <size key="maxSize" width="50" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="aFU-ss-znG">
                             <rect key="frame" x="3" y="14" width="36" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSListViewTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mi8-xQ-QHn">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="bullet2" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="mi8-xQ-QHn">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -176,10 +176,10 @@
     <resources>
         <image name="NSGoLeftTemplate" width="9" height="9"/>
         <image name="NSGoRightTemplate" width="9" height="9"/>
-        <image name="NSListViewTemplate" width="11" height="10"/>
-        <image name="NSQuickLookTemplate" width="21" height="16"/>
         <image name="ToolbarBinTemplate" width="771" height="774"/>
-        <image name="ToolbarBinTemplate_1_clipped_rev_1" width="771" height="774"/>
-        <image name="ToolbarNotesTemplate_1_clipped_rev_1" width="1345" height="557"/>
+        <image name="bullet2" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="delete23" width="512" height="493"/>
+        <image name="home87" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="text73" width="40" height="40"/>
     </resources>
 </document>
