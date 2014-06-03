@@ -30,6 +30,12 @@ namespace Tomboy
 		[Outlet]
 		MonoMac.AppKit.NSProgressIndicator syncProgressIndicator { get; set; }
 
+		[Outlet]
+		MonoMac.AppKit.NSTextField SyncURL { get; set; }
+
+		[Action ("Authenticate:")]
+		partial void Authenticate (MonoMac.Foundation.NSObject sender);
+
 		[Action ("EnableAutoSyncingAction:")]
 		partial void EnableAutoSyncingAction (MonoMac.Foundation.NSObject sender);
 
@@ -63,6 +69,11 @@ namespace Tomboy
 				ExportPathTextField = null;
 			}
 
+			if (ExportStatusField != null) {
+				ExportStatusField.Dispose ();
+				ExportStatusField = null;
+			}
+
 			if (statusField != null) {
 				statusField.Dispose ();
 				statusField = null;
@@ -78,9 +89,9 @@ namespace Tomboy
 				syncProgressIndicator = null;
 			}
 
-			if (ExportStatusField != null) {
-				ExportStatusField.Dispose ();
-				ExportStatusField = null;
+			if (SyncURL != null) {
+				SyncURL.Dispose ();
+				SyncURL = null;
 			}
 		}
 	}

@@ -23,12 +23,23 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
-using System.IO;
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+
+using Tomboy;
+using Tomboy.OAuth;
 using Tomboy.Sync;
+using Tomboy.Sync.Filesystem;
+using Tomboy.Sync.Web;
+
+using System.Security.Cryptography.X509Certificates;
 
 namespace Tomboy
 {
@@ -57,6 +68,19 @@ namespace Tomboy
         	#endregion
 
 		partial void SetSyncPath(NSObject sender) {
+			bool webSync = false;
+
+			if (!String.IsNullOrEmpty (AppDelegate.settings.webSyncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.webSyncURL)) {
+				webSync = true;
+				NSAlert syncWarning = new NSAlert() {
+					MessageText = "Web Sync Found",
+					InformativeText = "Setting the File System Sync Path will override the Web Sync Authorization",
+					AlertStyle = NSAlertStyle.Informational
+				};
+				syncWarning.AddButton ("OK");
+				syncWarning.BeginSheet (this.Window,this,null,IntPtr.Zero);
+			}
+
             		var openPanel = new NSOpenPanel();
             		openPanel.ReleasedWhenClosed = true;
             		openPanel.CanChooseDirectories = true;
@@ -70,7 +94,7 @@ namespace Tomboy
 				//AppDelegate.FilesystemSyncPath = openPanel.DirectoryUrl.Path;
 
 				AppDelegate.settings.syncURL = openPanel.DirectoryUrl.Path;
-				SettingsSync.Write(AppDelegate.settings);
+
 
                 		NSAlert alert = new NSAlert () {
                     			MessageText = "File System Sync",
@@ -78,12 +102,19 @@ namespace Tomboy
                     			AlertStyle = NSAlertStyle.Warning
                 		};
                 		alert.AddButton ("OK");
-                			alert.BeginSheet (this.Window,
+                		alert.BeginSheet (this.Window,
                     			this,
                     			null,
-                    			IntPtr.Zero);
-			}
+					IntPtr.Zero);
 
+				if (webSync) {
+					AppDelegate.settings.webSyncURL = String.Empty;
+					AppDelegate.settings.token = String.Empty;
+					AppDelegate.settings.secret = String.Empty;
+				}
+
+				SettingsSync.Write(AppDelegate.settings);
+			}
         	}
 
 		partial void SetExportNotesPath (NSButton sender) {
@@ -145,6 +176,140 @@ namespace Tomboy
             		Console.WriteLine ("FAKE SYNC");
         	}
 
+		partial void Authenticate (NSObject sender) {
+
+			if (!String.IsNullOrEmpty (AppDelegate.settings.syncURL) || !String.IsNullOrWhiteSpace (AppDelegate.settings.syncURL)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "File System Sync Found",
+					InformativeText = "The File System Sync option would be overriden with Rainy Web Sync.",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("Override File System Sync");
+				alert.AddButton ("Cancel");
+				alert.BeginSheet (this.Window,
+					this,
+					new MonoMac.ObjCRuntime.Selector ("alertDidEnd:returnCode:contextInfo:"),
+					IntPtr.Zero);
+
+				AppDelegate.settings.syncURL = "";
+				SettingsSync.Write (AppDelegate.settings);
+			} else {
+				SyncPrefDialogController.AuthorizeAction (this.Window, SyncURL.StringValue);
+			}
+		}
+
+		[Export ("alertDidEnd:returnCode:contextInfo:")]
+		void AlertDidEnd (NSAlert alert, int returnCode, IntPtr contextInfo) {
+			if (alert == null)
+				throw new ArgumentNullException("alert");
+			if (((NSAlertButtonReturn)returnCode) == NSAlertButtonReturn.First) {
+				AppDelegate.settings.syncURL = String.Empty;
+				SettingsSync.Write (AppDelegate.settings);
+				SyncPrefDialogController.AuthorizeAction (this.Window, SyncURL.StringValue);
+			}
+		}
+
+		public static void AuthorizeAction (NSWindow window, String serverURL) {
+
+			if (String.IsNullOrEmpty (serverURL) || String.IsNullOrWhiteSpace (serverURL)) {
+				NSAlert alert = new NSAlert () {
+					MessageText = "Incorrect URL",
+					InformativeText = "The Sync URL cannot be empty",
+					AlertStyle = NSAlertStyle.Warning
+				};
+				alert.AddButton ("OK");
+				alert.BeginSheet (window,
+					null,
+					null,
+					IntPtr.Zero);
+
+				//SyncURL.StringValue = "";
+				return ;
+
+			}
+
+			HttpListener listener = new HttpListener ();
+			string callbackURL = "http://localhost:9001/";
+			listener.Prefixes.Add (callbackURL);
+			listener.Start ();
+
+			var callback_delegate = new OAuthAuthorizationCallback ( url => {
+				Process.Start (url);
+
+				// wait (block) until the HttpListener has received a request 
+				var context = listener.GetContext ();
+
+				// if we reach here the authentication has most likely been successfull and we have the
+				// oauth_identifier in the request url query as a query parameter
+				var request_url = context.Request.Url;
+				string oauth_verifier = System.Web.HttpUtility.ParseQueryString (request_url.Query).Get("oauth_verifier");
+
+				if (string.IsNullOrEmpty (oauth_verifier)) {
+					// authentication failed or error
+					context.Response.StatusCode = 500;
+					context.Response.StatusDescription = "Error";
+					context.Response.Close();
+					throw new ArgumentException ("oauth_verifier");
+				} else {
+					// authentication successfull
+					context.Response.StatusCode = 200;
+					using (var writer = new StreamWriter (context.Response.OutputStream)) {
+						writer.WriteLine("<h1>Authorization successfull!</h1>Go back to the Tomboy application window.");
+					}
+					context.Response.Close();
+					return oauth_verifier;
+				}
+			});
+
+			try{
+				//FIXME: see http://mono-project.com/UsingTrustedRootsRespectfully for SSL warning
+				ServicePointManager.CertificatePolicy = new DummyCertificateManager ();
+
+				IOAuthToken access_token = WebSyncServer.PerformTokenExchange (serverURL, callbackURL, callback_delegate);
+
+				AppDelegate.settings.webSyncURL = serverURL;
+				AppDelegate.settings.token = access_token.Token;
+				AppDelegate.settings.secret = access_token.Secret;
+
+				SettingsSync.Write (AppDelegate.settings);
+
+				Console.WriteLine ("Received token {0} with secret key {1}",access_token.Token, access_token.Secret);
+
+				listener.Stop ();
+
+				NSAlert success = new NSAlert () {
+					MessageText = "Authentication Successful",
+					InformativeText = "The authentication with the server has been successful. You can sync with the web server now.",
+					AlertStyle = NSAlertStyle.Informational
+				};
+				success.AddButton ("OK");
+				success.BeginSheet (window,
+					window,
+					null,
+					IntPtr.Zero);
+				return;
+			} catch (Exception ex) {
+
+				if (ex is WebException || ex is System.Runtime.Serialization.SerializationException) {
+
+					NSAlert alert = new NSAlert () {
+						MessageText = "Incorrect URL",
+						InformativeText = "The URL entered "+ serverURL +" is not valid for syncing",
+						AlertStyle = NSAlertStyle.Warning
+					};
+					alert.AddButton ("OK");
+					alert.BeginSheet (window,
+						null,
+						null,
+						IntPtr.Zero);
+
+					listener.Abort ();
+
+					return;
+				}
+			}
+		}
+
         	//strongly typed window accessor
 		public new SyncPrefDialog Window {
 			get {
@@ -152,5 +317,12 @@ namespace Tomboy
             		}
         	}
     	}
+
+	public class DummyCertificateManager : ICertificatePolicy
+	{
+		public bool CheckValidationResult (ServicePoint sp, X509Certificate certificate, WebRequest request, int error) {
+			return true;
+		}
+	}
 }
 
