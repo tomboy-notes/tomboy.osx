@@ -110,7 +110,7 @@ namespace Tomboy
 		}
 
 		public void UpdateNotesTable() {
-			_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
             		Dictionary<string, Note> results = new Dictionary<string, Note>();
             		results = AppDelegate.NoteEngine.GetNotesForNotebook(AppDelegate.currentNotebook);
             		SortNotesIntoOrder(results);
@@ -126,32 +126,44 @@ namespace Tomboy
 			results = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
 
 			SortNotesIntoOrder (results);
-			_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
 		}
 
 
 		#endregion
 
 		#region private methods
+
+		/// <summary>
+		/// Reloads the notes table view
+		/// </summary>
+		void ReloadNotesTableView ()
+		{
+			//TODO: probably should do more intelligence. Maybe tie into an event.
+			if (_notesTableView != null)
+				_notesTableView.ReloadData ();
+		}
 		
 		void HandleNoteUpdated (Note note) {
-			_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
 		}
 
 		void HandleNotebookAdded() {
-            		_notebooksTableView.ReloadData();
-			_notebooksTableView.SelectRow( AppDelegate.Notebooks.IndexOf (AppDelegate.currentNotebook), false);
+			if (_notesTableView != null) {
+				_notebooksTableView.ReloadData ();
+				_notebooksTableView.SelectRow (AppDelegate.Notebooks.IndexOf (AppDelegate.currentNotebook), false);
+			}
         	}
 		
 		void HandleNoteAdded (Note note) {
-            		_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
 		}
 		
 		void HandleNoteRemoved (Note note) {
             		int index = notes.FindIndex(f => f.Key == note.Uri);
 			if (index != -1) {
                 		notes.RemoveAt(index);
-                	_notesTableView.ReloadData();
+				ReloadNotesTableView ();
             		}
 		}
 
@@ -163,7 +175,7 @@ namespace Tomboy
 		/// </param>
 		partial void FindNotes (MonoMac.AppKit.NSSearchField sender) {
 			SortNotesIntoOrder (AppDelegate.NoteEngine.GetNotes (sender.StringValue, true));
-			_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
 		}
 
 		/// <summary>
@@ -222,7 +234,7 @@ namespace Tomboy
 		partial void NewNoteClicked (NSObject sender) {
 			_sharedDocumentController.NewDocument (null);
 			//FIXME: Should insert data into tableview maybe instead or reloading the whole view?
-			_notesTableView.ReloadData ();
+			ReloadNotesTableView ();
 		}
 
 		partial void newNotebookButton (NSObject sender) {
@@ -284,7 +296,7 @@ namespace Tomboy
 				Dictionary<string, Note> allNotes = AppDelegate.NoteEngine.GetNotesForNotebook (AppDelegate.currentNotebook);
 				_notebooksTableView.SelectRow (0, false);
 				SortNotesIntoOrder (allNotes);
-				_notesTableView.ReloadData ();
+				ReloadNotesTableView ();
 				_notebooksTableView.ReloadData ();
 
 
