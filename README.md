@@ -1,7 +1,7 @@
 Tomboy OSX
 ===========
 
-Tomboy OSX is the implementation of Tomboy Notes on OSX devices. Tomboy OSX is built using the Tomboy.library.
+Tomboy OSX is the implementation of Tomboy Notes for OSX. It is built using the Tomboy.library, another project which provides all Tomboy features by API.
 
 Tomboy is a desktop note-taking application for Linux, Unix and Mac. Its very simple and easy to use, with the potential to help you organize ideas and information you deal with every day.
 
@@ -9,6 +9,12 @@ Have you ever felt the frustation at not being able to locate a website you want
 
 Time for Tomboy. We bet you'll be surprised at how well a little application can make life less cluttered and run more smoothly.
 
+
+Installation
+============
+Tomboy OSX installation file can be found [here](https://www.dropbox.com/s/h8i69aguo9467x8/tomboy.osx-0.3.4.pkg). For release notes, please refer [this](https://github.com/tomboy-notes/tomboy.osx/wiki/Current-Releases).
+
+The [Wiki](https://github.com/tomboy-notes/tomboy.osx/wiki/Build-Instructions-for-Mac-OS-X-10.9) contains instructions for building Tomboy OSX from source.
 
 LICENSE
 =======
