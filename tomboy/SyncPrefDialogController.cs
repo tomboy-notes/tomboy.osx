@@ -113,7 +113,14 @@ namespace Tomboy
 					AppDelegate.settings.secret = String.Empty;
 				}
 
-				SettingsSync.Write(AppDelegate.settings);
+				try {
+					if (AppDelegate.settings != null){
+						SettingsSync.Write(AppDelegate.settings);
+						Console.WriteLine ("WRITTEN PROPERLY");
+					}
+				} catch (NullReferenceException ex) {
+					Console.WriteLine ("ERROR - "+ex.Message);
+				}
 			}
         	}
 
@@ -156,7 +163,8 @@ namespace Tomboy
 		public override void AwakeFromNib() {
             		// set according to AppDelegate, which later should be a preference.
             		// FIXME: Turn into a system setting.
-			SyncPathTextField.StringValue = AppDelegate.settings.syncURL;
+			if (AppDelegate.settings.syncURL != null)
+				SyncPathTextField.StringValue = AppDelegate.settings.syncURL;
 			EnableAutoSyncing.Enabled = true;
 			//Console.WriteLine(AppDelegate.settings.autoSync.ToString());
         	}
@@ -224,8 +232,11 @@ namespace Tomboy
 					IntPtr.Zero);
 
 				//SyncURL.StringValue = "";
-				return ;
+				return;
 
+			} else {
+				if (!serverURL.EndsWith ("/"))
+					serverURL += "/";
 			}
 
 			HttpListener listener = new HttpListener ();
@@ -294,7 +305,7 @@ namespace Tomboy
 
 					NSAlert alert = new NSAlert () {
 						MessageText = "Incorrect URL",
-						InformativeText = "The URL entered "+ serverURL +" is not valid for syncing",
+						InformativeText = "The URL entered " + serverURL + " is not valid for syncing",
 						AlertStyle = NSAlertStyle.Warning
 					};
 					alert.AddButton ("OK");
@@ -306,6 +317,19 @@ namespace Tomboy
 					listener.Abort ();
 
 					return;
+				} else {
+					NSAlert alert = new NSAlert () {
+						MessageText = "Some Issue has occured",
+						InformativeText = "Something does not seem right!",
+						AlertStyle = NSAlertStyle.Warning
+					};
+					alert.AddButton ("OK");
+					alert.BeginSheet (window,
+						null,
+						null,
+						IntPtr.Zero);
+
+					listener.Abort ();
 				}
 			}
 		}

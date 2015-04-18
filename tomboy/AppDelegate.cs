@@ -103,11 +103,19 @@ namespace Tomboy
 			NoteEngine.NoteRemoved += HandleNoteRemoved;
 			NoteEngine.NoteUpdated += HandleNoteUpdated;
 
-			settings = SettingsSync.Read();
+			settings = SettingsSync.ReadFile ();
+
+			if (settings == null) {
+				SettingsSync.CreateSettings ();
+				settings = new SettingsSync ();
+				Console.WriteLine ("Created New settings");
+			}
 
             		Notebooks = new List<string>();
             		currentNotebook = "All Notebooks";
 			PopulateNotebookList(true);
+
+			Console.WriteLine ("App Delegate Loaded!");
 		}
 
 		/// <summary>
