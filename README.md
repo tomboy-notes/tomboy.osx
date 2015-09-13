@@ -1,6 +1,8 @@
 Tomboy OSX
 ===========
 
+[![Join the chat at https://gitter.im/tomboy-notes/tomboy.osx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tomboy-notes/tomboy.osx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Tomboy OSX is the implementation of Tomboy Notes for OSX. It is built using the Tomboy.library, another project which provides all Tomboy features by API.
 
 Tomboy is a desktop note-taking application for Linux, Unix and Mac. Its very simple and easy to use, with the potential to help you organize ideas and information you deal with every day.
